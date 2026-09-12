@@ -1,0 +1,1462 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checkout | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+    <style>
+
+        /* ========================================================
+           CHECKOUT PAGE
+        ======================================================== */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(232, 93, 4, 0.08),
+                    transparent 35%
+                ),
+                #f7f7f8;
+            color: #171717;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+        }
+
+        .checkout-page {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 45px 22px 80px;
+            box-sizing: border-box;
+        }
+
+
+        /* ========================================================
+           HEADER
+        ======================================================== */
+
+        .checkout-heading {
+            margin-bottom: 32px;
+        }
+
+        .checkout-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #fff1e8;
+            color: #e85d04;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .checkout-heading h1 {
+            margin: 12px 0 8px;
+            font-size: 38px;
+            line-height: 1.15;
+            color: #171717;
+        }
+
+        .checkout-heading p {
+            margin: 0;
+            color: #777;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+
+        /* ========================================================
+           PROGRESS
+        ======================================================== */
+
+        .checkout-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+            max-width: 700px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #999;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .progress-step.completed {
+            color: #16824b;
+        }
+
+        .progress-step.active {
+            color: #e85d04;
+        }
+
+        .progress-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eeeeee;
+            color: #777;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .progress-step.completed .progress-number {
+            background: #16824b;
+            color: #ffffff;
+        }
+
+        .progress-step.active .progress-number {
+            background: #e85d04;
+            color: #ffffff;
+        }
+
+        .progress-line {
+            height: 2px;
+            width: 65px;
+            margin: 0 12px;
+            background: #e5e5e5;
+            flex-shrink: 0;
+        }
+
+        .progress-line.completed {
+            background: #16824b;
+        }
+
+
+        /* ========================================================
+           MAIN GRID
+        ======================================================== */
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1.45fr)
+                minmax(330px, 0.8fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+
+        /* ========================================================
+           CARDS
+        ======================================================== */
+
+        .checkout-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 14px 45px rgba(0, 0, 0, 0.07);
+            box-sizing: border-box;
+        }
+
+        .checkout-card + .checkout-card {
+            margin-top: 22px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 24px;
+            color: #181818;
+            font-size: 21px;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #fff1e8;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+
+        /* ========================================================
+           MOVIE INFORMATION
+        ======================================================== */
+
+        .movie-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .movie-poster {
+            width: 100px;
+            height: 145px;
+            border-radius: 13px;
+            overflow: hidden;
+            background: #f1f1f1;
+            flex-shrink: 0;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .poster-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 30px;
+        }
+
+        .movie-info h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            color: #171717;
+        }
+
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .movie-meta span {
+            padding: 6px 10px;
+            border-radius: 7px;
+            background: #f6f6f6;
+            color: #666;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* ========================================================
+           SHOW DETAILS
+        ======================================================== */
+
+        .show-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .show-detail {
+            padding: 16px;
+            border: 1px solid #eeeeee;
+            border-radius: 13px;
+            background: #fafafa;
+        }
+
+        .show-detail-label {
+            display: block;
+            margin-bottom: 6px;
+            color: #888;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .show-detail-value {
+            color: #222;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+
+        /* ========================================================
+           SEATS
+        ======================================================== */
+
+        .seat-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .seat-count {
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #fff1e8;
+            color: #e85d04;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .seat-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .seat-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 52px;
+            padding: 9px 12px;
+            border-radius: 9px;
+            background: #181818;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* ========================================================
+           CUSTOMER FORM
+        ======================================================== */
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            pointer-events: none;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid #dddddd;
+            border-radius: 11px;
+            background: #ffffff;
+            color: #222;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .form-group input:focus {
+            border-color: #e85d04;
+            box-shadow:
+                0 0 0 4px
+                rgba(232, 93, 4, 0.08);
+        }
+
+        .input-help {
+            margin-top: 7px;
+            color: #999;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        /* ========================================================
+           ORDER SUMMARY
+        ======================================================== */
+
+        .summary-card {
+            position: sticky;
+            top: 25px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 23px;
+            gap: 12px;
+        }
+
+        .summary-header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .secure-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 9px;
+            border-radius: 20px;
+            background: #ecfdf3;
+            color: #16824b;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .summary-movie {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 13px;
+            background: #fafafa;
+        }
+
+        .summary-movie-title {
+            margin-bottom: 6px;
+            color: #181818;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .summary-movie-info {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+        }
+
+        .summary-row span {
+            color: #777;
+        }
+
+        .summary-row strong {
+            color: #222;
+            text-align: right;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 21px;
+            padding-top: 20px;
+            border-top: 2px dashed #dddddd;
+        }
+
+        .summary-total span {
+            color: #333;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .summary-total strong {
+            color: #e85d04;
+            font-size: 26px;
+        }
+
+
+        /* ========================================================
+           PAYMENT AREA
+        ======================================================== */
+
+        .payment-box {
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px solid #eeeeee;
+            border-radius: 13px;
+            background: #fafafa;
+        }
+
+        .payment-box-title {
+            margin-bottom: 11px;
+            color: #333;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 9px;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+        }
+
+        .payment-method-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .payment-method-text strong {
+            display: block;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .payment-method-text span {
+            color: #999;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+
+        /* ========================================================
+           CONFIRM BUTTON
+        ======================================================== */
+
+        .confirm-button {
+            width: 100%;
+            border: none;
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 12px;
+            background: #e85d04;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow:
+                0 8px 20px
+                rgba(232, 93, 4, 0.22);
+        }
+
+        .confirm-button:hover {
+            background: #d94f00;
+            transform: translateY(-2px);
+            box-shadow:
+                0 11px 25px
+                rgba(232, 93, 4, 0.28);
+        }
+
+        .confirm-button:active {
+            transform: translateY(0);
+        }
+
+        .confirm-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        /* ========================================================
+           SECURITY
+        ======================================================== */
+
+        .security-box {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-top: 16px;
+            padding: 13px;
+            border-radius: 11px;
+            background: #f7f9fb;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .security-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+
+        /* ========================================================
+           ERROR
+        ======================================================== */
+
+        .error-box {
+            margin-bottom: 22px;
+            padding: 14px 16px;
+            border: 1px solid #fecdd3;
+            border-radius: 11px;
+            background: #fff1f2;
+            color: #b42318;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        /* ========================================================
+           BACK LINK
+        ======================================================== */
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 22px;
+            color: #777;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #e85d04;
+        }
+
+
+        /* ========================================================
+           RESPONSIVE
+        ======================================================== */
+
+        @media (max-width: 900px) {
+
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                position: static;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .checkout-page {
+                margin-top: 0;
+                padding: 30px 15px 60px;
+            }
+
+            .checkout-heading h1 {
+                font-size: 30px;
+            }
+
+            .checkout-progress {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+
+            .progress-line {
+                width: 35px;
+                margin: 0 8px;
+            }
+
+            .checkout-card {
+                padding: 21px;
+                border-radius: 17px;
+            }
+
+            .movie-info {
+                align-items: flex-start;
+            }
+
+            .movie-poster {
+                width: 82px;
+                height: 120px;
+            }
+
+            .movie-info h2 {
+                font-size: 19px;
+            }
+
+            .show-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* ========================================================
+           SMALL MOBILE
+        ======================================================== */
+
+        @media (max-width: 430px) {
+
+            .checkout-heading h1 {
+                font-size: 27px;
+            }
+
+            .checkout-heading p {
+                font-size: 14px;
+            }
+
+            .movie-poster {
+                width: 72px;
+                height: 105px;
+            }
+
+            .movie-meta span {
+                font-size: 10px;
+            }
+
+            .summary-total strong {
+                font-size: 22px;
+            }
+
+            .checkout-card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================================
+         IMPORTANT:
+         NO GLOBAL NAVBAR / HEADER ON CHECKOUT PAGE.
+
+         The old <header> and <nav> were intentionally removed
+         from this template so the checkout UI starts cleanly.
+    ========================================================= -->
+
+
+    <main class="checkout-page">
+
+
+        <!-- ======================================================
+             CHECKOUT HEADING
+        ======================================================= -->
+
+        <section class="checkout-heading">
+
+            <span class="checkout-eyebrow">
+                🎟️ Secure Checkout
+            </span>
+
+            <h1>
+                Complete Your Booking
+            </h1>
+
+            <p>
+                Review your movie details and enter your information
+                before proceeding to payment.
+            </p>
+
+        </section>
+
+
+        <!-- ======================================================
+             PROGRESS
+        ======================================================= -->
+
+        <div class="checkout-progress">
+
+            <div class="progress-step completed">
+
+                <span class="progress-number">
+                    ✓
+                </span>
+
+                Seats
+
+            </div>
+
+
+            <div class="progress-line completed"></div>
+
+
+            <div class="progress-step active">
+
+                <span class="progress-number">
+                    2
+                </span>
+
+                Checkout
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <span class="progress-number">
+                    3
+                </span>
+
+                Payment
+
+            </div>
+
+        </div>
+
+
+        <!-- ======================================================
+             ERROR MESSAGE
+        ======================================================= -->
+
+        {% if error %}
+
+            <div class="error-box">
+                ⚠️ {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- ======================================================
+             BOOKING FORM
+        ======================================================= -->
+
+        <form
+            method="post"
+            action="{% url 'booking_details' showtime.id %}"
+            id="booking-details-form"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- ==================================================
+                 FINAL BOOKING SUBMISSION FLAG
+            =================================================== -->
+
+            <input
+                type="hidden"
+                name="confirm_booking"
+                value="1"
+            >
+
+
+            <!-- ==================================================
+                 PRESERVE SELECTED SEATS
+            =================================================== -->
+
+            {% for seat in seats %}
+
+                <input
+                    type="hidden"
+                    name="seats"
+                    value="{{ seat.id }}"
+                >
+
+            {% endfor %}
+
+
+            <div class="checkout-grid">
+
+
+                <!-- ==============================================
+                     LEFT COLUMN
+                =============================================== -->
+
+                <div>
+
+
+                    <!-- ==========================================
+                         MOVIE
+                    =========================================== -->
+
+                    <section class="checkout-card">
+
+                        <h2 class="card-title">
+
+                            <span class="card-icon">
+                                🎬
+                            </span>
+
+                            Movie Details
+
+                        </h2>
+
+
+                        <div class="movie-info">
+
+                            <div class="movie-poster">
+
+                                {% if showtime.movie.poster_url %}
+
+                                    <img
+                                        src="{{ showtime.movie.poster_url }}"
+                                        alt="{{ showtime.movie.title }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="poster-placeholder">
+                                        🎬
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div>
+
+                                <h2>
+                                    {{ showtime.movie.title }}
+                                </h2>
+
+
+                                <div class="movie-meta">
+
+                                    {% if showtime.movie.language %}
+
+                                        <span>
+                                            {{ showtime.movie.language }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if showtime.movie.genre %}
+
+                                        <span>
+                                            {{ showtime.movie.genre }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if showtime.movie.duration_minutes %}
+
+                                        <span>
+                                            {{ showtime.movie.duration_minutes }} min
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if showtime.movie.rating %}
+
+                                        <span>
+                                            ⭐ {{ showtime.movie.rating }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ==========================================
+                         SHOW DETAILS
+                    =========================================== -->
+
+                    <section class="checkout-card">
+
+                        <h2 class="card-title">
+
+                            <span class="card-icon">
+                                📍
+                            </span>
+
+                            Show Details
+
+                        </h2>
+
+
+                        <div class="show-details-grid">
+
+
+                            <div class="show-detail">
+
+                                <span class="show-detail-label">
+                                    Cinema
+                                </span>
+
+                                <span class="show-detail-value">
+                                    {{ showtime.cinema.name }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="show-detail">
+
+                                <span class="show-detail-label">
+                                    City
+                                </span>
+
+                                <span class="show-detail-value">
+                                    {{ showtime.cinema.city.name }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="show-detail">
+
+                                <span class="show-detail-label">
+                                    Date
+                                </span>
+
+                                <span class="show-detail-value">
+                                    {{ showtime.starts_at|date:"D, d M Y" }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="show-detail">
+
+                                <span class="show-detail-label">
+                                    Showtime
+                                </span>
+
+                                <span class="show-detail-value">
+                                    {{ showtime.starts_at|date:"h:i A" }}
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        {% if showtime.cinema.address %}
+
+                            <div class="security-box">
+
+                                <span class="security-icon">
+                                    📌
+                                </span>
+
+                                <span>
+                                    {{ showtime.cinema.address }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- ==========================================
+                         SEATS
+                    =========================================== -->
+
+                    <section class="checkout-card">
+
+                        <div class="seat-heading">
+
+                            <h2
+                                class="card-title"
+                                style="margin-bottom: 0;"
+                            >
+
+                                <span class="card-icon">
+                                    💺
+                                </span>
+
+                                Selected Seats
+
+                            </h2>
+
+
+                            <span class="seat-count">
+
+                                {{ seats|length }}
+
+                                {% if seats|length == 1 %}
+                                    Seat
+                                {% else %}
+                                    Seats
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="seat-list">
+
+                            {% for seat in seats %}
+
+                                <span class="seat-item">
+                                    {{ seat.seat_number }}
+                                </span>
+
+                            {% empty %}
+
+                                <span>
+                                    No seats selected.
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ==========================================
+                         CUSTOMER INFORMATION
+                    =========================================== -->
+
+                    <section class="checkout-card">
+
+                        <h2 class="card-title">
+
+                            <span class="card-icon">
+                                👤
+                            </span>
+
+                            Customer Information
+
+                        </h2>
+
+
+                        <div class="form-group">
+
+                            <label for="customer_name">
+                                Full Name
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="input-icon">
+                                    👤
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="customer_name"
+                                    name="customer_name"
+                                    placeholder="Enter your full name"
+                                    autocomplete="name"
+                                    maxlength="150"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customer_email">
+                                Email Address
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="input-icon">
+                                    ✉️
+                                </span>
+
+                                <input
+                                    type="email"
+                                    id="customer_email"
+                                    name="customer_email"
+                                    placeholder="Enter your email address"
+                                    autocomplete="email"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="input-help">
+                                Your booking confirmation and digital ticket
+                                will be associated with this email.
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+
+                <!-- ==============================================
+                     RIGHT COLUMN
+                =============================================== -->
+
+                <aside>
+
+
+                    <section class="checkout-card summary-card">
+
+
+                        <div class="summary-header">
+
+                            <h2>
+                                Order Summary
+                            </h2>
+
+                            <span class="secure-badge">
+                                🔒 Secure
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-movie">
+
+                            <div class="summary-movie-title">
+                                {{ showtime.movie.title }}
+                            </div>
+
+                            <div class="summary-movie-info">
+
+                                {{ showtime.cinema.name }}
+
+                                <br>
+
+                                {{ showtime.starts_at|date:"D, d M Y • h:i A" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Ticket Price
+                            </span>
+
+                            <strong>
+                                ₹{{ showtime.price }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Number of Seats
+                            </span>
+
+                            <strong>
+                                {{ seats|length }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Selected Seats
+                            </span>
+
+                            <strong>
+
+                                {% for seat in seats %}
+
+                                    {{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+
+                                {% endfor %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Booking Fee
+                            </span>
+
+                            <strong>
+                                Included
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total Amount
+                            </span>
+
+                            <strong>
+                                ₹{{ total_amount }}
+                            </strong>
+
+                        </div>
+
+
+                        <!-- ======================================
+                             PAYMENT INFORMATION
+                        ======================================= -->
+
+                        <div class="payment-box">
+
+                            <div class="payment-box-title">
+                                Next Step
+                            </div>
+
+
+                            <div class="payment-method">
+
+                                <span class="payment-method-icon">
+                                    💳
+                                </span>
+
+                                <div class="payment-method-text">
+
+                                    <strong>
+                                        Secure Online Payment
+                                    </strong>
+
+                                    <span>
+                                        Choose your payment method
+                                        on the next page
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ======================================
+                             CONTINUE TO PAYMENT
+                        ======================================= -->
+
+                        <button
+                            type="submit"
+                            class="confirm-button"
+                            id="continue-payment-button"
+                        >
+                            Continue to Payment →
+                        </button>
+
+
+                        <div class="security-box">
+
+                            <span class="security-icon">
+                                🔐
+                            </span>
+
+                            <span>
+                                Your booking information is securely
+                                processed. Payment will be simulated
+                                on the next step.
+                            </span>
+
+                        </div>
+
+
+                    </section>
+
+
+                    <a
+                        href="{% url 'seat_selection' showtime.id %}"
+                        class="back-link"
+                    >
+                        ← Change Seats
+                    </a>
+
+
+                </aside>
+
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const form =
+                    document.getElementById(
+                        "booking-details-form"
+                    );
+
+                const button =
+                    document.getElementById(
+                        "continue-payment-button"
+                    );
+
+                if (!form || !button) {
+                    return;
+                }
+
+
+                form.addEventListener(
+                    "submit",
+                    function () {
+
+                        button.disabled = true;
+
+                        button.innerHTML =
+                            "Processing...";
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

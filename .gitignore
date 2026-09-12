@@ -1,0 +1,21 @@
+# Django
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables / secrets
+.env
+tmdb.env
+
+# SQLite database
+db.sqlite3
+
+# IDE
+.vscode/
+
+# Python cache
+.pytest_cache/

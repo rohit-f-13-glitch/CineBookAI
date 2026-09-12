@@ -1,0 +1,1265 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Watchlist | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+
+    <style>
+
+        /* =========================================================
+           WATCHLIST PAGE
+        ========================================================= */
+
+        .watchlist-page {
+
+            background: #f5f1ea;
+
+            min-height: 100vh;
+
+            padding: 45px 0 80px;
+        }
+
+
+        .watchlist-container {
+
+            width: min(1180px, 92%);
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .watchlist-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .watchlist-header-content {
+            min-width: 0;
+        }
+
+
+        .watchlist-label {
+
+            display: inline-block;
+
+            margin-bottom: 10px;
+
+            color: #d85d35;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .watchlist-title {
+
+            margin: 0;
+
+            color: #171717;
+
+            font-size: clamp(34px, 5vw, 52px);
+
+            line-height: 1.05;
+
+            letter-spacing: -1.5px;
+        }
+
+
+        .watchlist-description {
+
+            margin: 12px 0 0;
+
+            max-width: 650px;
+
+            color: #777;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+
+        .watchlist-count {
+
+            flex-shrink: 0;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            min-width: 105px;
+
+            padding: 12px 16px;
+
+            border-radius: 50px;
+
+            background: #ffffff;
+
+            border: 1px solid #ebe4db;
+
+            color: #171717;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+        }
+
+
+        /* =========================================================
+           BACK LINK
+        ========================================================= */
+
+        .watchlist-back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 25px;
+
+            color: #171717;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .watchlist-back:hover {
+
+            color: #d85d35;
+
+            transform: translateX(-3px);
+        }
+
+
+        /* =========================================================
+           MOVIE GRID
+        ========================================================= */
+
+        .watchlist-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 24px;
+        }
+
+
+        /* =========================================================
+           WATCHLIST CARD
+        ========================================================= */
+
+        .watchlist-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #ffffff;
+
+            border: 1px solid #ebe4db;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 28px rgba(0, 0, 0, 0.05);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+
+        .watchlist-card:hover {
+
+            transform: translateY(-6px);
+
+            border-color: #ddd2c6;
+
+            box-shadow:
+                0 16px 38px rgba(0, 0, 0, 0.10);
+        }
+
+
+        /* =========================================================
+           POSTER
+        ========================================================= */
+
+        .watchlist-poster {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 390px;
+
+            overflow: hidden;
+
+            background: #e9e3da;
+        }
+
+
+        .watchlist-poster img {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            transition: transform 0.4s ease;
+        }
+
+
+        .watchlist-card:hover
+        .watchlist-poster img {
+
+            transform: scale(1.04);
+        }
+
+
+        .watchlist-poster-placeholder {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            color: #888;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            text-align: center;
+        }
+
+
+        .poster-placeholder-icon {
+
+            font-size: 42px;
+        }
+
+
+        /* =========================================================
+           RATING BADGE
+        ========================================================= */
+
+        .watchlist-rating {
+
+            position: absolute;
+
+            top: 14px;
+
+            left: 14px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 8px 11px;
+
+            border-radius: 50px;
+
+            background: rgba(23, 23, 23, 0.92);
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            backdrop-filter: blur(8px);
+        }
+
+
+        /* =========================================================
+           SAVED BADGE
+        ========================================================= */
+
+        .watchlist-saved-badge {
+
+            position: absolute;
+
+            top: 14px;
+
+            right: 14px;
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.94);
+
+            color: #d85d35;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* =========================================================
+           CARD CONTENT
+        ========================================================= */
+
+        .watchlist-content {
+
+            padding: 20px;
+        }
+
+
+        .watchlist-movie-title {
+
+            margin: 0 0 8px;
+
+            color: #171717;
+
+            font-size: 20px;
+
+            line-height: 1.25;
+
+            font-weight: 800;
+
+            letter-spacing: -0.3px;
+        }
+
+
+        .watchlist-movie-title a {
+
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        .watchlist-movie-title a:hover {
+
+            color: #d85d35;
+        }
+
+
+        /* =========================================================
+           MOVIE META
+        ========================================================= */
+
+        .watchlist-meta {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .watchlist-meta-item {
+
+            color: #777;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .watchlist-meta-separator {
+
+            color: #c7beb4;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           ADDED DATE
+        ========================================================= */
+
+        .watchlist-added {
+
+            margin-bottom: 17px;
+
+            padding-top: 13px;
+
+            border-top: 1px solid #eee7de;
+
+            color: #999;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           CARD ACTIONS
+        ========================================================= */
+
+        .watchlist-actions {
+
+            display: grid;
+
+            grid-template-columns: 1fr auto;
+
+            gap: 9px;
+        }
+
+
+        .watchlist-book-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 43px;
+
+            padding: 10px 13px;
+
+            border-radius: 11px;
+
+            background: #171717;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            transition: 0.25s ease;
+        }
+
+
+        .watchlist-book-button:hover {
+
+            background: #d85d35;
+
+            color: #ffffff;
+
+            transform: translateY(-2px);
+        }
+
+
+        .watchlist-remove-form {
+
+            margin: 0;
+        }
+
+
+        .watchlist-remove-button {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 0;
+
+            border: 1px solid #e5ddd4;
+
+            border-radius: 11px;
+
+            background: #ffffff;
+
+            color: #777;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .watchlist-remove-button:hover {
+
+            background: #fff3ef;
+
+            color: #d85d35;
+
+            border-color: #d85d35;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================================
+           EMPTY WATCHLIST
+        ========================================================= */
+
+        .watchlist-empty {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 480px;
+
+            padding: 45px 25px;
+
+            background: #ffffff;
+
+            border: 1px solid #ebe4db;
+
+            border-radius: 24px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .watchlist-empty-content {
+
+            max-width: 500px;
+        }
+
+
+        .watchlist-empty-icon {
+
+            width: 82px;
+
+            height: 82px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 22px;
+
+            border-radius: 50%;
+
+            background: #fff3ef;
+
+            color: #d85d35;
+
+            font-size: 38px;
+
+            box-shadow:
+                0 8px 25px rgba(216, 93, 53, 0.10);
+        }
+
+
+        .watchlist-empty h2 {
+
+            margin: 0 0 10px;
+
+            color: #171717;
+
+            font-size: 28px;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .watchlist-empty p {
+
+            margin: 0 auto 25px;
+
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .browse-movies-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 46px;
+
+            padding: 11px 20px;
+
+            border-radius: 12px;
+
+            background: #171717;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: 0.25s ease;
+        }
+
+
+        .browse-movies-button:hover {
+
+            background: #d85d35;
+
+            color: #ffffff;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .watchlist-grid {
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .watchlist-poster {
+
+                height: 360px;
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .watchlist-page {
+
+                padding-top: 35px;
+            }
+
+            .watchlist-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .watchlist-count {
+
+                min-width: auto;
+            }
+
+            .watchlist-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 18px;
+            }
+
+            .watchlist-poster {
+
+                height: 340px;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .watchlist-container {
+
+                width: 94%;
+            }
+
+            .watchlist-title {
+
+                font-size: 36px;
+            }
+
+            .watchlist-description {
+
+                font-size: 14px;
+            }
+
+            .watchlist-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+            .watchlist-poster {
+
+                height: 430px;
+            }
+
+            .watchlist-content {
+
+                padding: 18px;
+            }
+
+            .watchlist-empty {
+
+                min-height: 420px;
+
+                padding: 35px 20px;
+            }
+
+            .watchlist-empty h2 {
+
+                font-size: 24px;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+
+            .watchlist-poster {
+
+                height: 390px;
+            }
+
+            .watchlist-actions {
+
+                grid-template-columns: 1fr;
+            }
+
+            .watchlist-remove-button {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+    <div class="header-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="{% url 'home' %}"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                🎬
+            </span>
+
+            <span>
+                CineBook <strong>AI</strong>
+            </span>
+
+        </a>
+
+
+        <!-- SEARCH -->
+
+        <form
+            action="{% url 'search_movies' %}"
+            method="GET"
+            class="search-box"
+        >
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Search movies..."
+                aria-label="Search movies"
+            >
+
+            <button type="submit">
+                🔍
+            </button>
+
+        </form>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'home' %}#movies">
+                Movies
+            </a>
+
+            <a href="{% url 'home' %}#experience">
+                Experience
+            </a>
+
+            <a href="{% url 'my_bookings' %}">
+                My Bookings
+            </a>
+
+            <a
+                href="{% url 'my_watchlist' %}"
+                class="active"
+            >
+                ❤️ Watchlist
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="watchlist-page">
+
+    <div class="watchlist-container">
+
+
+        <!-- BACK -->
+
+        <a
+            href="{% url 'home' %}"
+            class="watchlist-back"
+        >
+            ← Back to Movies
+        </a>
+
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <section class="watchlist-header">
+
+            <div class="watchlist-header-content">
+
+                <span class="watchlist-label">
+                    Your Collection
+                </span>
+
+                <h1 class="watchlist-title">
+                    My Watchlist
+                </h1>
+
+                <p class="watchlist-description">
+                    Keep track of movies you want to watch.
+                    Save your favorites and book your next
+                    cinematic experience whenever you're ready.
+                </p>
+
+            </div>
+
+
+            {% if watchlist %}
+
+                <div class="watchlist-count">
+
+                    ❤️
+
+                    {{ watchlist|length }}
+
+                    {% if watchlist|length == 1 %}
+                        Movie
+                    {% else %}
+                        Movies
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WATCHLIST CONTENT
+        ====================================================== -->
+
+        {% if watchlist %}
+
+
+            <section class="watchlist-grid">
+
+
+                {% for item in watchlist %}
+
+                    <article class="watchlist-card">
+
+
+                        <!-- POSTER -->
+
+                        <div class="watchlist-poster">
+
+
+                            {% if item.movie.poster_url %}
+
+                                <img
+                                    src="{{ item.movie.poster_url }}"
+                                    alt="{{ item.movie.title }} poster"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="watchlist-poster-placeholder">
+
+                                    <span class="poster-placeholder-icon">
+                                        🎬
+                                    </span>
+
+                                    Poster Not Available
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- RATING -->
+
+                            <div class="watchlist-rating">
+
+                                ⭐
+
+                                {{ item.movie.rating }}/10
+
+                            </div>
+
+
+                            <!-- SAVED -->
+
+                            <div
+                                class="watchlist-saved-badge"
+                                title="Saved to your watchlist"
+                            >
+                                ♥
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- CARD CONTENT -->
+
+                        <div class="watchlist-content">
+
+
+                            <!-- TITLE -->
+
+                            <h2 class="watchlist-movie-title">
+
+                                <a
+                                    href="{% url 'movie_detail' item.movie.id %}"
+                                >
+                                    {{ item.movie.title }}
+                                </a>
+
+                            </h2>
+
+
+
+                            <!-- META -->
+
+                            <div class="watchlist-meta">
+
+                                <span class="watchlist-meta-item">
+                                    {{ item.movie.genre }}
+                                </span>
+
+                                <span class="watchlist-meta-separator">
+                                    •
+                                </span>
+
+                                <span class="watchlist-meta-item">
+                                    {{ item.movie.language }}
+                                </span>
+
+                                <span class="watchlist-meta-separator">
+                                    •
+                                </span>
+
+                                <span class="watchlist-meta-item">
+                                    {{ item.movie.duration_minutes }} min
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- ADDED DATE -->
+
+                            <div class="watchlist-added">
+
+                                Added
+                                {{ item.added_at|date:"d M Y" }}
+
+                            </div>
+
+
+
+                            <!-- ACTIONS -->
+
+                            <div class="watchlist-actions">
+
+
+                                <!-- BOOK -->
+
+                                <a
+                                    href="{% url 'movie_detail' item.movie.id %}"
+                                    class="watchlist-book-button"
+                                >
+                                    🎟️ View & Book
+                                </a>
+
+
+
+                                <!-- REMOVE -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'remove_from_watchlist' item.movie.id %}"
+                                    class="watchlist-remove-form"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="watchlist-remove-button"
+                                        title="Remove from watchlist"
+                                        aria-label="Remove {{ item.movie.title }} from watchlist"
+                                    >
+                                        🗑️
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+
+            </section>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY WATCHLIST
+            ================================================== -->
+
+            <section class="watchlist-empty">
+
+                <div class="watchlist-empty-content">
+
+
+                    <div class="watchlist-empty-icon">
+                        ♡
+                    </div>
+
+
+                    <h2>
+                        Your Watchlist is Empty
+                    </h2>
+
+
+                    <p>
+                        You haven't saved any movies yet.
+                        Explore CineBook AI, find something you love,
+                        and add it to your personal watchlist.
+                    </p>
+
+
+                    <a
+                        href="{% url 'home' %}#movies"
+                        class="browse-movies-button"
+                    >
+                        🎬 Browse Movies
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+        {% endif %}
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <!-- BRAND -->
+
+        <div>
+
+            <div class="footer-logo">
+                🎬 CineBook AI
+            </div>
+
+            <p>
+                Your intelligent movie ticket booking experience.
+            </p>
+
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="footer-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'my_bookings' %}">
+                My Bookings
+            </a>
+
+            <a href="{% url 'my_watchlist' %}">
+                Watchlist
+            </a>
+
+            <a href="{% url 'ai_recommend' %}">
+                AI Recommendations
+            </a>
+
+            <a href="{% url 'ai_chat' %}">
+                AI Assistant
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 CineBook AI. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sign In | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <!-- ==============================
+         HEADER
+    =============================== -->
+
+    <header class="header">
+
+        <div class="header-container">
+
+            <a
+                href="{% url 'home' %}"
+                class="logo"
+            >
+
+                <span class="logo-icon">🎬</span>
+
+                <span class="logo-text">
+                    CineBook<strong>AI</strong>
+                </span>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a href="{% url 'my_bookings' %}">
+                    My Bookings
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         LOGIN PAGE
+    =============================== -->
+
+    <main class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    🔐
+                </div>
+
+                <h1>
+                    Welcome Back
+                </h1>
+
+                <p>
+                    Sign in to continue your CineBook AI journey.
+                </p>
+
+            </div>
+
+
+            <!-- ==============================
+                 MESSAGES
+            =============================== -->
+
+            {% if messages %}
+
+                <div class="auth-messages">
+
+                    {% for message in messages %}
+
+                        <div class="auth-message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ==============================
+                 LOGIN FORM
+            =============================== -->
+
+            <form
+                method="POST"
+                action="{% url 'login' %}"
+                class="auth-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+
+                <!-- SIGN IN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <!-- ==============================
+                 SIGNUP LINK
+            =============================== -->
+
+            <div class="auth-footer">
+
+                <p>
+
+                    Don't have an account?
+
+                    <a href="{% url 'signup' %}">
+                        Create Account
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==============================
+         FOOTER
+    =============================== -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 CineBook AI. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

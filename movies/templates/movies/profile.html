@@ -1,0 +1,1533 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+    <style>
+
+        /* =========================================================
+           PROFILE PAGE
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(211, 143, 164, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(166, 110, 145, 0.14),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #100d13 0%,
+                    #17121a 45%,
+                    #0d0b10 100%
+                );
+
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .profile-header {
+            width: 100%;
+            position: relative;
+            z-index: 100;
+
+            background:
+                rgba(15, 12, 18, 0.94);
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .profile-header .header-container {
+            max-width: 1240px;
+            margin: 0 auto;
+
+            min-height: 76px;
+
+            padding:
+                12px 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .profile-header .logo {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+            color: #ffffff;
+
+            flex-shrink: 0;
+        }
+
+        .profile-header .logo-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d6a0ae,
+                    #b96f8d
+                );
+
+            box-shadow:
+                0 8px 25px rgba(185, 111, 141, 0.28);
+
+            font-size: 20px;
+        }
+
+        .profile-header .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-header .logo-text strong {
+            color: #d9a0af;
+        }
+
+
+        /* =========================================================
+           PROFESSIONAL NAVIGATION BOXES
+        ========================================================= */
+
+        .profile-header .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-left: auto;
+        }
+
+        .profile-header .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding:
+                10px 18px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.09);
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            color:
+                rgba(255, 255, 255, 0.82);
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .profile-header .nav-links a:hover {
+            transform: translateY(-2px);
+
+            background:
+                rgba(214, 160, 174, 0.13);
+
+            border-color:
+                rgba(214, 160, 174, 0.35);
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 22px rgba(0, 0, 0, 0.22);
+        }
+
+        /* Home */
+
+        .profile-header .nav-links a:first-child:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(214, 160, 174, 0.18),
+                    rgba(185, 111, 141, 0.10)
+                );
+        }
+
+        /* My Bookings */
+
+        .profile-header .nav-links a:nth-child(2) {
+            border-color:
+                rgba(214, 160, 174, 0.18);
+        }
+
+        .profile-header .nav-links a:nth-child(2):hover {
+            border-color:
+                rgba(214, 160, 174, 0.45);
+        }
+
+        /* Logout */
+
+        .profile-header .nav-links a:last-child {
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            color:
+                rgba(255, 255, 255, 0.70);
+        }
+
+        .profile-header .nav-links a:last-child:hover {
+            background:
+                rgba(220, 80, 110, 0.12);
+
+            border-color:
+                rgba(220, 80, 110, 0.30);
+
+            color:
+                #ffb7c5;
+        }
+
+
+        /* =========================================================
+           MAIN PROFILE AREA
+        ========================================================= */
+
+        .cine-profile-page {
+            min-height: calc(100vh - 76px);
+
+            padding:
+                38px 20px 70px;
+        }
+
+        .cine-profile-container {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .profile-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 24px;
+        }
+
+        .profile-breadcrumb {
+            color:
+                rgba(255, 255, 255, 0.48);
+
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .profile-breadcrumb span {
+            color: #d9a0af;
+        }
+
+        .profile-label {
+            padding:
+                8px 13px;
+
+            border-radius: 999px;
+
+            border:
+                1px solid rgba(214, 160, 174, 0.18);
+
+            background:
+                rgba(214, 160, 174, 0.07);
+
+            color:
+                #d9a0af;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.4px;
+        }
+
+
+        /* =========================================================
+           PROFILE HERO
+        ========================================================= */
+
+        .profile-hero {
+            position: relative;
+            overflow: hidden;
+
+            padding: 32px;
+
+            border-radius: 24px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.075),
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.28);
+
+            margin-bottom: 20px;
+        }
+
+        .profile-hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            right: -120px;
+            top: -150px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(214, 160, 174, 0.13);
+
+            filter: blur(5px);
+        }
+
+        .profile-hero-content {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+
+            gap: 24px;
+        }
+
+
+        /* =========================================================
+           AVATAR
+        ========================================================= */
+
+        .profile-avatar {
+            width: 94px;
+            height: 94px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e3b0bd,
+                    #a95f7b
+                );
+
+            border:
+                4px solid rgba(255, 255, 255, 0.12);
+
+            box-shadow:
+                0 12px 35px rgba(185, 111, 141, 0.28);
+
+            color: #ffffff;
+
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .profile-info {
+            min-width: 0;
+        }
+
+        .profile-info h1 {
+            margin:
+                0 0 7px;
+
+            font-size: 30px;
+            line-height: 1.2;
+
+            font-weight: 750;
+
+            letter-spacing: -0.7px;
+        }
+
+        .profile-email {
+            margin: 0 0 12px;
+
+            color:
+                rgba(255, 255, 255, 0.55);
+
+            font-size: 14px;
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 11px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(110, 210, 150, 0.09);
+
+            border:
+                1px solid rgba(110, 210, 150, 0.16);
+
+            color:
+                #9de0b7;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .profile-status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8bd3a5;
+
+            box-shadow:
+                0 0 10px rgba(139, 211, 165, 0.55);
+        }
+
+
+        /* =========================================================
+           STATISTICS
+        ========================================================= */
+
+        .profile-stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .profile-stat {
+            padding: 22px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .profile-stat:hover {
+            transform: translateY(-3px);
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border-color:
+                rgba(214, 160, 174, 0.20);
+        }
+
+        .profile-stat-label {
+            color:
+                rgba(255, 255, 255, 0.45);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            margin-bottom: 9px;
+        }
+
+        .profile-stat-value {
+            font-size: 25px;
+            font-weight: 750;
+
+            color: #ffffff;
+        }
+
+
+        /* =========================================================
+           CONTENT GRID
+        ========================================================= */
+
+        .profile-content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr) 340px;
+
+            gap: 20px;
+        }
+
+        .profile-section {
+            border-radius: 20px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            overflow: hidden;
+        }
+
+        .profile-section-header {
+            padding:
+                22px 24px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-section-header h2 {
+            margin: 0;
+
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .profile-section-header span {
+            color:
+                rgba(255, 255, 255, 0.42);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           BOOKING ITEMS
+        ========================================================= */
+
+        .booking-list {
+            padding: 8px 18px 18px;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding:
+                18px 6px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.055);
+        }
+
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-main {
+            min-width: 0;
+        }
+
+        .booking-title {
+            margin: 0 0 6px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            color: #ffffff;
+        }
+
+        .booking-meta {
+            margin: 0;
+
+            color:
+                rgba(255, 255, 255, 0.47);
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .booking-right {
+            flex-shrink: 0;
+
+            text-align: right;
+        }
+
+        .booking-price {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .booking-confirmed {
+            display: inline-flex;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(110, 210, 150, 0.08);
+
+            color:
+                #9de0b7;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =========================================================
+           EMPTY BOOKINGS
+        ========================================================= */
+
+        .empty-bookings {
+            text-align: center;
+
+            padding:
+                45px 20px;
+        }
+
+        .empty-icon {
+            font-size: 36px;
+
+            margin-bottom: 12px;
+        }
+
+        .empty-bookings h3 {
+            margin:
+                0 0 7px;
+
+            font-size: 17px;
+        }
+
+        .empty-bookings p {
+            margin:
+                0 0 20px;
+
+            color:
+                rgba(255, 255, 255, 0.45);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           BUTTON
+        ========================================================= */
+
+        .profile-primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding:
+                10px 17px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d7a2b1,
+                    #b76c88
+                );
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            box-shadow:
+                0 9px 25px rgba(183, 108, 136, 0.20);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .profile-primary-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 13px 30px rgba(183, 108, 136, 0.30);
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-actions {
+            padding: 14px;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                14px 12px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .quick-action:hover {
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            transform: translateX(3px);
+
+            color: #ffffff;
+        }
+
+        .quick-action-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                rgba(214, 160, 174, 0.09);
+
+            border:
+                1px solid rgba(214, 160, 174, 0.12);
+
+            font-size: 16px;
+        }
+
+        .quick-action-text {
+            display: flex;
+            flex-direction: column;
+
+            gap: 3px;
+        }
+
+        .quick-action-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .quick-action-description {
+            font-size: 10px;
+
+            color:
+                rgba(255, 255, 255, 0.38);
+        }
+
+
+        /* =========================================================
+           MEMBER CARD
+        ========================================================= */
+
+        .member-card {
+            margin:
+                14px;
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(214, 160, 174, 0.11),
+                    rgba(185, 111, 141, 0.04)
+                );
+
+            border:
+                1px solid rgba(214, 160, 174, 0.13);
+        }
+
+        .member-card-label {
+            color:
+                #d9a0af;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+
+            margin-bottom: 8px;
+        }
+
+        .member-card h3 {
+            margin:
+                0 0 6px;
+
+            font-size: 15px;
+        }
+
+        .member-card p {
+            margin: 0;
+
+            color:
+                rgba(255, 255, 255, 0.42);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .profile-footer {
+            max-width: 1180px;
+
+            margin:
+                35px auto 0;
+
+            padding-top: 24px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.06);
+
+            text-align: center;
+
+            color:
+                rgba(255, 255, 255, 0.32);
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .profile-content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .profile-header .header-container {
+                min-height: auto;
+
+                padding:
+                    14px 16px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 14px;
+            }
+
+            .profile-header .logo {
+                justify-content: center;
+            }
+
+            .profile-header .nav-links {
+                width: 100%;
+
+                justify-content: center;
+
+                gap: 8px;
+            }
+
+            .profile-header .nav-links a {
+                flex: 1;
+
+                min-height: 40px;
+
+                padding:
+                    9px 10px;
+
+                font-size: 12px;
+            }
+
+            .cine-profile-page {
+                padding:
+                    25px 14px 50px;
+            }
+
+            .profile-topbar {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+            .profile-hero {
+                padding: 24px 20px;
+            }
+
+            .profile-hero-content {
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+            .profile-info h1 {
+                font-size: 25px;
+            }
+
+            .profile-stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+            .profile-stat {
+                padding: 17px;
+            }
+
+            .profile-stat-value {
+                font-size: 21px;
+            }
+
+            .booking-item {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+            .booking-right {
+                width: 100%;
+
+                text-align: left;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .profile-header .nav-links {
+                gap: 6px;
+            }
+
+            .profile-header .nav-links a {
+                padding:
+                    8px 6px;
+
+                font-size: 11px;
+            }
+
+            .profile-stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <header class="header profile-header">
+
+        <div class="header-container">
+
+            <a
+                href="{% url 'home' %}"
+                class="logo"
+            >
+
+                <span class="logo-icon">
+                    🎬
+                </span>
+
+                <span class="logo-text">
+                    CineBook<strong>AI</strong>
+                </span>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="{% url 'home' %}">
+                    🏠&nbsp; Home
+                </a>
+
+                <a href="{% url 'my_bookings' %}">
+                    🎟️&nbsp; My Bookings
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    🚪&nbsp; Logout
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         PROFILE PAGE
+    ========================================================= -->
+
+    <main class="cine-profile-page">
+
+        <div class="cine-profile-container">
+
+
+            <!-- TOP BAR -->
+
+            <div class="profile-topbar">
+
+                <div class="profile-breadcrumb">
+                    CineBook AI
+                    <span> / </span>
+                    My Profile
+                </div>
+
+                <div class="profile-label">
+                    ACCOUNT DASHBOARD
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE HERO -->
+
+            <section class="profile-hero">
+
+                <div class="profile-hero-content">
+
+                    <div class="profile-avatar">
+                        {{ user.username|first|upper }}
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <h1>
+                            {{ user.username }}
+                        </h1>
+
+                        <p class="profile-email">
+                            {{ user.email }}
+                        </p>
+
+                        <div class="profile-status">
+
+                            <span class="profile-status-dot"></span>
+
+                            Active Account
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 STATISTICS
+            ===================================================== -->
+
+            <section class="profile-stats">
+
+
+                <div class="profile-stat">
+
+                    <div class="profile-stat-label">
+                        Total Bookings
+                    </div>
+
+                    <div class="profile-stat-value">
+                        {{ total_bookings }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-stat">
+
+                    <div class="profile-stat-label">
+                        Watchlist
+                    </div>
+
+                    <div class="profile-stat-value">
+                        {{ total_watchlist }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-stat">
+
+                    <div class="profile-stat-label">
+                        Reviews
+                    </div>
+
+                    <div class="profile-stat-value">
+                        {{ total_reviews }}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-stat">
+
+                    <div class="profile-stat-label">
+                        Total Spent
+                    </div>
+
+                    <div class="profile-stat-value">
+                        ₹{{ total_spent|floatformat:2 }}
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =====================================================
+                 MAIN CONTENT
+            ===================================================== -->
+
+            <div class="profile-content-grid">
+
+
+                <!-- =================================================
+                     RECENT BOOKINGS
+                ================================================= -->
+
+                <section class="profile-section">
+
+                    <div class="profile-section-header">
+
+                        <h2>
+                            Recent Bookings
+                        </h2>
+
+                        <span>
+                            Your latest movie activity
+                        </span>
+
+                    </div>
+
+
+                    {% if bookings %}
+
+                        <div class="booking-list">
+
+                            {% for booking in bookings %}
+
+                                <div class="booking-item">
+
+
+                                    <div class="booking-main">
+
+                                        <h3 class="booking-title">
+                                            {{ booking.showtime.movie.title }}
+                                        </h3>
+
+                                        <p class="booking-meta">
+
+                                            {{ booking.showtime.theater.name }}
+
+                                            {% if booking.showtime.theater.city %}
+                                                •
+                                                {{ booking.showtime.theater.city }}
+                                            {% endif %}
+
+                                            <br>
+
+                                            {{ booking.showtime.starts_at|date:"d M Y, h:i A" }}
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="booking-right">
+
+                                        <span class="booking-price">
+                                            ₹{{ booking.total_amount|floatformat:2 }}
+                                        </span>
+
+                                        <span class="booking-confirmed">
+                                            Confirmed
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="empty-bookings">
+
+                            <div class="empty-icon">
+                                🎬
+                            </div>
+
+                            <h3>
+                                No bookings yet
+                            </h3>
+
+                            <p>
+                                Your movie adventures will appear here.
+                            </p>
+
+                            <a
+                                href="{% url 'home' %}"
+                                class="profile-primary-btn"
+                            >
+                                Explore Movies
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </section>
+
+
+                <!-- =================================================
+                     SIDEBAR
+                ================================================= -->
+
+                <aside class="profile-section">
+
+                    <div class="profile-section-header">
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a
+                            href="{% url 'my_bookings' %}"
+                            class="quick-action"
+                        >
+
+                            <span class="quick-action-icon">
+                                🎟️
+                            </span>
+
+                            <span class="quick-action-text">
+
+                                <span class="quick-action-title">
+                                    My Bookings
+                                </span>
+
+                                <span class="quick-action-description">
+                                    View your booked tickets
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'my_watchlist' %}"
+                            class="quick-action"
+                        >
+
+                            <span class="quick-action-icon">
+                                ❤️
+                            </span>
+
+                            <span class="quick-action-text">
+
+                                <span class="quick-action-title">
+                                    My Watchlist
+                                </span>
+
+                                <span class="quick-action-description">
+                                    Movies saved for later
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'home' %}"
+                            class="quick-action"
+                        >
+
+                            <span class="quick-action-icon">
+                                🎬
+                            </span>
+
+                            <span class="quick-action-text">
+
+                                <span class="quick-action-title">
+                                    Explore Movies
+                                </span>
+
+                                <span class="quick-action-description">
+                                    Discover what's playing
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'ai_recommend' %}"
+                            class="quick-action"
+                        >
+
+                            <span class="quick-action-icon">
+                                ✨
+                            </span>
+
+                            <span class="quick-action-text">
+
+                                <span class="quick-action-title">
+                                    AI Recommendations
+                                </span>
+
+                                <span class="quick-action-description">
+                                    Get personalized movie picks
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'logout' %}"
+                            class="quick-action"
+                        >
+
+                            <span class="quick-action-icon">
+                                🚪
+                            </span>
+
+                            <span class="quick-action-text">
+
+                                <span class="quick-action-title">
+                                    Logout
+                                </span>
+
+                                <span class="quick-action-description">
+                                    Sign out of CineBook AI
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                    <!-- MEMBER CARD -->
+
+                    <div class="member-card">
+
+                        <div class="member-card-label">
+                            CineBook AI Member
+                        </div>
+
+                        <h3>
+                            Welcome back, {{ user.username }}!
+                        </h3>
+
+                        <p>
+                            Manage your bookings, watchlist and
+                            personalized movie experience from one place.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+
+            </div>
+
+
+            <!-- =====================================================
+                 FOOTER
+            ===================================================== -->
+
+            <footer class="profile-footer">
+
+                © 2026 CineBook AI
+                •
+                AI-Powered Movie Ticket Booking
+
+            </footer>
+
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

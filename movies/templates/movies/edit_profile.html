@@ -1,0 +1,800 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Profile | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ffffff;
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(124, 58, 237, 0.20),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(236, 72, 153, 0.15),
+                    transparent 30%
+                ),
+                #080810;
+        }
+
+        .edit-page {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 45px 0 70px;
+        }
+
+        /* ==========================
+           BREADCRUMB
+        ========================== */
+
+        .edit-breadcrumb {
+            margin-bottom: 25px;
+            color: #9999aa;
+            font-size: 14px;
+        }
+
+        .edit-breadcrumb span {
+            color: #ffffff;
+        }
+
+        /* ==========================
+           HEADER
+        ========================== */
+
+        .edit-heading {
+            margin-bottom: 30px;
+        }
+
+        .edit-heading h1 {
+            margin: 0 0 8px;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .edit-heading p {
+            margin: 0;
+            color: #a4a4b5;
+            font-size: 15px;
+        }
+
+        /* ==========================
+           MAIN GRID
+        ========================== */
+
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.5fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* ==========================
+           PROFILE SIDE CARD
+        ========================== */
+
+        .profile-preview {
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            text-align: center;
+        }
+
+        .avatar {
+            width: 105px;
+            height: 105px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #7c3aed,
+                #ec4899
+            );
+            font-size: 42px;
+            font-weight: 800;
+            box-shadow:
+                0 15px 40px rgba(124, 58, 237, 0.35);
+        }
+
+        .profile-preview h2 {
+            margin: 0 0 8px;
+            font-size: 24px;
+        }
+
+        .profile-preview p {
+            margin: 0;
+            color: #9999aa;
+            word-break: break-word;
+        }
+
+        .account-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 20px;
+            padding: 8px 13px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.10);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86efac;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .account-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+
+        /* ==========================
+           FORM CARD
+        ========================== */
+
+        .form-card {
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .section-title {
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            margin: 0 0 7px;
+            font-size: 22px;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: #9292a4;
+            font-size: 14px;
+        }
+
+        /* ==========================
+           FORM GROUP
+        ========================== */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddddE8;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888899;
+            font-size: 17px;
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 12px;
+            outline: none;
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            font-size: 14px;
+            transition: 0.25s ease;
+        }
+
+        .form-control:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+        }
+
+        .form-control::placeholder {
+            color: #6f6f7e;
+        }
+
+        /* ==========================
+           PASSWORD SECTION
+        ========================== */
+
+        .password-section {
+            margin-top: 30px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .password-note {
+            margin: 0 0 20px;
+            color: #858596;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ==========================
+           MESSAGES
+        ========================== */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 13px 16px;
+            border-radius: 11px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.10);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.10);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86efac;
+        }
+
+        /* ==========================
+           ACTIONS
+        ========================== */
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .btn-save {
+            border: none;
+            color: #ffffff;
+            background: linear-gradient(
+                135deg,
+                #7c3aed,
+                #ec4899
+            );
+            box-shadow:
+                0 12px 30px rgba(124, 58, 237, 0.25);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 16px 35px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-cancel {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: #ddddE8;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ==========================
+           SECURITY NOTE
+        ========================== */
+
+        .security-note {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.07);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        .security-icon {
+            font-size: 20px;
+        }
+
+        .security-note strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .security-note span {
+            color: #9292a4;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 850px) {
+
+            .edit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-preview {
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .edit-page {
+                width: 94%;
+                padding-top: 30px;
+            }
+
+            .edit-heading h1 {
+                font-size: 28px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .profile-preview {
+                padding: 25px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================================
+         EXISTING HEADER
+    ========================================== -->
+
+    <header class="site-header">
+
+        <div class="container">
+
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    🎬 CineBook AI
+                </a>
+            </div>
+
+            <nav>
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a href="{% url 'my_bookings' %}">
+                    My Bookings
+                </a>
+
+                <a href="{% url 'my_watchlist' %}">
+                    Watchlist
+                </a>
+
+                <a href="{% url 'profile' %}">
+                    Profile
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         EDIT PROFILE
+    ========================================== -->
+
+    <main class="edit-page">
+
+        <div class="edit-breadcrumb">
+            CineBook AI
+            <span> / My Profile / Edit Profile</span>
+        </div>
+
+
+        <div class="edit-heading">
+
+            <h1>
+                Edit Profile
+            </h1>
+
+            <p>
+                Manage your CineBook AI account information and security.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================
+             GRID
+        ====================================== -->
+
+        <div class="edit-grid">
+
+
+            <!-- =================================
+                 PROFILE PREVIEW
+            ================================== -->
+
+            <aside class="profile-preview">
+
+                <div class="avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <h2>
+                    {{ user.username }}
+                </h2>
+
+                <p>
+                    {{ user.email }}
+                </p>
+
+                <div class="account-badge">
+
+                    <span class="account-dot"></span>
+
+                    Active Account
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================
+                 FORM
+            ================================== -->
+
+            <section class="form-card">
+
+                <div class="section-title">
+
+                    <h2>
+                        Account Information
+                    </h2>
+
+                    <p>
+                        Update your personal account details.
+                    </p>
+
+                </div>
+
+
+                <!-- =============================
+                     DJANGO MESSAGES
+                ============================== -->
+
+                {% if messages %}
+
+                    <div class="messages">
+
+                        {% for message in messages %}
+
+                            <div class="message {{ message.tags }}">
+
+                                {{ message }}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <form
+                    method="POST"
+                    action="{% url 'edit_profile' %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- =========================
+                         USERNAME
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="form-control"
+                                value="{{ user.username }}"
+                                placeholder="Enter username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         EMAIL
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                value="{{ user.email }}"
+                                placeholder="Enter email address"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         PASSWORD
+                    ========================== -->
+
+                    <div class="password-section">
+
+                        <div class="section-title">
+
+                            <h2>
+                                Change Password
+                            </h2>
+
+                            <p>
+                                Leave these fields empty if you don't
+                                want to change your password.
+                            </p>
+
+                        </div>
+
+                        <p class="password-note">
+                            For security, you must enter your current
+                            password before setting a new password.
+                        </p>
+
+
+                        <!-- CURRENT PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="current_password">
+                                Current Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="input-icon">
+                                    🔐
+                                </span>
+
+                                <input
+                                    type="password"
+                                    id="current_password"
+                                    name="current_password"
+                                    class="form-control"
+                                    placeholder="Enter current password"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- NEW PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="new_password">
+                                New Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="input-icon">
+                                    🔑
+                                </span>
+
+                                <input
+                                    type="password"
+                                    id="new_password"
+                                    name="new_password"
+                                    class="form-control"
+                                    placeholder="Enter new password"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="confirm_password">
+                                Confirm New Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="input-icon">
+                                    🔑
+                                </span>
+
+                                <input
+                                    type="password"
+                                    id="confirm_password"
+                                    name="confirm_password"
+                                    class="form-control"
+                                    placeholder="Confirm new password"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         ACTION BUTTONS
+                    ========================== -->
+
+                    <div class="form-actions">
+
+                        <a
+                            href="{% url 'profile' %}"
+                            class="btn btn-cancel"
+                        >
+                            ← Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-save"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+
+                    <!-- =========================
+                         SECURITY
+                    ========================== -->
+
+                    <div class="security-note">
+
+                        <div class="security-icon">
+                            🛡️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Your account is protected
+                            </strong>
+
+                            <span>
+                                CineBook AI securely stores passwords
+                                using Django's password hashing system.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

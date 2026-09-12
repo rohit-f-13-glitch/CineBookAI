@@ -1,0 +1,550 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+    {{ title }} | CineBookAI Admin
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">
+        🎬 CineBookAI
+        <span class="admin-brand">ADMIN PANEL</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+
+<style>
+
+/* =========================================================
+   CINEBOOKAI — PREMIUM ADMIN PANEL
+   ========================================================= */
+
+:root {
+    --rose: #d99aa6;
+    --rose-light: #f1c7ce;
+    --rose-dark: #b86f7d;
+
+    --black: #111111;
+    --dark: #18181d;
+    --dark-2: #202027;
+
+    --white: #ffffff;
+    --muted: #777777;
+
+    --border: rgba(185, 111, 125, 0.25);
+}
+
+
+/* =========================================================
+   PAGE BACKGROUND
+   ========================================================= */
+
+body {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(217, 154, 166, 0.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(217, 154, 166, 0.08),
+            transparent 30%
+        ),
+        #f7f4f5 !important;
+
+    color: var(--black) !important;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+#header {
+    background:
+        linear-gradient(
+            135deg,
+            #21171b,
+            #3a2429
+        ) !important;
+
+    border-bottom:
+        3px solid var(--rose) !important;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+#site-name {
+    margin: 0 !important;
+}
+
+
+#site-name a {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    color: #ffffff !important;
+
+    font-size: 23px !important;
+    font-weight: 800 !important;
+
+    text-decoration: none !important;
+
+    letter-spacing: 0.4px;
+}
+
+
+#site-name a:hover {
+    color: var(--rose-light) !important;
+}
+
+
+.admin-brand {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.30);
+
+    background:
+        rgba(217, 154, 166, 0.16);
+
+    color: var(--rose-light) !important;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   USER TOOLS
+   ========================================================= */
+
+#user-tools {
+    color: #eeeeee !important;
+}
+
+
+#user-tools a {
+    color: var(--rose-light) !important;
+
+    font-weight: 600;
+}
+
+
+#user-tools a:hover {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
+
+div.breadcrumbs {
+    background: #ffffff !important;
+
+    color: #666666 !important;
+
+    border-bottom:
+        1px solid var(--border) !important;
+
+    padding: 10px 18px !important;
+}
+
+
+div.breadcrumbs a {
+    color: var(--rose-dark) !important;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+#content {
+    color: var(--black) !important;
+}
+
+
+#content-main {
+    padding-top: 12px;
+}
+
+
+/* =========================================================
+   APP BOXES
+   ========================================================= */
+
+#content-main .module {
+    background: #ffffff !important;
+
+    border:
+        1px solid rgba(0, 0, 0, 0.08) !important;
+
+    border-radius: 15px !important;
+
+    overflow: hidden;
+
+    margin-bottom: 22px !important;
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#content-main .module:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.13);
+}
+
+
+/* =========================================================
+   AUTHENTICATION & AUTHORIZATION
+   ========================================================= */
+
+#content-main .app-auth.module {
+    border-top:
+        5px solid #b86f7d !important;
+}
+
+
+#content-main .app-auth.module caption {
+    background:
+        linear-gradient(
+            135deg,
+            #e9b8c0,
+            #d99aa6
+        ) !important;
+
+    padding: 16px 20px !important;
+
+    text-align: left !important;
+}
+
+
+#content-main .app-auth.module caption a {
+    color: #000000 !important;
+
+    font-size: 16px !important;
+
+    font-weight: 800 !important;
+
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   MOVIES
+   ========================================================= */
+
+#content-main .app-movies.module {
+    border-top:
+        5px solid #b86f7d !important;
+}
+
+
+#content-main .app-movies.module caption {
+    background:
+        linear-gradient(
+            135deg,
+            #e9b8c0,
+            #d99aa6
+        ) !important;
+
+    padding: 16px 20px !important;
+
+    text-align: left !important;
+}
+
+
+#content-main .app-movies.module caption a {
+    color: #000000 !important;
+
+    font-size: 16px !important;
+
+    font-weight: 800 !important;
+
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+#content-main .module table {
+    width: 100% !important;
+
+    background: #ffffff !important;
+}
+
+
+/* =========================================================
+   MODEL ROWS
+   ========================================================= */
+
+#content-main .module tr {
+    transition:
+        background 0.2s ease;
+}
+
+
+#content-main .module tr:hover {
+    background:
+        rgba(217, 154, 166, 0.10) !important;
+}
+
+
+#content-main .module th,
+#content-main .module td {
+    padding: 13px 18px !important;
+
+    border-bottom:
+        1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+
+/* =========================================================
+   MODEL NAMES
+   → Bookings
+   → Cinemas
+   → Movies
+   → Payments
+   etc.
+   ========================================================= */
+
+#content-main .module th a {
+    color: #000000 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+
+    text-decoration: none !important;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* THE ARROW */
+
+#content-main .module th a::before {
+    content: "→";
+
+    color: var(--rose-dark);
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+/* HOVER */
+
+#content-main .module th a:hover {
+    color: var(--rose-dark) !important;
+}
+
+
+#content-main .module th a:hover::before {
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   ADD / CHANGE LINKS
+   ========================================================= */
+
+#content-main .module td a {
+    color: #777777 !important;
+
+    font-size: 12px !important;
+
+    font-weight: 600 !important;
+
+    text-decoration: none !important;
+}
+
+
+#content-main .module td a:hover {
+    color: var(--rose-dark) !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+    background:
+        linear-gradient(
+            135deg,
+            var(--rose-dark),
+            var(--rose)
+        ) !important;
+
+    color: #ffffff !important;
+
+    border: none !important;
+
+    border-radius: 8px !important;
+
+    font-weight: 700 !important;
+
+    padding: 9px 16px !important;
+
+    box-shadow:
+        0 5px 14px rgba(185, 111, 125, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(185, 111, 125, 0.30) !important;
+}
+
+
+/* =========================================================
+   SEARCH BAR
+   ========================================================= */
+
+#toolbar {
+    background: #ffffff !important;
+
+    border:
+        1px solid rgba(0, 0, 0, 0.08) !important;
+
+    border-radius: 10px !important;
+
+    padding: 12px !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+    background: #ffffff !important;
+
+    color: #111111 !important;
+
+    border:
+        1px solid #d8d8d8 !important;
+
+    border-radius: 7px !important;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        var(--rose) !important;
+
+    outline: none !important;
+
+    box-shadow:
+        0 0 0 2px rgba(217, 154, 166, 0.18) !important;
+}
+
+
+/* =========================================================
+   OBJECT TOOLS
+   ========================================================= */
+
+.object-tools a {
+    background:
+        linear-gradient(
+            135deg,
+            var(--rose-dark),
+            var(--rose)
+        ) !important;
+
+    color: #ffffff !important;
+
+    border-radius: 7px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+#footer {
+    color: #777777 !important;
+
+    background: transparent !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    #site-name a {
+        font-size: 18px !important;
+    }
+
+    .admin-brand {
+        font-size: 8px;
+    }
+
+    #content-main .module {
+        border-radius: 10px !important;
+    }
+
+}
+
+</style>
+
+{% endblock %}

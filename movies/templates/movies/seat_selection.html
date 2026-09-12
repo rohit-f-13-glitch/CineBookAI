@@ -1,0 +1,1604 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Select Seats | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #07111f;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .pro-header {
+            height: 72px;
+            background: #081321;
+            border-bottom: 1px solid #1d2a3a;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .pro-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .pro-logo-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+            background: #ef233c;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .pro-logo-text span {
+            color: #ef233c;
+        }
+
+        .secure-booking {
+            color: #9ee7b1;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .booking-progress {
+            background: #0a1625;
+            border-bottom: 1px solid #1d2a3a;
+            padding: 20px;
+        }
+
+        .progress-container {
+            max-width: 1100px;
+            margin: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 25px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #9aa8b8;
+            font-size: 14px;
+        }
+
+        .progress-number {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+            background: #344154;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 700;
+        }
+
+        .progress-step.active {
+            color: #ef233c;
+            font-weight: 700;
+        }
+
+        .progress-step.active .progress-number {
+            background: #ef233c;
+            color: white;
+        }
+
+        .progress-line {
+            width: 65px;
+            height: 1px;
+            background: #354254;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .seat-page-pro {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px 25px 45px;
+        }
+
+        .back-showtimes {
+            display: inline-block;
+
+            color: #aebccc;
+            text-decoration: none;
+
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .back-showtimes:hover {
+            color: #ffffff;
+        }
+
+        .page-title {
+            font-size: 30px;
+            margin: 0 0 20px;
+        }
+
+        /* =========================
+           BOOKING FORM / LAYOUT
+        ========================= */
+
+        .booking-layout {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                350px;
+
+            gap: 22px;
+            align-items: start;
+        }
+
+        /* =========================
+           MOVIE CARD
+        ========================= */
+
+        .movie-show-card {
+            background: #0d1a2a;
+            border: 1px solid #223247;
+            border-radius: 12px;
+
+            padding: 18px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .movie-poster {
+            width: 82px;
+            height: 110px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            background: #182536;
+        }
+
+        .movie-info h2 {
+            margin: 0 0 10px;
+            font-size: 23px;
+        }
+
+        .movie-info p {
+            margin: 8px 0;
+
+            color: #aab7c7;
+            font-size: 14px;
+        }
+
+        .movie-rating {
+            display: inline-block;
+
+            background: #263549;
+            color: #ffffff;
+
+            border-radius: 5px;
+
+            padding: 4px 8px;
+            margin-left: 8px;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           SEAT CARD
+        ========================= */
+
+        .seat-card {
+            background: #0d1a2a;
+            border: 1px solid #223247;
+            border-radius: 14px;
+
+            padding: 35px 30px 30px;
+
+            overflow: hidden;
+        }
+
+        /* =========================
+           SCREEN
+        ========================= */
+
+        .screen-container {
+            text-align: center;
+            margin-bottom: 42px;
+        }
+
+        .screen {
+            width: 72%;
+            height: 28px;
+
+            margin: auto;
+
+            background: linear-gradient(
+                to bottom,
+                #dce3eb,
+                #697585
+            );
+
+            border-radius: 0 0 50% 50%;
+
+            box-shadow:
+                0 10px 35px rgba(255, 255, 255, 0.16);
+        }
+
+        .screen-text {
+            margin-top: 13px;
+
+            color: #9caabc;
+
+            font-size: 12px;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           SEAT AREA
+        ========================= */
+
+        .seat-area {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+            padding: 0 10px;
+        }
+
+        .seat-area::before {
+            content: "";
+
+            display: block;
+
+            width: 100%;
+            height: 1px;
+
+            background: #1e3045;
+
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           SEAT GRID
+        ========================= */
+
+        .seat-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(10, 1fr);
+
+            column-gap: 12px;
+            row-gap: 17px;
+
+            width: 100%;
+
+            justify-items: center;
+            align-items: center;
+        }
+
+        /* CENTER AISLE */
+
+        .seat-wrapper:nth-child(10n + 6) {
+            margin-left: 28px;
+        }
+
+        /* =========================
+           SEAT
+        ========================= */
+
+        .seat-wrapper {
+            width: 42px;
+            height: 42px;
+
+            position: relative;
+        }
+
+        .seat-checkbox {
+            position: absolute;
+
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .seat {
+            width: 42px;
+            height: 42px;
+
+            border-radius:
+                9px 9px 6px 6px;
+
+            background: #344154;
+
+            border: 1px solid #526177;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            color: #e8edf3;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease,
+                border-color 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        /* SMALL SEAT BACK EFFECT */
+
+        .seat::after {
+            content: "";
+
+            position: absolute;
+
+            bottom: -4px;
+            left: 5px;
+            right: 5px;
+
+            height: 4px;
+
+            border-radius:
+                0 0 5px 5px;
+
+            background: #273448;
+        }
+
+        .seat:hover {
+            transform: translateY(-3px);
+
+            background: #46556a;
+
+            border-color: #718197;
+
+            box-shadow:
+                0 5px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================
+           SELECTED
+        ========================= */
+
+        .seat-checkbox:checked + .seat {
+            background: #19a463;
+
+            border-color: #55e5a0;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 0 15px rgba(25, 164, 99, 0.55);
+
+            transform: translateY(-2px);
+        }
+
+        .seat-checkbox:checked + .seat::after {
+            background: #117848;
+        }
+
+        /* =========================
+           BOOKED
+        ========================= */
+
+        .booked-seat .seat {
+            background: #e63946;
+
+            border-color: #ff6872;
+
+            color: white;
+
+            cursor: not-allowed;
+
+            opacity: 0.85;
+        }
+
+        .booked-seat .seat::after {
+            background: #b52330;
+        }
+
+        .booked-seat .seat:hover {
+            transform: none;
+
+            box-shadow: none;
+        }
+
+        /* =========================
+           LEGEND
+        ========================= */
+
+        .seat-legend {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 35px;
+
+            margin-top: 42px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #1e3045;
+
+            color: #b5c0cd;
+
+            font-size: 13px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .legend-box {
+            width: 18px;
+            height: 18px;
+
+            border-radius: 5px;
+        }
+
+        .legend-available {
+            background: #344154;
+            border: 1px solid #526177;
+        }
+
+        .legend-selected {
+            background: #19a463;
+        }
+
+        .legend-booked {
+            background: #e63946;
+        }
+
+        /* =========================
+           BOOKING SUMMARY
+        ========================= */
+
+        .booking-summary-card {
+            background: #0d1a2a;
+
+            border: 1px solid #223247;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            margin: 0 0 25px;
+        }
+
+        .summary-item {
+            margin-bottom: 20px;
+        }
+
+        .summary-label {
+            color: #8190a3;
+
+            font-size: 12px;
+
+            display: block;
+
+            margin-bottom: 6px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            color: white;
+
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .summary-divider {
+            height: 1px;
+
+            background: #263549;
+
+            margin: 22px 0;
+        }
+
+        /* =========================
+           SELECTED SEATS
+        ========================= */
+
+        .selected-seats-title {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 12px;
+        }
+
+        .selected-seat-list {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            min-height: 28px;
+        }
+
+        .selected-seat-pill {
+            background: #155f3e;
+
+            border: 1px solid #28a86a;
+
+            color: #a9ffd2;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .no-seats {
+            color: #7e8b9c;
+            font-size: 13px;
+        }
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        .total-label {
+            color: #aab7c7;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .total-price {
+            color: #ff4055;
+
+            font-size: 30px;
+
+            font-weight: 800;
+        }
+
+        .price-note {
+            color: #7f8da0;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        /* =========================
+           CONTINUE BUTTON
+        ========================= */
+
+        .continue-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #ef233c;
+
+            color: white;
+
+            padding: 14px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-top: 22px;
+
+            transition:
+                all 0.2s ease;
+        }
+
+        .continue-button:hover {
+            background: #ff3049;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 20px rgba(239, 35, 60, 0.25);
+        }
+
+        /* =========================
+           SECURITY
+        ========================= */
+
+        .security-box {
+            margin-top: 18px;
+
+            background: #0b2b24;
+
+            border: 1px solid #155c4b;
+
+            border-radius: 8px;
+
+            padding: 14px;
+
+            color: #9ee7b1;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .feature-row {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 22px;
+        }
+
+        .feature-card {
+            background: #0d1a2a;
+
+            border: 1px solid #223247;
+
+            border-radius: 10px;
+
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 25px;
+
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 7px;
+
+            font-size: 15px;
+        }
+
+        .feature-card p {
+            margin: 0;
+
+            color: #8796a8;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .secure-footer {
+            text-align: center;
+
+            color: #738296;
+
+            font-size: 12px;
+
+            margin-top: 25px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .booking-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-summary-card {
+                position: static;
+            }
+
+            .feature-row {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .seat-card {
+                padding: 25px 12px;
+
+                overflow-x: auto;
+            }
+
+            .seat-area {
+                min-width: 650px;
+            }
+
+            .booking-layout {
+                display: block;
+            }
+
+            .booking-summary-card {
+                margin-top: 20px;
+            }
+
+            .feature-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .pro-header {
+                padding: 0 15px;
+            }
+
+            .secure-booking {
+                display: none;
+            }
+
+            .progress-container {
+                gap: 8px;
+            }
+
+            .progress-line {
+                width: 20px;
+            }
+
+            .progress-step span {
+                display: none;
+            }
+
+            .movie-show-card {
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="pro-header">
+
+        <div class="pro-logo">
+
+            <div class="pro-logo-icon">
+                🎬
+            </div>
+
+            <div class="pro-logo-text">
+                CineBook<span>AI</span>
+            </div>
+
+        </div>
+
+        <div class="secure-booking">
+            🛡 100% Secure Booking
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         PROGRESS
+    ========================= -->
+
+    <section class="booking-progress">
+
+        <div class="progress-container">
+
+            <div class="progress-step active">
+
+                <div class="progress-number">
+                    1
+                </div>
+
+                <span>
+                    Select Seats
+                </span>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <div class="progress-number">
+                    2
+                </div>
+
+                <span>
+                    Your Details
+                </span>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <div class="progress-number">
+                    3
+                </div>
+
+                <span>
+                    Payment
+                </span>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <div class="progress-number">
+                    4
+                </div>
+
+                <span>
+                    Confirmation
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="seat-page-pro">
+
+        <a
+            href="{% url 'movie_detail' showtime.movie.id %}"
+            class="back-showtimes"
+        >
+            ← Back to Showtimes
+        </a>
+
+
+        <h1 class="page-title">
+            Select Your Seats
+        </h1>
+
+
+        <!--
+            IMPORTANT:
+            The whole booking layout is now inside
+            ONE POST form.
+
+            This fixes the Continue button.
+        -->
+
+        <form
+            method="post"
+            action="{% url 'booking_details' showtime.id %}"
+            id="seat-form"
+            class="booking-layout"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- =========================
+                 LEFT SIDE
+            ========================= -->
+
+            <div>
+
+                <!-- MOVIE CARD -->
+
+                <section class="movie-show-card">
+
+                    {% if showtime.movie.poster_url %}
+
+                        <img
+                            src="{{ showtime.movie.poster_url }}"
+                            alt="{{ showtime.movie.title }}"
+                            class="movie-poster"
+                        >
+
+                    {% else %}
+
+                        <div class="movie-poster"></div>
+
+                    {% endif %}
+
+
+                    <div class="movie-info">
+
+                        <h2>
+
+                            {{ showtime.movie.title }}
+
+                            <span class="movie-rating">
+                                {{ showtime.movie.rating }}
+                            </span>
+
+                        </h2>
+
+
+                        <p>
+                            📅
+                            {{ showtime.starts_at|date:"D, d M Y" }}
+                        </p>
+
+
+                        <p>
+                            🕐
+                            {{ showtime.starts_at|date:"h:i A" }}
+                        </p>
+
+
+                        <p>
+                            📍
+                            {{ showtime.cinema.name }},
+                            {{ showtime.cinema.city.name }}
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     SEAT CARD
+                ========================= -->
+
+                <section class="seat-card">
+
+                    <!-- SCREEN -->
+
+                    <div class="screen-container">
+
+                        <div class="screen"></div>
+
+                        <div class="screen-text">
+                            SCREEN THIS WAY
+                        </div>
+
+                    </div>
+
+
+                    <!-- SEAT AREA -->
+
+                    <div class="seat-area">
+
+                        <div class="seat-grid">
+
+                            {% for seat in seats %}
+
+                                {% if seat.id in booked_seat_ids %}
+
+                                    <!-- BOOKED SEAT -->
+
+                                    <label class="seat-wrapper booked-seat">
+
+                                        <input
+                                            type="checkbox"
+                                            class="seat-checkbox"
+                                            disabled
+                                        >
+
+                                        <span class="seat">
+                                            {{ seat.seat_number }}
+                                        </span>
+
+                                    </label>
+
+                                {% else %}
+
+                                    <!-- AVAILABLE SEAT -->
+
+                                    <label class="seat-wrapper">
+
+                                        <input
+                                            type="checkbox"
+                                            name="seats"
+                                            value="{{ seat.id }}"
+                                            class="seat-checkbox"
+                                        >
+
+                                        <span class="seat">
+                                            {{ seat.seat_number }}
+                                        </span>
+
+                                    </label>
+
+                                {% endif %}
+
+                            {% empty %}
+
+                                <p>
+                                    No seats available.
+                                </p>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEGEND -->
+
+                    <div class="seat-legend">
+
+                        <div class="legend-item">
+
+                            <span
+                                class="legend-box legend-available"
+                            ></span>
+
+                            Available
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span
+                                class="legend-box legend-selected"
+                            ></span>
+
+                            Selected
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span
+                                class="legend-box legend-booked"
+                            ></span>
+
+                            Booked
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =========================
+                 RIGHT SIDE
+            ========================= -->
+
+            <aside class="booking-summary-card">
+
+                <h2 class="summary-title">
+                    Booking Summary
+                </h2>
+
+
+                <!-- MOVIE -->
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        Movie
+                    </span>
+
+                    <span class="summary-value">
+                        {{ showtime.movie.title }}
+                    </span>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        Date
+                    </span>
+
+                    <span class="summary-value">
+                        {{ showtime.starts_at|date:"D, d M Y" }}
+                    </span>
+
+                </div>
+
+
+                <!-- TIME -->
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        Time
+                    </span>
+
+                    <span class="summary-value">
+                        {{ showtime.starts_at|date:"h:i A" }}
+                    </span>
+
+                </div>
+
+
+                <!-- CINEMA -->
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        Cinema
+                    </span>
+
+                    <span class="summary-value">
+                        {{ showtime.cinema.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <!-- SELECTED SEATS -->
+
+                <div class="selected-seats-title">
+                    Selected Seats
+                </div>
+
+
+                <div
+                    class="selected-seat-list"
+                    id="selected-seat-list"
+                >
+
+                    <span class="no-seats">
+                        No seats selected
+                    </span>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <!-- TOTAL -->
+
+                <div class="total-label">
+                    Total Amount
+                </div>
+
+
+                <div
+                    class="total-price"
+                    id="total-price"
+                >
+                    ₹0
+                </div>
+
+
+                <div
+                    class="price-note"
+                    id="price-note"
+                >
+                    ₹{{ showtime.price }} × 0 Seats
+                </div>
+
+
+                <!-- CONTINUE -->
+
+                <button
+                    type="button"
+                    class="continue-button"
+                    id="continue-button"
+                >
+                    Continue →
+                </button>
+
+
+                <!-- SECURITY -->
+
+                <div class="security-box">
+
+                    🔒 Your data is safe and secure with us.
+
+                </div>
+
+            </aside>
+
+        </form>
+
+
+        <!-- =========================
+             FEATURES
+        ========================= -->
+
+        <section class="feature-row">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛋️
+                </div>
+
+                <h3>
+                    Comfort Seating
+                </h3>
+
+                <p>
+                    Spacious and comfortable seating
+                    for a great movie experience.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔊
+                </div>
+
+                <h3>
+                    Premium Sound
+                </h3>
+
+                <p>
+                    Immersive sound technology for
+                    an amazing cinema experience.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🖥️
+                </div>
+
+                <h3>
+                    Large Screens
+                </h3>
+
+                <p>
+                    Crystal clear picture quality
+                    on large cinema screens.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Safe & Secure
+                </h3>
+
+                <p>
+                    Your information is protected
+                    with secure booking.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <div class="secure-footer">
+
+            🔒 Secure Booking
+            &nbsp; • &nbsp;
+            SSL Protected
+            &nbsp; • &nbsp;
+            24/7 Customer Support
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const ticketPrice =
+            Number("{{ showtime.price }}");
+
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".seat-checkbox:not(:disabled)"
+            );
+
+
+        const selectedSeatList =
+            document.getElementById(
+                "selected-seat-list"
+            );
+
+
+        const totalPrice =
+            document.getElementById(
+                "total-price"
+            );
+
+
+        const priceNote =
+            document.getElementById(
+                "price-note"
+            );
+
+
+        const continueButton =
+            document.getElementById(
+                "continue-button"
+            );
+
+
+        const seatForm =
+            document.getElementById(
+                "seat-form"
+            );
+
+
+        /* =========================
+           UPDATE BOOKING SUMMARY
+        ========================= */
+
+        function updateBookingSummary() {
+
+            const selected =
+                document.querySelectorAll(
+                    ".seat-checkbox:checked"
+                );
+
+
+            selectedSeatList.innerHTML = "";
+
+
+            /* NO SEATS */
+
+            if (selected.length === 0) {
+
+                const emptyMessage =
+                    document.createElement("span");
+
+                emptyMessage.className =
+                    "no-seats";
+
+                emptyMessage.textContent =
+                    "No seats selected";
+
+                selectedSeatList.appendChild(
+                    emptyMessage
+                );
+            }
+
+
+            /* SELECTED SEATS */
+
+            selected.forEach(
+                function(checkbox) {
+
+                    const seat =
+                        checkbox.parentElement.querySelector(
+                            ".seat"
+                        );
+
+
+                    const pill =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    pill.className =
+                        "selected-seat-pill";
+
+
+                    pill.textContent =
+                        seat.textContent.trim();
+
+
+                    selectedSeatList.appendChild(
+                        pill
+                    );
+
+                }
+            );
+
+
+            /* TOTAL */
+
+            const count =
+                selected.length;
+
+
+            const total =
+                count * ticketPrice;
+
+
+            totalPrice.textContent =
+                "₹" + total.toFixed(2);
+
+
+            priceNote.textContent =
+                "₹" +
+                ticketPrice.toFixed(2) +
+                " × " +
+                count +
+                " Seat" +
+                (count === 1 ? "" : "s");
+
+        }
+
+
+        /* =========================
+           SEAT CHANGE
+        ========================= */
+
+        checkboxes.forEach(
+            function(checkbox) {
+
+                checkbox.addEventListener(
+                    "change",
+                    updateBookingSummary
+                );
+
+            }
+        );
+
+
+        /* =========================
+           CONTINUE BUTTON
+        ========================= */
+
+        continueButton.addEventListener(
+            "click",
+            function() {
+
+                const selected =
+                    document.querySelectorAll(
+                        ".seat-checkbox:checked"
+                    );
+
+
+                if (selected.length === 0) {
+
+                    alert(
+                        "Please select at least one seat."
+                    );
+
+                    return;
+                }
+
+
+                /*
+                    Submit the POST form.
+
+                    Selected seat IDs are sent as:
+
+                    seats=1
+                    seats=2
+                    seats=3
+                */
+
+                seatForm.submit();
+
+            }
+        );
+
+
+        /* =========================
+           INITIAL SUMMARY
+        ========================= */
+
+        updateBookingSummary();
+
+    </script>
+
+</body>
+
+</html>

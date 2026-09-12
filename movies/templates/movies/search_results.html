@@ -1,0 +1,1319 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Search Movies | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+    <style>
+
+        /* =====================================================
+           SEARCH PAGE
+           ===================================================== */
+
+        .search-page {
+            min-height: 70vh;
+            padding: 55px 0 90px;
+            background: #f5f1ea;
+        }
+
+        .search-page-container {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           SEARCH HEADING
+           ===================================================== */
+
+        .search-heading {
+            margin-bottom: 30px;
+        }
+
+        .search-heading-label {
+            margin-bottom: 7px;
+            color: #d85d35;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .search-heading h1 {
+            margin: 0;
+            color: #171717;
+            font-size: 38px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .search-heading p {
+            margin-top: 8px;
+            color: #777;
+            font-size: 15px;
+        }
+
+        .search-query {
+            color: #d85d35;
+        }
+
+
+        /* =====================================================
+           FILTER CARD
+           ===================================================== */
+
+        .search-filter-card {
+            margin-bottom: 38px;
+            padding: 24px;
+            background: #b14c2180;
+            border: 1px solid #93754f;
+            border-radius: 17px;
+            box-shadow: 0 8px 25px rgba(23, 23, 23, 0.05);
+        }
+
+        .search-filter-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-filter-title h2 {
+            margin: 0;
+            color: #171717;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .clear-filters {
+            color: #d85d35;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .clear-filters:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           FILTER FORM
+           ===================================================== */
+
+        .search-filter-form {
+            display: grid;
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr
+                1fr
+                auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .search-filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .search-filter-group label {
+            color: #555;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+        }
+
+        .search-filter-group input,
+        .search-filter-group select {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+
+            color: #171717;
+            background: #ffffff;
+
+            border: 1px solid #ddd3c7;
+            border-radius: 10px;
+
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-filter-group input:focus,
+        .search-filter-group select:focus {
+            border-color: #d85d35;
+        }
+
+        .filter-button {
+            height: 44px;
+            padding: 0 22px;
+
+            color: #ffffff;
+            background: #171717;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .filter-button:hover {
+            background: #d85d35;
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           RESULTS BAR
+           ===================================================== */
+
+        .search-results-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 24px;
+        }
+
+        .search-results-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .search-results-count strong {
+            color: #171717;
+            font-weight: 800;
+        }
+
+        .active-filter {
+            display: inline-flex;
+            align-items: center;
+
+            margin-left: 7px;
+            padding: 5px 10px;
+
+            color: #d85d35;
+            background: #fff0e7;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           MOVIE GRID
+           ===================================================== */
+
+        .search-movie-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .search-movie-card {
+            overflow: hidden;
+
+            background: #ffffff;
+
+            border: 1px solid #e8e1d8;
+            border-radius: 17px;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .search-movie-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(23, 23, 23, 0.09);
+        }
+
+
+        /* =====================================================
+           POSTER
+           ===================================================== */
+
+        .search-movie-poster {
+            position: relative;
+
+            height: 330px;
+
+            overflow: hidden;
+
+            background: #222;
+        }
+
+        .search-movie-poster img {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.35s ease;
+        }
+
+        .search-movie-card:hover
+        .search-movie-poster img {
+            transform: scale(1.04);
+        }
+
+
+        /* =====================================================
+           POSTER PLACEHOLDER
+           ===================================================== */
+
+        .search-poster-placeholder {
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            height: 100%;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #282828,
+                    #111111
+                );
+        }
+
+        .search-poster-placeholder span {
+            margin-bottom: 10px;
+            font-size: 42px;
+        }
+
+        .search-poster-placeholder p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           RATING
+           ===================================================== */
+
+        .search-rating {
+            position: absolute;
+
+            top: 12px;
+            left: 12px;
+
+            padding: 6px 9px;
+
+            color: #ffffff;
+            background: rgba(23, 23, 23, 0.9);
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           NOW SHOWING
+           ===================================================== */
+
+        .search-now-showing {
+            position: absolute;
+
+            top: 12px;
+            right: 12px;
+
+            padding: 6px 9px;
+
+            color: #ffffff;
+            background: #d85d35;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           MOVIE INFORMATION
+           ===================================================== */
+
+        .search-movie-info {
+            padding: 17px;
+        }
+
+        .search-movie-info h3 {
+            margin: 0;
+
+            color: #171717;
+
+            font-size: 17px;
+            line-height: 1.3;
+            font-weight: 800;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .search-movie-meta {
+            margin-top: 7px;
+
+            color: #777;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .search-movie-duration {
+            margin-top: 5px;
+
+            color: #888;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           BOOK BUTTON
+           ===================================================== */
+
+        .search-book-button {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            min-height: 42px;
+
+            margin-top: 15px;
+
+            color: #ffffff;
+            background: #171717;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            transition: 0.2s ease;
+        }
+
+        .search-book-button:hover {
+            background: #d85d35;
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           EMPTY RESULTS
+           ===================================================== */
+
+        .search-empty {
+            grid-column: 1 / -1;
+
+            padding: 65px 25px;
+
+            text-align: center;
+
+            background: #faf7f2;
+
+            border: 1px dashed #d8cec3;
+            border-radius: 17px;
+        }
+
+        .search-empty-icon {
+            margin-bottom: 12px;
+            font-size: 48px;
+        }
+
+        .search-empty h2 {
+            margin: 0;
+
+            color: #171717;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .search-empty p {
+            max-width: 500px;
+
+            margin: 8px auto 20px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .search-empty-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding: 0 18px;
+
+            color: #ffffff;
+            background: #171717;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .search-empty-button:hover {
+            background: #d85d35;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .search-filter-form {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .filter-button {
+                width: 100%;
+            }
+
+            .search-movie-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+
+        @media (max-width: 750px) {
+
+            .search-page {
+                padding: 40px 0 65px;
+            }
+
+            .search-heading h1 {
+                font-size: 31px;
+            }
+
+            .search-filter-form {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-results-bar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .search-movie-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .search-movie-poster {
+                height: 260px;
+            }
+
+            .search-movie-info {
+                padding: 14px;
+            }
+
+            .search-movie-info h3 {
+                font-size: 15px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .search-heading h1 {
+                font-size: 27px;
+            }
+
+            .search-filter-card {
+                padding: 16px;
+            }
+
+            .search-filter-form {
+                grid-template-columns: 1fr;
+            }
+
+            .search-movie-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-movie-poster {
+                height: 360px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="header">
+
+    <div class="header-container">
+
+        <a
+            href="{% url 'home' %}"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                🎬
+            </span>
+
+            <span class="logo-text">
+                CineBook<strong>AI</strong>
+            </span>
+
+        </a>
+
+
+        <form
+            method="GET"
+            action="{% url 'search_movies' %}"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search movies..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                🔍
+            </button>
+
+        </form>
+
+
+        <div class="header-actions">
+
+            <a
+                href="{% url 'ai_chat' %}"
+                class="ai-button"
+            >
+                ✨ AI Assistant
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <span class="user-greeting">
+                    Hi, {{ user.username }}
+                </span>
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="profile-button"
+                >
+                    👤 Profile
+                </a>
+
+                <a
+                    href="{% url 'logout' %}"
+                    class="logout-button"
+                >
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="login-button"
+                >
+                    Sign In
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     NAVIGATION
+     ========================================================= -->
+
+<nav class="main-nav">
+
+    <div class="nav-container">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'my_bookings' %}">
+                My Bookings
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                My Bookings
+            </a>
+
+        {% endif %}
+
+
+        <a href="{% url 'ai_recommend' %}">
+            AI Recommendations
+        </a>
+
+
+        <a href="{% url 'ai_chat' %}">
+            AI Movie Assistant
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     SEARCH PAGE
+     ========================================================= -->
+
+<main class="search-page">
+
+    <div class="search-page-container">
+
+
+        <!-- SEARCH HEADING -->
+
+        <div class="search-heading">
+
+            <p class="search-heading-label">
+                MOVIE DISCOVERY
+            </p>
+
+
+            {% if query %}
+
+                <h1>
+
+                    Results for
+
+                    <span class="search-query">
+                        "{{ query }}"
+                    </span>
+
+                </h1>
+
+                <p>
+                    Find your next movie and book your perfect seats.
+                </p>
+
+            {% else %}
+
+                <h1>
+                    Discover Movies
+                </h1>
+
+                <p>
+                    Search and filter movies available on CineBook AI.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             FILTER CARD
+             ================================================= -->
+
+        <div class="search-filter-card">
+
+            <div class="search-filter-title">
+
+                <h2>
+                    🎯 Refine Your Search
+                </h2>
+
+
+                {% if query or genre or language or rating or sort %}
+
+                    <a
+                        href="{% url 'search_movies' %}"
+                        class="clear-filters"
+                    >
+                        Clear Filters
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <form
+                method="GET"
+                action="{% url 'search_movies' %}"
+                class="search-filter-form"
+            >
+
+
+                <!-- SEARCH -->
+
+                <div class="search-filter-group">
+
+                    <label for="search-query">
+                        Search
+                    </label>
+
+                    <input
+                        id="search-query"
+                        type="text"
+                        name="q"
+                        value="{{ query }}"
+                        placeholder="Movie title..."
+                    >
+
+                </div>
+
+
+                <!-- GENRE -->
+
+                <div class="search-filter-group">
+
+                    <label for="genre">
+                        Genre
+                    </label>
+
+                    <select
+                        id="genre"
+                        name="genre"
+                    >
+
+                        <option value="">
+                            All Genres
+                        </option>
+
+
+                        {% for item in genres %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if genre == item %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- LANGUAGE -->
+
+                <div class="search-filter-group">
+
+                    <label for="language">
+                        Language
+                    </label>
+
+                    <select
+                        id="language"
+                        name="language"
+                    >
+
+                        <option value="">
+                            All Languages
+                        </option>
+
+
+                        {% for item in languages %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if language == item %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div class="search-filter-group">
+
+                    <label for="rating">
+                        Minimum Rating
+                    </label>
+
+                    <select
+                        id="rating"
+                        name="rating"
+                    >
+
+                        <option value="">
+                            Any Rating
+                        </option>
+
+                        <option
+                            value="8"
+                            {% if rating == "8" %}
+                                selected
+                            {% endif %}
+                        >
+                            ⭐ 8.0+
+                        </option>
+
+                        <option
+                            value="7"
+                            {% if rating == "7" %}
+                                selected
+                            {% endif %}
+                        >
+                            ⭐ 7.0+
+                        </option>
+
+                        <option
+                            value="6"
+                            {% if rating == "6" %}
+                                selected
+                            {% endif %}
+                        >
+                            ⭐ 6.0+
+                        </option>
+
+                        <option
+                            value="5"
+                            {% if rating == "5" %}
+                                selected
+                            {% endif %}
+                        >
+                            ⭐ 5.0+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SORT -->
+
+                <div class="search-filter-group">
+
+                    <label for="sort">
+                        Sort By
+                    </label>
+
+                    <select
+                        id="sort"
+                        name="sort"
+                    >
+
+                        <option
+                            value=""
+                            {% if not sort %}
+                                selected
+                            {% endif %}
+                        >
+                            Recommended
+                        </option>
+
+                        <option
+                            value="rating"
+                            {% if sort == "rating" %}
+                                selected
+                            {% endif %}
+                        >
+                            Highest Rated
+                        </option>
+
+                        <option
+                            value="newest"
+                            {% if sort == "newest" %}
+                                selected
+                            {% endif %}
+                        >
+                            Newest
+                        </option>
+
+                        <option
+                            value="title"
+                            {% if sort == "title" %}
+                                selected
+                            {% endif %}
+                        >
+                            A → Z
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SEARCH BUTTON -->
+
+                <button
+                    type="submit"
+                    class="filter-button"
+                >
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =================================================
+             RESULTS
+             ================================================= -->
+
+        <div class="search-results-bar">
+
+            <div class="search-results-count">
+
+                Showing
+
+                <strong>
+                    {{ result_count }}
+                </strong>
+
+                movie{{ result_count|pluralize }}
+
+
+                {% if genre %}
+
+                    <span class="active-filter">
+                        Genre: {{ genre }}
+                    </span>
+
+                {% endif %}
+
+
+                {% if language %}
+
+                    <span class="active-filter">
+                        {{ language }}
+                    </span>
+
+                {% endif %}
+
+
+                {% if rating %}
+
+                    <span class="active-filter">
+                        ⭐ {{ rating }}+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MOVIE GRID
+             ================================================= -->
+
+        <div class="search-movie-grid">
+
+
+            {% for movie in movies %}
+
+
+                <article class="search-movie-card">
+
+
+                    <!-- POSTER -->
+
+                    <div class="search-movie-poster">
+
+
+                        {% if movie.poster_url %}
+
+                            <img
+                                src="{{ movie.poster_url }}"
+                                alt="{{ movie.title }}"
+                            >
+
+                        {% else %}
+
+                            <div class="search-poster-placeholder">
+
+                                <span>
+                                    🎬
+                                </span>
+
+                                <p>
+                                    {{ movie.title }}
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- RATING -->
+
+                        <div class="search-rating">
+                            ⭐ {{ movie.rating }}
+                        </div>
+
+
+                        <!-- NOW SHOWING -->
+
+                        {% if movie.is_now_showing %}
+
+                            <div class="search-now-showing">
+                                Now Showing
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <!-- MOVIE INFO -->
+
+                    <div class="search-movie-info">
+
+
+                        <h3>
+                            {{ movie.title }}
+                        </h3>
+
+
+                        <p class="search-movie-meta">
+
+                            {{ movie.language }}
+
+                            {% if movie.genre %}
+
+                                • {{ movie.genre }}
+
+                            {% endif %}
+
+                        </p>
+
+
+                        <p class="search-movie-duration">
+
+                            ⏱
+                            {{ movie.duration_minutes }}
+                            min
+
+                        </p>
+
+
+                        <a
+                            href="{% url 'movie_detail' movie.id %}"
+                            class="search-book-button"
+                        >
+                            Book Tickets
+                        </a>
+
+
+                    </div>
+
+
+                </article>
+
+
+            {% empty %}
+
+
+                <div class="search-empty">
+
+                    <div class="search-empty-icon">
+                        🎬
+                    </div>
+
+                    <h2>
+                        No Movies Found
+                    </h2>
+
+                    <p>
+                        We couldn't find any movies matching
+                        your search or filters. Try another
+                        movie, genre, language or rating.
+                    </p>
+
+                    <a
+                        href="{% url 'search_movies' %}"
+                        class="search-empty-button"
+                    >
+                        Browse All Movies
+                    </a>
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <a
+                href="{% url 'home' %}"
+                class="logo"
+            >
+
+                <span class="logo-icon">
+                    🎬
+                </span>
+
+                <span class="logo-text">
+                    CineBook<strong>AI</strong>
+                </span>
+
+            </a>
+
+            <p>
+                Your smart movie booking experience.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'my_bookings' %}">
+                My Bookings
+            </a>
+
+            <a href="{% url 'ai_chat' %}">
+                AI Assistant
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'profile' %}">
+                    Profile
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Sign In
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CineBook AI. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>

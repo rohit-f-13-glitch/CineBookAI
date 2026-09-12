@@ -1,0 +1,1544 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CineBookAI | Secure Payment</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #f6f3ef;
+            --surface: #ffffff;
+            --surface-soft: #faf8f6;
+            --text: #171717;
+            --text-secondary: #716d68;
+            --text-light: #99938d;
+            --border: #e8e3de;
+            --dark: #151515;
+            --accent: #ff6b4a;
+            --accent-dark: #e95738;
+            --green: #21875a;
+            --shadow: 0 18px 55px rgba(28, 22, 18, 0.07);
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================== */
+
+        .topbar {
+            height: 72px;
+            background: var(--dark);
+            color: white;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 850;
+            box-shadow: 0 8px 22px rgba(255, 107, 74, 0.25);
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-name span {
+            color: var(--accent);
+        }
+
+        .secure-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #d5d5d5;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .secure-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* =========================================
+           PAGE
+        ========================================== */
+
+        .page {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+            padding: 30px 0 60px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #59544f;
+            font-size: 14px;
+            font-weight: 650;
+            margin-bottom: 25px;
+            transition: 0.2s ease;
+        }
+
+        .back-home:hover {
+            color: var(--accent);
+            transform: translateX(-2px);
+        }
+
+        .page-heading {
+            margin-bottom: 28px;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(29px, 4vw, 41px);
+            line-height: 1.1;
+            letter-spacing: -1.3px;
+            margin-bottom: 9px;
+        }
+
+        .page-heading p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* =========================================
+           MAIN GRID
+        ========================================== */
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        /* =========================================
+           SECTION HEADER
+        ========================================== */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 17px;
+            letter-spacing: -0.2px;
+        }
+
+        .section-number {
+            width: 29px;
+            height: 29px;
+            border-radius: 9px;
+            background: #fff0ec;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        /* =========================================
+           BOOKING DETAILS
+        ========================================== */
+
+        .booking-card {
+            padding: 25px;
+        }
+
+        .movie-info {
+            display: flex;
+            gap: 18px;
+            padding-bottom: 23px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .poster {
+            width: 98px;
+            height: 135px;
+            border-radius: 13px;
+            overflow: hidden;
+            background: #ece8e4;
+            flex-shrink: 0;
+        }
+
+        .poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .movie-details {
+            padding-top: 3px;
+        }
+
+        .movie-details h3 {
+            font-size: 21px;
+            line-height: 1.25;
+            letter-spacing: -0.4px;
+            margin-bottom: 10px;
+        }
+
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 14px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 9px;
+            background: #f6f3f0;
+            border: 1px solid #ebe6e1;
+            border-radius: 8px;
+            color: #65605c;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .movie-note {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* =========================================
+           DETAILS GRID
+        ========================================== */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .detail-item {
+            padding: 14px 15px;
+            border-radius: 13px;
+            background: var(--surface-soft);
+            border: 1px solid #eeeae6;
+        }
+
+        .detail-label {
+            display: block;
+            color: var(--text-light);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            font-weight: 750;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            display: block;
+            color: #292724;
+            font-size: 14px;
+            line-height: 1.4;
+            font-weight: 650;
+        }
+
+        /* =========================================
+           PAYMENT METHOD CARD
+        ========================================== */
+
+        .payment-method-card {
+            padding: 25px;
+        }
+
+        .payment-intro {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.55;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .razorpay-panel {
+            border: 1px solid #e8e2dd;
+            border-radius: 17px;
+            background: linear-gradient(
+                135deg,
+                #fffaf7 0%,
+                #ffffff 65%
+            );
+            padding: 22px;
+        }
+
+        .razorpay-brand-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 18px;
+        }
+
+        .razorpay-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #151515;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 850;
+        }
+
+        .razorpay-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .razorpay-subtitle {
+            color: var(--text-light);
+            font-size: 11px;
+        }
+
+        .payment-availability {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 14px;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid #eee9e5;
+        }
+
+        .availability-icon {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border-radius: 9px;
+            background: #fff0ec;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .availability-text strong {
+            display: block;
+            font-size: 12px;
+            color: #34312e;
+            margin-bottom: 4px;
+        }
+
+        .availability-text span {
+            display: block;
+            color: #89837e;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .payment-note {
+            margin-top: 13px;
+            color: #99928c;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* =========================================
+           SUMMARY
+        ========================================== */
+
+        .summary-card {
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            letter-spacing: -0.3px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 10px 0;
+            color: #716c67;
+            font-size: 13px;
+        }
+
+        .summary-row strong {
+            color: #2d2a27;
+            font-weight: 650;
+            text-align: right;
+            max-width: 65%;
+        }
+
+        .summary-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 0;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding-top: 7px;
+        }
+
+        .total-label {
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .total-amount {
+            font-size: 25px;
+            font-weight: 850;
+            letter-spacing: -0.7px;
+        }
+
+        /* =========================================
+           PAY BUTTON
+        ========================================== */
+
+        .payment-form {
+            margin-top: 22px;
+        }
+
+        .pay-button {
+            width: 100%;
+            min-height: 55px;
+            border: 0;
+            border-radius: 14px;
+            background: var(--accent);
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 12px 25px rgba(255, 107, 74, 0.22);
+        }
+
+        .pay-button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 15px 30px rgba(255, 107, 74, 0.28);
+        }
+
+        .pay-button:active {
+            transform: translateY(0);
+        }
+
+        .pay-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        .payment-security {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 14px;
+            color: #85807b;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .payment-security-icon {
+            color: var(--green);
+            font-size: 13px;
+        }
+
+        /* =========================================
+           TRUST CARD
+        ========================================== */
+
+        .trust-card {
+            padding: 20px 22px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+        }
+
+        .trust-item + .trust-item {
+            border-top: 1px solid var(--border);
+        }
+
+        .trust-icon {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #f7f3f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .trust-text strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .trust-text span {
+            display: block;
+            color: #8a8580;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* =========================================
+           TEST MODE
+        ========================================== */
+
+        .test-mode {
+            padding: 13px 15px;
+            border-radius: 12px;
+            background: #fff8e8;
+            border: 1px solid #f1dfae;
+            color: #806b38;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 18px;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================== */
+
+        footer {
+            margin-top: 38px;
+            text-align: center;
+            color: #9a948e;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================== */
+
+        @media (max-width: 900px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                position: static;
+            }
+
+            .right-column {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .topbar {
+                height: 64px;
+                padding: 0 5%;
+            }
+
+            .brand-name {
+                font-size: 18px;
+            }
+
+            .secure-label {
+                font-size: 11px;
+            }
+
+            .page {
+                width: 92%;
+                padding-top: 22px;
+            }
+
+            .page-heading {
+                margin-bottom: 22px;
+            }
+
+            .page-heading h1 {
+                font-size: 29px;
+            }
+
+            .card {
+                border-radius: 17px;
+            }
+
+            .booking-card,
+            .payment-method-card,
+            .summary-card {
+                padding: 19px;
+            }
+
+            .movie-info {
+                gap: 13px;
+            }
+
+            .poster {
+                width: 76px;
+                height: 108px;
+            }
+
+            .movie-details h3 {
+                font-size: 17px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .razorpay-panel {
+                padding: 17px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .secure-label span {
+                display: none;
+            }
+
+            .movie-info {
+                align-items: flex-start;
+            }
+
+            .movie-meta {
+                margin-bottom: 8px;
+            }
+
+            .tag {
+                padding: 5px 7px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="topbar">
+
+        <a href="{% url 'home' %}" class="brand">
+
+            <div class="brand-mark">
+                C
+            </div>
+
+            <div class="brand-name">
+                CineBook<span>AI</span>
+            </div>
+
+        </a>
+
+
+        <div class="secure-label">
+
+            <div class="secure-icon">
+                🔒
+            </div>
+
+            <span>
+                Secure Checkout
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="page">
+
+        <!-- BACK TO HOME -->
+
+        <a href="{% url 'home' %}" class="back-home">
+
+            <span>
+                ←
+            </span>
+
+            <span>
+                Back to Home
+            </span>
+
+        </a>
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h1>
+                Complete your booking
+            </h1>
+
+            <p>
+                Review your booking details and continue to secure payment.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================
+             CHECKOUT GRID
+        ====================================== -->
+
+        <div class="checkout-grid">
+
+
+            <!-- =================================
+                 LEFT COLUMN
+            ================================== -->
+
+            <div class="left-column">
+
+
+                <!-- BOOKING DETAILS -->
+
+                <section class="card booking-card">
+
+                    <div class="section-title">
+
+                        <h2>
+                            Booking details
+                        </h2>
+
+                        <div class="section-number">
+                            01
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <div class="poster">
+
+                            {% if booking.showtime.movie.poster_url %}
+
+                                <img
+                                    src="{{ booking.showtime.movie.poster_url }}"
+                                    alt="{{ booking.showtime.movie.title }}"
+                                >
+
+                            {% else %}
+
+                                <div style="
+                                    width:100%;
+                                    height:100%;
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    color:#aaa;
+                                    font-size:12px;
+                                    text-align:center;
+                                ">
+                                    No Poster
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="movie-details">
+
+                            <h3>
+                                {{ booking.showtime.movie.title }}
+                            </h3>
+
+
+                            <div class="movie-meta">
+
+                                {% if booking.showtime.movie.language %}
+
+                                    <span class="tag">
+                                        {{ booking.showtime.movie.language }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if booking.showtime.movie.genre %}
+
+                                    <span class="tag">
+                                        {{ booking.showtime.movie.genre }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <p class="movie-note">
+
+                                Your selected seats and showtime are reserved
+                                for this booking.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="details-grid">
+
+
+                        <div class="detail-item">
+
+                            <span class="detail-label">
+                                Cinema
+                            </span>
+
+                            <span class="detail-value">
+                                {{ booking.showtime.screen.cinema.name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span class="detail-label">
+                                City
+                            </span>
+
+                            <span class="detail-value">
+                                {{ booking.showtime.screen.cinema.city.name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span class="detail-label">
+                                Showtime
+                            </span>
+
+                            <span class="detail-value">
+                                {{ booking.showtime.starts_at|date:"d M Y, h:i A" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span class="detail-label">
+                                Seats
+                            </span>
+
+                            <span class="detail-value">
+
+                                {% for seat in booking.seats.all %}
+
+                                    {{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+
+                                {% empty %}
+
+                                    Not available
+
+                                {% endfor %}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span class="detail-label">
+                                Booking ID
+                            </span>
+
+                            <span class="detail-value">
+                                #{{ booking.id }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================
+                     PAYMENT METHOD
+                ================================== -->
+
+                <section class="card payment-method-card">
+
+
+                    <div class="section-title">
+
+                        <h2>
+                            Payment method
+                        </h2>
+
+                        <div class="section-number">
+                            02
+                        </div>
+
+                    </div>
+
+
+                    <p class="payment-intro">
+
+                        Pay securely through Razorpay Checkout. The payment
+                        methods available for your account will be displayed
+                        inside the secure Razorpay payment window.
+
+                    </p>
+
+
+                    <div class="razorpay-panel">
+
+
+                        <div class="razorpay-brand-row">
+
+                            <div class="razorpay-logo">
+                                R
+                            </div>
+
+
+                            <div>
+
+                                <div class="razorpay-title">
+                                    Secure payment with Razorpay
+                                </div>
+
+                                <div class="razorpay-subtitle">
+                                    Trusted payment processing
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="payment-availability">
+
+                            <div class="availability-icon">
+                                ✓
+                            </div>
+
+
+                            <div class="availability-text">
+
+                                <strong>
+                                    Multiple payment options
+                                </strong>
+
+                                <span>
+                                    Available payment methods will appear
+                                    automatically in the Razorpay Checkout
+                                    window.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="payment-note">
+
+                            Payment availability depends on the payment
+                            methods configured for the Razorpay account.
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =================================
+                 RIGHT COLUMN
+            ================================== -->
+
+            <div class="right-column">
+
+
+                <!-- PAYMENT SUMMARY -->
+
+                <section class="card summary-card">
+
+                    <h2 class="summary-title">
+                        Payment summary
+                    </h2>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Movie
+                        </span>
+
+                        <strong>
+                            {{ booking.showtime.movie.title }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Seats
+                        </span>
+
+                        <strong>
+
+                            {% for seat in booking.seats.all %}
+
+                                {{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+
+                            {% endfor %}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Booking ID
+                        </span>
+
+                        <strong>
+                            #{{ booking.id }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="total-row">
+
+                        <span class="total-label">
+                            Total payable
+                        </span>
+
+                        <span class="total-amount">
+                            ₹{{ booking.total_amount }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- PAYMENT FORM -->
+
+                    <form
+                        method="POST"
+                        id="payment-form"
+                        class="payment-form"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            id="pay-button"
+                            class="pay-button"
+                        >
+                            Pay ₹{{ booking.total_amount }}
+                        </button>
+
+                    </form>
+
+
+                    <div class="payment-security">
+
+                        <span class="payment-security-icon">
+                            ✓
+                        </span>
+
+                        <span>
+                            Secure payment powered by Razorpay
+                        </span>
+
+                    </div>
+
+
+                    <div class="test-mode">
+
+                        <strong>
+                            Razorpay Test Mode
+                        </strong>
+
+                        <br>
+
+                        No real money will be charged while testing
+                        CineBookAI payments.
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- TRUST CARD -->
+
+                <section class="card trust-card">
+
+
+                    <div class="trust-item">
+
+                        <div class="trust-icon">
+                            🔐
+                        </div>
+
+
+                        <div class="trust-text">
+
+                            <strong>
+                                Secure checkout
+                            </strong>
+
+                            <span>
+                                Your payment is securely processed through
+                                Razorpay Checkout.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <div class="trust-icon">
+                            🎟️
+                        </div>
+
+
+                        <div class="trust-text">
+
+                            <strong>
+                                Digital ticket
+                            </strong>
+
+                            <span>
+                                After successful payment verification,
+                                your CineBookAI ticket and QR code are generated.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <div class="trust-icon">
+                            ✓
+                        </div>
+
+
+                        <div class="trust-text">
+
+                            <strong>
+                                Payment verification
+                            </strong>
+
+                            <span>
+                                Your booking is confirmed only after successful
+                                payment verification.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            CineBookAI &nbsp;•&nbsp;
+            Smart movie booking powered by AI
+
+            <br>
+
+            Secure payments powered by Razorpay
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         RAZORPAY PAYMENT JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        let paymentStarted = false;
+
+
+        document
+            .getElementById("payment-form")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+
+                if (paymentStarted) {
+                    return;
+                }
+
+
+                paymentStarted = true;
+
+
+                const payButton =
+                    document.getElementById("pay-button");
+
+
+                payButton.disabled = true;
+
+                payButton.innerText =
+                    "Opening Secure Checkout...";
+
+
+                const options = {
+
+                    key: "{{ razorpay_key_id }}",
+
+                    amount: "{{ amount }}",
+
+                    currency: "{{ currency }}",
+
+                    name: "CineBookAI",
+
+                    description:
+                        "{{ booking.showtime.movie.title|escapejs }} - Movie Ticket",
+
+                    order_id: "{{ razorpay_order_id }}",
+
+
+                    prefill: {
+
+                        name:
+                            "{{ request.user.get_full_name|default:request.user.username|escapejs }}",
+
+                        email:
+                            "{{ request.user.email|escapejs }}"
+
+                    },
+
+
+                    theme: {
+
+                        color: "#ff6b4a"
+
+                    },
+
+
+                    /* =================================
+                       SUCCESS
+                    ================================== */
+
+                    handler: function(response) {
+
+                        const form =
+                            document.createElement("form");
+
+
+                        form.method = "POST";
+
+
+                        form.action =
+                            "{% url 'verify_razorpay_payment' %}";
+
+
+                        const csrfToken =
+                            document.querySelector(
+                                '[name=csrfmiddlewaretoken]'
+                            ).value;
+
+
+                        function addField(name, value) {
+
+                            const input =
+                                document.createElement("input");
+
+                            input.type = "hidden";
+
+                            input.name = name;
+
+                            input.value = value || "";
+
+                            form.appendChild(input);
+
+                        }
+
+
+                        addField(
+                            "csrfmiddlewaretoken",
+                            csrfToken
+                        );
+
+
+                        addField(
+                            "razorpay_payment_id",
+                            response.razorpay_payment_id
+                        );
+
+
+                        addField(
+                            "razorpay_order_id",
+                            response.razorpay_order_id
+                        );
+
+
+                        addField(
+                            "razorpay_signature",
+                            response.razorpay_signature
+                        );
+
+
+                        addField(
+                            "booking_id",
+                            "{{ booking.id }}"
+                        );
+
+
+                        document.body.appendChild(form);
+
+                        form.submit();
+
+                    },
+
+
+                    /* =================================
+                       CHECKOUT DISMISSED
+                    ================================== */
+
+                    modal: {
+
+                        ondismiss: function() {
+
+                            paymentStarted = false;
+
+
+                            payButton.disabled = false;
+
+
+                            payButton.innerText =
+                                "Pay ₹{{ booking.total_amount }}";
+
+                        }
+
+                    }
+
+                };
+
+
+                const razorpay =
+                    new Razorpay(options);
+
+
+                /* =================================
+                   PAYMENT FAILED
+                ================================== */
+
+                razorpay.on(
+                    "payment.failed",
+                    function(response) {
+
+                        const error =
+                            response.error || {};
+
+
+                        const form =
+                            document.createElement("form");
+
+
+                        form.method = "POST";
+
+
+                        form.action =
+                            "{% url 'razorpay_payment_failed' %}";
+
+
+                        const csrfToken =
+                            document.querySelector(
+                                '[name=csrfmiddlewaretoken]'
+                            ).value;
+
+
+                        function addField(name, value) {
+
+                            const input =
+                                document.createElement("input");
+
+                            input.type = "hidden";
+
+                            input.name = name;
+
+                            input.value = value || "";
+
+                            form.appendChild(input);
+
+                        }
+
+
+                        addField(
+                            "csrfmiddlewaretoken",
+                            csrfToken
+                        );
+
+
+                        addField(
+                            "booking_id",
+                            "{{ booking.id }}"
+                        );
+
+
+                        addField(
+                            "razorpay_order_id",
+                            error.metadata
+                                ? error.metadata.order_id
+                                : "{{ razorpay_order_id }}"
+                        );
+
+
+                        addField(
+                            "razorpay_payment_id",
+                            error.metadata
+                                ? error.metadata.payment_id
+                                : ""
+                        );
+
+
+                        addField(
+                            "error_description",
+                            error.description ||
+                            "Payment failed"
+                        );
+
+
+                        document.body.appendChild(form);
+
+                        form.submit();
+
+                    }
+                );
+
+
+                /* =================================
+                   OPEN RAZORPAY
+                ================================== */
+
+                razorpay.open();
+
+            });
+
+    </script>
+
+</body>
+</html>

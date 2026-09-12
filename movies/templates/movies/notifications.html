@@ -1,0 +1,2052 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CineBookAI | Notifications</title>
+
+    <style>
+
+        /* =========================================================
+           CINEBOOKAI NOTIFICATIONS PAGE
+           PAGE-SPECIFIC CSS ONLY
+           ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Manrope,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(190, 105, 145, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(221, 155, 135, 0.12),
+                    transparent 28%
+                ),
+                linear-gradient(
+                    135deg,
+                    #0c0714 0%,
+                    #160c22 42%,
+                    #100817 100%
+                );
+
+            color: #ffffff;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================================
+           PAGE WRAPPER
+           ========================================================= */
+
+        .cb-notification-page {
+
+            position: relative;
+
+            min-height: 100vh;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+           MOVIE BACKGROUND DECORATIONS
+           ========================================================= */
+
+        .cb-bg-pattern {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            z-index: 0;
+        }
+
+        .cb-film-strip {
+
+            position: absolute;
+
+            width: 460px;
+            height: 460px;
+
+            border: 2px solid rgba(231, 160, 141, 0.045);
+
+            border-radius: 28px;
+
+            transform: rotate(-18deg);
+
+            right: -180px;
+            top: 180px;
+        }
+
+        .cb-film-strip::before,
+        .cb-film-strip::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 30px;
+            right: 30px;
+
+            height: 28px;
+
+            border-top: 2px solid rgba(231, 160, 141, 0.045);
+            border-bottom: 2px solid rgba(231, 160, 141, 0.045);
+        }
+
+        .cb-film-strip::before {
+            top: 75px;
+        }
+
+        .cb-film-strip::after {
+            bottom: 75px;
+        }
+
+        .cb-ticket-watermark {
+
+            position: absolute;
+
+            left: -130px;
+            bottom: 130px;
+
+            width: 430px;
+            height: 190px;
+
+            border: 2px solid rgba(231, 160, 141, 0.04);
+
+            border-radius: 28px;
+
+            transform: rotate(17deg);
+        }
+
+        .cb-ticket-watermark::before {
+
+            content: "CINEBOOK";
+
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: rgba(231, 160, 141, 0.035);
+
+            font-size: 52px;
+
+            font-weight: 900;
+
+            letter-spacing: 8px;
+        }
+
+        .cb-light-one,
+        .cb-light-two {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(70px);
+        }
+
+        .cb-light-one {
+
+            width: 280px;
+            height: 280px;
+
+            background: rgba(145, 70, 125, 0.12);
+
+            top: 80px;
+            left: -100px;
+        }
+
+        .cb-light-two {
+
+            width: 320px;
+            height: 320px;
+
+            background: rgba(210, 125, 115, 0.09);
+
+            right: -130px;
+            bottom: -80px;
+        }
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .cb-header {
+
+            position: relative;
+
+            z-index: 10;
+
+            width: 100%;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(11, 6, 19, 0.88);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .cb-header-inner {
+
+            width: min(
+                1180px,
+                calc(100% - 40px)
+            );
+
+            min-height: 76px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 24px;
+        }
+
+
+        /* LOGO */
+
+        .cb-logo {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            flex-shrink: 0;
+
+            color: #ffffff;
+
+            text-decoration: none;
+        }
+
+        .cb-logo-mark {
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #e7a08d,
+                    #b96888
+                );
+
+            color: #180b15;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(201, 123, 104, 0.25);
+        }
+
+        .cb-logo-text {
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            letter-spacing: -0.5px;
+        }
+
+        .cb-logo-text span {
+
+            color: #e7a08d;
+        }
+
+
+        /* SEARCH */
+
+        .cb-search {
+
+            flex: 1;
+
+            max-width: 470px;
+
+            margin: 0 auto;
+        }
+
+        .cb-search-form {
+
+            position: relative;
+        }
+
+        .cb-search-input {
+
+            width: 100%;
+
+            height: 42px;
+
+            padding:
+                0 18px 0 44px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .cb-search-input::placeholder {
+            color: #8e8495;
+        }
+
+        .cb-search-input:focus {
+
+            border-color:
+                rgba(231, 160, 141, 0.55);
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(231, 160, 141, 0.07);
+        }
+
+        .cb-search-icon {
+
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #b98b9f;
+
+            font-size: 14px;
+
+            pointer-events: none;
+        }
+
+
+        /* HEADER ACTIONS */
+
+        .cb-header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            flex-shrink: 0;
+        }
+
+        .cb-city {
+
+            min-height: 40px;
+
+            padding: 0 13px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            color: #c9bfce;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .cb-header-btn {
+
+            min-height: 40px;
+
+            padding: 0 15px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .cb-header-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .cb-login {
+
+            border:
+                1px solid
+                rgba(231, 160, 141, 0.30);
+
+            background:
+                rgba(231, 160, 141, 0.08);
+
+            color: #e7a08d;
+        }
+
+        .cb-login:hover {
+
+            background:
+                rgba(231, 160, 141, 0.15);
+
+            color: #ffffff;
+        }
+
+        .cb-profile {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #e7a08d
+                );
+
+            color: #180b15;
+
+            box-shadow:
+                0 7px 20px
+                rgba(201, 123, 104, 0.18);
+        }
+
+
+        /* =========================================================
+           MAIN CONTENT
+           ========================================================= */
+
+        .cb-main {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(
+                1080px,
+                calc(100% - 40px)
+            );
+
+            margin: 0 auto;
+
+            padding:
+                70px 0 90px;
+        }
+
+
+        /* PAGE HEADER */
+
+        .cb-page-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 34px;
+        }
+
+        .cb-heading-area {
+
+            max-width: 680px;
+        }
+
+        .cb-kicker {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 13px;
+
+            color: #e7a08d;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        .cb-kicker::before {
+
+            content: "";
+
+            width: 25px;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #c97b68,
+                    #e7a08d
+                );
+        }
+
+        .cb-title {
+
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: clamp(
+                34px,
+                5vw,
+                54px
+            );
+
+            line-height: 1.05;
+
+            font-weight: 900;
+
+            letter-spacing: -2px;
+        }
+
+        .cb-title span {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #f0b5a1,
+                    #d8869d
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cb-subtitle {
+
+            max-width: 600px;
+
+            margin-top: 13px;
+
+            color: #aaa0b0;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* MARK ALL BUTTON */
+
+        .cb-mark-all {
+
+            flex-shrink: 0;
+
+            min-height: 44px;
+
+            padding: 0 17px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            border:
+                1px solid
+                rgba(231, 160, 141, 0.30);
+
+            border-radius: 11px;
+
+            background:
+                rgba(231, 160, 141, 0.08);
+
+            color: #e7a08d;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .cb-mark-all:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #e7a08d
+                );
+
+            color: #180b15;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 9px 25px
+                rgba(201, 123, 104, 0.20);
+        }
+
+
+        /* =========================================================
+           SUMMARY
+           ========================================================= */
+
+        .cb-summary {
+
+            margin-bottom: 20px;
+
+            padding: 17px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.075);
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.065),
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            box-shadow:
+                0 15px 45px
+                rgba(0, 0, 0, 0.20);
+        }
+
+        .cb-summary-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .cb-summary-icon {
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                rgba(231, 160, 141, 0.11);
+
+            color: #e7a08d;
+
+            font-size: 16px;
+        }
+
+        .cb-summary-text {
+
+            color: #a9a0ae;
+
+            font-size: 11px;
+        }
+
+        .cb-summary-text strong {
+
+            color: #ffffff;
+
+            font-size: 12px;
+        }
+
+        .cb-unread-count {
+
+            padding: 6px 10px;
+
+            border:
+                1px solid
+                rgba(231, 160, 141, 0.25);
+
+            border-radius: 100px;
+
+            background:
+                rgba(231, 160, 141, 0.08);
+
+            color: #e7a08d;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION LIST
+           ========================================================= */
+
+        .cb-notification-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+        }
+
+
+        /* CARD */
+
+        .cb-notification-card {
+
+            position: relative;
+
+            width: 100%;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 16px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.075);
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.065),
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.18);
+
+            overflow: hidden;
+
+            transition:
+                transform 0.22s ease,
+                border-color 0.22s ease,
+                box-shadow 0.22s ease;
+        }
+
+        .cb-notification-card:hover {
+
+            transform: translateY(-2px);
+
+            border-color:
+                rgba(231, 160, 141, 0.22);
+
+            box-shadow:
+                0 18px 42px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* UNREAD */
+
+        .cb-notification-card.unread {
+
+            border-color:
+                rgba(231, 160, 141, 0.19);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(201, 123, 104, 0.11),
+                    rgba(255, 255, 255, 0.025)
+                );
+        }
+
+        .cb-notification-card.unread::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 14px;
+            bottom: 14px;
+
+            width: 3px;
+
+            border-radius: 0 4px 4px 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #c97b68,
+                    #e7a08d,
+                    #d8869d
+                );
+
+            box-shadow:
+                0 0 16px
+                rgba(231, 160, 141, 0.25);
+        }
+
+
+        /* ICON */
+
+        .cb-notification-icon {
+
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border:
+                1px solid
+                rgba(231, 160, 141, 0.16);
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(201, 123, 104, 0.15),
+                    rgba(216, 134, 157, 0.07)
+                );
+
+            color: #e7a08d;
+
+            font-size: 18px;
+        }
+
+
+        /* CONTENT */
+
+        .cb-notification-content {
+
+            min-width: 0;
+
+            flex: 1;
+        }
+
+        .cb-notification-top {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 7px;
+        }
+
+        .cb-notification-title {
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            line-height: 1.35;
+
+            font-weight: 850;
+        }
+
+        .cb-new-badge {
+
+            padding: 4px 7px;
+
+            border-radius: 100px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #e7a08d
+                );
+
+            color: #180b15;
+
+            font-size: 7px;
+
+            font-weight: 950;
+
+            letter-spacing: 0.8px;
+        }
+
+        .cb-notification-message {
+
+            margin: 0;
+
+            color: #aaa1af;
+
+            font-size: 11px;
+
+            line-height: 1.65;
+
+            overflow-wrap: anywhere;
+        }
+
+        .cb-notification-time {
+
+            display: block;
+
+            margin-top: 9px;
+
+            color: #8f8494;
+
+            font-size: 9px;
+
+            font-weight: 700;
+        }
+
+
+        /* READ BUTTON */
+
+        .cb-read-action {
+
+            flex-shrink: 0;
+
+            min-height: 34px;
+
+            padding: 0 11px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            color: #a89eac;
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .cb-read-action:hover {
+
+            border-color:
+                rgba(231, 160, 141, 0.28);
+
+            background:
+                rgba(231, 160, 141, 0.08);
+
+            color: #e7a08d;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+           ========================================================= */
+
+        .cb-empty {
+
+            padding: 70px 25px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.075);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.055),
+                    rgba(255, 255, 255, 0.018)
+                );
+
+            box-shadow:
+                0 20px 55px
+                rgba(0, 0, 0, 0.20);
+        }
+
+        .cb-empty-icon {
+
+            width: 66px;
+            height: 66px;
+
+            margin: 0 auto 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                rgba(231, 160, 141, 0.08);
+
+            color: #e7a08d;
+
+            font-size: 27px;
+        }
+
+        .cb-empty h2 {
+
+            margin-bottom: 7px;
+
+            color: #ffffff;
+
+            font-size: 19px;
+        }
+
+        .cb-empty p {
+
+            color: #918796;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .cb-footer {
+
+            position: relative;
+
+            z-index: 2;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #0b0611,
+                    #07040b
+                );
+        }
+
+        .cb-footer-inner {
+
+            width: min(
+                1080px,
+                calc(100% - 40px)
+            );
+
+            margin: 0 auto;
+
+            padding: 48px 0 25px;
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr 1fr;
+
+            gap: 45px;
+        }
+
+        .cb-footer-brand {
+
+            max-width: 310px;
+        }
+
+        .cb-footer-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 900;
+        }
+
+        .cb-footer-logo-mark {
+
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c97b68,
+                    #e7a08d
+                );
+
+            color: #170a13;
+
+            font-size: 15px;
+        }
+
+        .cb-footer-description {
+
+            margin-top: 13px;
+
+            color: #746b79;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+        }
+
+        .cb-footer-column {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .cb-footer-column h3 {
+
+            margin-bottom: 8px;
+
+            color: #d9d0dc;
+
+            font-size: 10px;
+
+            font-weight: 850;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+        }
+
+        .cb-footer-column a {
+
+            width: fit-content;
+
+            color: #776e7c;
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .cb-footer-column a:hover {
+
+            color: #e7a08d;
+
+            transform: translateX(3px);
+        }
+
+        .cb-footer-bottom {
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.055);
+        }
+
+        .cb-footer-bottom-inner {
+
+            width: min(
+                1080px,
+                calc(100% - 40px)
+            );
+
+            min-height: 58px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .cb-footer-bottom p {
+
+            color: #5f5665;
+
+            font-size: 9px;
+        }
+
+        .cb-footer-bottom span {
+
+            color: #766b78;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           TABLET
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .cb-header-inner {
+
+                flex-wrap: wrap;
+
+                padding: 15px 0;
+
+            }
+
+            .cb-search {
+
+                order: 3;
+
+                flex-basis: 100%;
+
+                max-width: none;
+            }
+
+            .cb-page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 20px;
+            }
+
+            .cb-footer-inner {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .cb-footer-brand {
+
+                grid-column: 1 / -1;
+
+                max-width: 500px;
+            }
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 650px) {
+
+            .cb-header-inner {
+
+                width: min(
+                    100% - 28px,
+                    1180px
+                );
+
+                gap: 12px;
+            }
+
+            .cb-header-actions {
+
+                margin-left: auto;
+            }
+
+            .cb-city {
+
+                display: none;
+            }
+
+            .cb-header-btn {
+
+                padding: 0 12px;
+            }
+
+            .cb-main {
+
+                width: min(
+                    100% - 28px,
+                    1080px
+                );
+
+                padding:
+                    48px 0 65px;
+            }
+
+            .cb-title {
+
+                font-size: 38px;
+
+                letter-spacing: -1.5px;
+            }
+
+            .cb-summary {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .cb-notification-card {
+
+                padding: 16px;
+
+                gap: 12px;
+            }
+
+            .cb-notification-icon {
+
+                width: 40px;
+                height: 40px;
+
+                border-radius: 11px;
+
+                font-size: 16px;
+            }
+
+            .cb-notification-title {
+
+                font-size: 13px;
+            }
+
+            .cb-read-action {
+
+                padding: 0 9px;
+
+                font-size: 8px;
+            }
+
+            .cb-footer-inner {
+
+                width: min(
+                    100% - 28px,
+                    1080px
+                );
+
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+
+                padding-top: 38px;
+            }
+
+            .cb-footer-brand {
+
+                grid-column: auto;
+            }
+
+            .cb-footer-bottom-inner {
+
+                width: min(
+                    100% - 28px,
+                    1080px
+                );
+
+                min-height: auto;
+
+                padding: 18px 0;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 7px;
+            }
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+           ========================================================= */
+
+        @media (max-width: 430px) {
+
+            .cb-logo-text {
+
+                font-size: 16px;
+            }
+
+            .cb-logo-mark {
+
+                width: 36px;
+                height: 36px;
+            }
+
+            .cb-header-btn {
+
+                padding: 0 10px;
+
+                font-size: 10px;
+            }
+
+            .cb-main {
+
+                width: calc(100% - 24px);
+            }
+
+            .cb-page-header {
+
+                margin-bottom: 26px;
+            }
+
+            .cb-title {
+
+                font-size: 33px;
+            }
+
+            .cb-subtitle {
+
+                font-size: 11px;
+            }
+
+            .cb-mark-all {
+
+                width: 100%;
+            }
+
+            .cb-notification-card {
+
+                display: grid;
+
+                grid-template-columns:
+                    42px 1fr;
+
+                gap: 12px;
+            }
+
+            .cb-read-action {
+
+                grid-column: 2;
+
+                width: fit-content;
+            }
+
+            .cb-footer-inner,
+            .cb-footer-bottom-inner {
+
+                width: calc(100% - 24px);
+            }
+        }
+
+
+        /* =========================================================
+           ACCESSIBILITY
+           ========================================================= */
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+
+            outline:
+                3px solid
+                rgba(231, 160, 141, 0.30);
+
+            outline-offset: 3px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="cb-notification-page">
+
+
+    <!-- =========================================================
+         BACKGROUND DECORATION
+         ========================================================= -->
+
+    <div class="cb-bg-pattern">
+
+        <div class="cb-film-strip"></div>
+
+        <div class="cb-ticket-watermark"></div>
+
+        <div class="cb-light-one"></div>
+
+        <div class="cb-light-two"></div>
+
+    </div>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header class="cb-header">
+
+        <div class="cb-header-inner">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="{% url 'home' %}"
+                class="cb-logo"
+            >
+
+                <span class="cb-logo-mark">
+                    🎬
+                </span>
+
+                <span class="cb-logo-text">
+                    CineBook<span>AI</span>
+                </span>
+
+            </a>
+
+
+            <!-- SEARCH -->
+
+            <div class="cb-search">
+
+                <form
+                    method="get"
+                    action="{% url 'search_movies' %}"
+                    class="cb-search-form"
+                >
+
+                    <span class="cb-search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        name="q"
+                        class="cb-search-input"
+                        placeholder="Search movies..."
+                        autocomplete="off"
+                    >
+
+                </form>
+
+            </div>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="cb-header-actions">
+
+                <span class="cb-city">
+                    📍 Pune
+                </span>
+
+
+                {% if user.is_authenticated %}
+
+                    <a
+                        href="{% url 'profile' %}"
+                        class="cb-header-btn cb-profile"
+                    >
+                        Profile
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="cb-header-btn cb-login"
+                    >
+                        Login
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+         ========================================================= -->
+
+    <main class="cb-main">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="cb-page-header">
+
+            <div class="cb-heading-area">
+
+                <div class="cb-kicker">
+                    CineBookAI Activity
+                </div>
+
+                <h1 class="cb-title">
+                    Your <span>Notifications</span>
+                </h1>
+
+                <p class="cb-subtitle">
+                    Stay updated with your CineBookAI activity,
+                    bookings, payments, cancellations and movie updates.
+                </p>
+
+            </div>
+
+
+            {% if unread_count > 0 %}
+
+                <form
+                    method="post"
+                    action="{% url 'mark_all_notifications_read' %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="cb-mark-all"
+                    >
+                        ✓ Mark All as Read
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <div class="cb-summary">
+
+            <div class="cb-summary-left">
+
+                <div class="cb-summary-icon">
+                    🔔
+                </div>
+
+                <div class="cb-summary-text">
+
+                    <strong>
+                        Notification Center
+                    </strong>
+
+                    <br>
+
+                    Keep track of everything happening
+                    on your CineBookAI account.
+
+                </div>
+
+            </div>
+
+
+            <div class="cb-unread-count">
+
+                {{ unread_count }} unread
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             NOTIFICATIONS
+             ===================================================== -->
+
+        {% if notifications %}
+
+            <div class="cb-notification-list">
+
+                {% for notification in notifications %}
+
+                    <article
+                        class="cb-notification-card {% if not notification.is_read %}unread{% endif %}"
+                    >
+
+
+                        <!-- ICON -->
+
+                        <div class="cb-notification-icon">
+
+                            {% if notification.notification_type == "booking_confirmed" %}
+
+                                🎟️
+
+                            {% elif notification.notification_type == "payment_successful" %}
+
+                                💳
+
+                            {% elif notification.notification_type == "booking_cancelled" %}
+
+                                ❌
+
+                            {% elif notification.notification_type == "new_movie" %}
+
+                                🎬
+
+                            {% elif notification.notification_type == "show_reminder" %}
+
+                                ⏰
+
+                            {% elif notification.notification_type == "watchlist" %}
+
+                                ❤️
+
+                            {% elif notification.notification_type == "review" %}
+
+                                ⭐
+
+                            {% elif notification.notification_type == "ai" %}
+
+                                🤖
+
+                            {% else %}
+
+                                🔔
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- CONTENT -->
+
+                        <div class="cb-notification-content">
+
+                            <div class="cb-notification-top">
+
+                                <h2 class="cb-notification-title">
+
+                                    {{ notification.title }}
+
+                                </h2>
+
+
+                                {% if not notification.is_read %}
+
+                                    <span class="cb-new-badge">
+                                        NEW
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <p class="cb-notification-message">
+
+                                {{ notification.message }}
+
+                            </p>
+
+
+                            <span class="cb-notification-time">
+
+                                {{ notification.created_at|date:"d M Y • h:i A" }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- READ -->
+
+                        {% if not notification.is_read %}
+
+                            <a
+                                href="{% url 'mark_notification_read' notification.id %}"
+                                class="cb-read-action"
+                            >
+                                Mark read
+                            </a>
+
+                        {% endif %}
+
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="cb-empty">
+
+                <div class="cb-empty-icon">
+                    🔔
+                </div>
+
+                <h2>
+                    You're all caught up
+                </h2>
+
+                <p>
+                    New CineBookAI activity and updates will appear here.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="cb-footer">
+
+        <div class="cb-footer-inner">
+
+
+            <!-- BRAND -->
+
+            <div class="cb-footer-brand">
+
+                <div class="cb-footer-logo">
+
+                    <span class="cb-footer-logo-mark">
+                        🎬
+                    </span>
+
+                    CineBookAI
+
+                </div>
+
+                <p class="cb-footer-description">
+
+                    Your smart movie ticket booking platform.
+                    Discover movies, choose your seats and
+                    enjoy a smarter cinema experience.
+
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="cb-footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a href="{% url 'home' %}#movies">
+                    Movies
+                </a>
+
+                <a href="{% url 'profile' %}">
+                    My Profile
+                </a>
+
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'notifications' %}">
+                        Notifications
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- SUPPORT -->
+
+            <div class="cb-footer-column">
+
+                <h3>
+                    Support
+                </h3>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+                <a href="#">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="cb-footer-bottom">
+
+            <div class="cb-footer-bottom-inner">
+
+                <p>
+                    © 2026 CineBookAI. All rights reserved.
+                </p>
+
+                <span>
+                    Smart Movies • Smart Booking • Smart Experience
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

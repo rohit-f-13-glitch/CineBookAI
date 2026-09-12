@@ -1,0 +1,1472 @@
+<div style="background:rgb(191, 81, 112);color:rgb(24, 10, 10);padding:30px;text-align:center;font-size:30px;font-weight:bold;">
+       ✦ 𝑺𝒊𝒕 𝑩𝒂𝒄𝒌 · 𝑹𝒆𝒍𝒂𝒙 · 𝑳𝒆𝒕 𝒕𝒉𝒆 𝑺𝒕𝒐𝒓𝒚 𝑩𝒆𝒈𝒊𝒏 ✦ 
+</div>
+
+{% load static %}
+
+<!-- ACTIVE BOOKING CONFIRMATION TEMPLATE -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Booking Confirmed | CineBook AI
+    </title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+
+            background: #f4f0e9;
+            color: #1b1b1b;
+
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        button,
+        a {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .confirmation-page {
+            width: 100%;
+            min-height: 100vh;
+
+            padding: 45px 20px 70px;
+        }
+
+        .confirmation-container {
+            width: min(1080px, 100%);
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           SUCCESS AREA
+        ===================================================== */
+
+        .success-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .success-icon {
+            width: 78px;
+            height: 78px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #16803c;
+            color: #ffffff;
+
+            font-size: 38px;
+            font-weight: 900;
+
+            box-shadow:
+                0 12px 30px rgba(22, 128, 60, 0.22);
+        }
+
+        .success-section h1 {
+            margin: 0;
+
+            color: #171717;
+
+            font-size: clamp(30px, 5vw, 44px);
+            font-weight: 850;
+
+            letter-spacing: -1px;
+        }
+
+        .success-section p {
+            margin: 10px 0 0;
+
+            color: #777777;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           DIGITAL TICKET
+        ===================================================== */
+
+        .ticket {
+            width: 100%;
+
+            overflow: hidden;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* =====================================================
+           TICKET HEADER
+        ===================================================== */
+
+        .ticket-header {
+            padding: 24px 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            background: #171717;
+            color: #ffffff;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #ff6b35;
+
+            color: #ffffff;
+
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .brand-name {
+            color: #ffffff;
+
+            font-size: 20px;
+            font-weight: 850;
+        }
+
+        .brand-tagline {
+            margin-top: 3px;
+
+            color: #999999;
+
+            font-size: 11px;
+        }
+
+        .booking-id-box {
+            text-align: right;
+        }
+
+        .booking-id-label {
+            color: #999999;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .booking-id {
+            margin-top: 4px;
+
+            color: #ff8b5f;
+
+            font-size: 21px;
+            font-weight: 850;
+        }
+
+
+        /* =====================================================
+           TICKET BODY
+        ===================================================== */
+
+        .ticket-body {
+            padding: 32px;
+        }
+
+
+        /* =====================================================
+           MOVIE SECTION
+        ===================================================== */
+
+        .movie-section {
+            display: flex;
+            align-items: center;
+
+            gap: 24px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px dashed #d6cec3;
+        }
+
+        .movie-poster {
+            width: 145px;
+            height: 205px;
+
+            flex-shrink: 0;
+
+            object-fit: cover;
+
+            border-radius: 16px;
+
+            background: #e9e3db;
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .poster-placeholder {
+            width: 145px;
+            height: 205px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background: #242424;
+
+            color: #ffffff;
+
+            font-size: 42px;
+        }
+
+        .movie-information {
+            flex: 1;
+        }
+
+        .confirmed-badge {
+            width: fit-content;
+
+            display: inline-flex;
+            align-items: center;
+
+            margin-bottom: 13px;
+            padding: 7px 12px;
+
+            border-radius: 30px;
+
+            background: #e9f8ef;
+            color: #16803c;
+
+            font-size: 11px;
+            font-weight: 850;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .movie-information h2 {
+            margin: 0 0 10px;
+
+            color: #171717;
+
+            font-size: clamp(27px, 4vw, 39px);
+            font-weight: 850;
+
+            line-height: 1.1;
+        }
+
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            color: #707070;
+
+            font-size: 13px;
+        }
+
+        .movie-meta span {
+            padding-right: 9px;
+
+            border-right: 1px solid #dddddd;
+        }
+
+        .movie-meta span:last-child {
+            padding-right: 0;
+            border-right: none;
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+            margin: 28px 0 15px;
+
+            color: #777777;
+
+            font-size: 12px;
+            font-weight: 850;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+        }
+
+        .detail-card {
+            min-height: 86px;
+
+            padding: 16px;
+
+            border: 1px solid #ece6de;
+
+            border-radius: 14px;
+
+            background: #faf8f5;
+        }
+
+        .detail-label {
+            margin-bottom: 7px;
+
+            color: #8a8a8a;
+
+            font-size: 10px;
+            font-weight: 750;
+
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .detail-value {
+            color: #222222;
+
+            font-size: 14px;
+            font-weight: 750;
+
+            line-height: 1.45;
+        }
+
+
+        /* =====================================================
+           SEATS
+        ===================================================== */
+
+        .seats-box {
+            padding: 18px;
+
+            border: 1px solid #ffe0d1;
+
+            border-radius: 15px;
+
+            background: #fff7f2;
+        }
+
+        .seat-list {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 9px;
+        }
+
+        .seat {
+            min-width: 46px;
+
+            padding: 9px 13px;
+
+            text-align: center;
+
+            border-radius: 8px;
+
+            background: #ff6b35;
+            color: #ffffff;
+
+            font-size: 13px;
+            font-weight: 850;
+
+            box-shadow:
+                0 5px 12px rgba(255, 107, 53, 0.18);
+        }
+
+
+        /* =====================================================
+           LOWER AREA
+        ===================================================== */
+
+        .lower-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.35fr 0.85fr;
+
+            gap: 28px;
+
+            margin-top: 28px;
+        }
+
+
+        /* =====================================================
+           CUSTOMER CARD
+        ===================================================== */
+
+        .customer-card {
+            padding: 20px;
+
+            border: 1px solid #ece6de;
+
+            border-radius: 16px;
+
+            background: #faf8f5;
+        }
+
+        .customer-row {
+            display: flex;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #e6e0d8;
+        }
+
+        .customer-row:first-child {
+            padding-top: 0;
+        }
+
+        .customer-row:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .customer-label {
+            color: #888888;
+
+            font-size: 13px;
+        }
+
+        .customer-value {
+            max-width: 65%;
+
+            color: #222222;
+
+            text-align: right;
+
+            font-size: 14px;
+            font-weight: 750;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           PAYMENT SUMMARY
+        ===================================================== */
+
+        .summary-card {
+            padding: 23px;
+
+            border-radius: 18px;
+
+            background: #171717;
+
+            color: #ffffff;
+        }
+
+        .summary-card h3 {
+            margin: 0 0 18px;
+
+            color: #ffffff;
+
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 8px 0;
+
+            color: #aaaaaa;
+
+            font-size: 13px;
+        }
+
+        .summary-row strong {
+            color: #ffffff;
+
+            text-align: right;
+        }
+
+        .summary-divider {
+            height: 1px;
+
+            margin: 13px 0;
+
+            background: #383838;
+        }
+
+        .total-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .total-label {
+            color: #aaaaaa;
+
+            font-size: 13px;
+        }
+
+        .total-price {
+            color: #ff8b5f;
+
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .status {
+            display: inline-block;
+
+            margin-top: 17px;
+            padding: 8px 13px;
+
+            border-radius: 20px;
+
+            background: rgba(50, 190, 100, 0.15);
+            color: #69dc94;
+
+            font-size: 11px;
+            font-weight: 850;
+        }
+
+
+        /* =====================================================
+           TICKET CODE
+        ===================================================== */
+
+        .code-section {
+            margin-top: 30px;
+            padding: 23px 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            border-top: 1px dashed #d6cec3;
+            border-bottom: 1px dashed #d6cec3;
+        }
+
+        .code-text h3 {
+            margin: 0 0 7px;
+
+            color: #222222;
+
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .code-text p {
+            margin: 0;
+
+            color: #777777;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .booking-code {
+            min-width: 190px;
+
+            padding: 14px 20px;
+
+            border: 2px solid #222222;
+
+            border-radius: 10px;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #ffffff 0px,
+                    #ffffff 3px,
+                    #222222 3px,
+                    #222222 5px
+                );
+
+            color: #111111;
+
+            text-align: center;
+
+            font-family: monospace;
+
+            font-size: 17px;
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+            background-blend-mode: screen;
+        }
+
+
+        /* =====================================================
+           ARRIVAL NOTE
+        ===================================================== */
+
+        .arrival-note {
+            margin-top: 22px;
+            padding: 14px 16px;
+
+            border-radius: 12px;
+
+            background: #f5f1ea;
+
+            color: #666666;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .ticket-actions {
+            padding: 26px 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            background: #faf8f5;
+        }
+
+        .ticket-button {
+            min-width: 150px;
+
+            padding: 13px 20px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .ticket-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .primary-button {
+            border: none;
+
+            background: #ff6b35;
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px rgba(255, 107, 53, 0.20);
+        }
+
+        .dark-button {
+            background: #171717;
+            color: #ffffff;
+        }
+
+        .light-button {
+            border: 1px solid #dddddd;
+
+            background: #ffffff;
+            color: #333333;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .confirmation-footer {
+            margin-top: 22px;
+
+            color: #999999;
+
+            text-align: center;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 820px) {
+
+            .confirmation-page {
+                padding: 28px 14px 50px;
+            }
+
+            .ticket-body {
+                padding: 24px;
+            }
+
+            .details-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 560px) {
+
+            .confirmation-page {
+                padding: 20px 10px 40px;
+            }
+
+            .success-section {
+                margin-bottom: 24px;
+            }
+
+            .success-icon {
+                width: 65px;
+                height: 65px;
+
+                font-size: 30px;
+            }
+
+            .success-section h1 {
+                font-size: 29px;
+            }
+
+            .success-section p {
+                font-size: 13px;
+            }
+
+            .ticket {
+                border-radius: 18px;
+            }
+
+            .ticket-header {
+                padding: 20px;
+
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .booking-id-box {
+                text-align: left;
+            }
+
+            .ticket-body {
+                padding: 20px;
+            }
+
+            .movie-section {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 17px;
+            }
+
+            .movie-poster,
+            .poster-placeholder {
+                width: 125px;
+                height: 180px;
+            }
+
+            .movie-information h2 {
+                font-size: 28px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lower-grid {
+                gap: 10px;
+            }
+
+            .customer-row {
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+            .customer-value {
+                max-width: 100%;
+
+                text-align: left;
+            }
+
+            .code-section {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .booking-code {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .ticket-actions {
+                padding: 20px;
+
+                flex-direction: column;
+            }
+
+            .ticket-button {
+                width: 100%;
+            }
+        }
+
+
+        /* =====================================================
+           PRINT
+        ===================================================== */
+
+        @media print {
+
+            body {
+                background: #ffffff;
+            }
+
+            .confirmation-page {
+                padding: 0;
+            }
+
+            .success-section {
+                margin-bottom: 15px;
+            }
+
+            .ticket {
+                border: 1px solid #dddddd;
+
+                box-shadow: none;
+            }
+
+            .ticket-actions {
+                display: none;
+            }
+
+            .confirmation-footer {
+                display: none;
+            }
+
+            .arrival-note {
+                break-inside: avoid;
+            }
+
+            .lower-grid {
+                break-inside: avoid;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="confirmation-page">
+
+    <div class="confirmation-container">
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+        ================================================= -->
+
+        <section class="success-section">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                Booking Confirmed!
+            </h1>
+
+            <p>
+                Your movie ticket has been successfully booked.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             DIGITAL TICKET
+        ================================================= -->
+
+        <div class="ticket">
+
+
+            <!-- =================================================
+                 TICKET HEADER
+            ================================================= -->
+
+            <div class="ticket-header">
+
+                <div class="brand">
+
+                    <div class="brand-logo">
+                        CB
+                    </div>
+
+                    <div>
+
+                        <div class="brand-name">
+                            CineBook AI
+                        </div>
+
+                        <div class="brand-tagline">
+                            Smart movie booking
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="booking-id-box">
+
+                    <div class="booking-id-label">
+                        Booking ID
+                    </div>
+
+                    <div class="booking-id">
+                        #{{ booking.id }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TICKET BODY
+            ================================================= -->
+
+            <div class="ticket-body">
+
+
+                <!-- =================================================
+                     MOVIE INFORMATION
+                ================================================= -->
+
+                <div class="movie-section">
+
+
+                    {% if booking.showtime.movie.poster_url %}
+
+                        <img
+                            src="{{ booking.showtime.movie.poster_url }}"
+                            alt="{{ booking.showtime.movie.title }}"
+                            class="movie-poster"
+                        >
+
+                    {% else %}
+
+                        <div class="poster-placeholder">
+                            🎬
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="movie-information">
+
+                        <div class="confirmed-badge">
+                            ✓ Booking Confirmed
+                        </div>
+
+                        <h2>
+                            {{ booking.showtime.movie.title }}
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>
+                                {{ booking.showtime.movie.language }}
+                            </span>
+
+                            <span>
+                                {{ booking.showtime.movie.genre }}
+                            </span>
+
+                            <span>
+                                ⭐ {{ booking.showtime.movie.rating }}
+                            </span>
+
+                            <span>
+                                {{ booking.showtime.movie.duration_minutes }} min
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SHOW DETAILS
+                ================================================= -->
+
+                <div class="section-title">
+                    Show Details
+                </div>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            Cinema
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.cinema.name }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            City
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.cinema.city.name }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            Date
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.starts_at|date:"d M Y" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            Showtime
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.starts_at|date:"h:i A" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            Duration
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.movie.duration_minutes }}
+                            minutes
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-label">
+                            Cinema Address
+                        </div>
+
+                        <div class="detail-value">
+                            {{ booking.showtime.cinema.address }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SELECTED SEATS
+                ================================================= -->
+
+                <div class="section-title">
+                    Selected Seats
+                </div>
+
+
+                <div class="seats-box">
+
+                    <div class="seat-list">
+
+                        {% for seat in booking.seats.all %}
+
+                            <div class="seat">
+                                {{ seat.seat_number }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     CUSTOMER + PAYMENT
+                ================================================= -->
+
+                <div class="lower-grid">
+
+
+                    <!-- CUSTOMER -->
+
+                    <div>
+
+                        <div class="section-title">
+                            Customer Details
+                        </div>
+
+
+                        <div class="customer-card">
+
+
+                            <div class="customer-row">
+
+                                <div class="customer-label">
+                                    Name
+                                </div>
+
+                                <div class="customer-value">
+                                    {{ booking.customer_name }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="customer-row">
+
+                                <div class="customer-label">
+                                    Email
+                                </div>
+
+                                <div class="customer-value">
+                                    {{ booking.customer_email }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="customer-row">
+
+                                <div class="customer-label">
+                                    Booking ID
+                                </div>
+
+                                <div class="customer-value">
+                                    #{{ booking.id }}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div>
+
+                        <div class="section-title">
+                            Payment Summary
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <h3>
+                                Ticket Summary
+                            </h3>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Movie
+                                </span>
+
+                                <strong>
+                                    {{ booking.showtime.movie.title }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Tickets
+                                </span>
+
+                                <strong>
+                                    {{ booking.seats.count }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Price / Seat
+                                </span>
+
+                                <strong>
+                                    ₹{{ booking.showtime.price }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-divider"></div>
+
+
+                            <div class="total-row">
+
+                                <div class="total-label">
+                                    Total Paid
+                                </div>
+
+                                <div class="total-price">
+                                    ₹{{ booking.total_amount }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="status">
+                                ✓ CONFIRMED
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     TICKET CODE
+                ================================================= -->
+
+                <div class="code-section">
+
+
+                    <div class="code-text">
+
+                        <h3>
+                            Your Ticket Code
+                        </h3>
+
+                        <p>
+                            Keep this booking ID available when
+                            entering the cinema.
+                        </p>
+
+                    </div>
+
+
+                    <div class="booking-code">
+                        CB{{ booking.id }}
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     ARRIVAL INFORMATION
+                ================================================= -->
+
+                <div class="arrival-note">
+
+                    🎟️ Please arrive at the cinema at least
+                    <strong>15 minutes before</strong>
+                    the showtime.
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================= -->
+
+            <div class="ticket-actions">
+
+
+                <a
+                    href="{% url 'my_bookings' %}"
+                    class="ticket-button light-button"
+                >
+                    ← My Bookings
+                </a>
+
+
+                <button
+                    type="button"
+                    class="ticket-button primary-button"
+                    onclick="window.print()"
+                >
+                    🖨️ Print Ticket
+                </button>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="ticket-button dark-button"
+                >
+                    🏠 Back to Home
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
+        <div class="confirmation-footer">
+
+            CineBook AI · Your smart movie ticketing experience
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

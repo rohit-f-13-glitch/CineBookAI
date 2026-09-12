@@ -1,0 +1,2702 @@
+/* =========================================================
+   CINEBOOKAI - PREMIUM DJANGO ADMIN THEME
+   Complete Admin Styling
+   ========================================================= */
+
+
+/* =========================================================
+   1. GLOBAL VARIABLES
+   ========================================================= */
+
+:root {
+
+    --cb-bg: #f6f3f1;
+    --cb-surface: #ffffff;
+    --cb-surface-soft: #faf8f7;
+
+    --cb-text: #171717;
+    --cb-text-muted: #5f5a57;
+
+    --cb-border: #e5dfdc;
+    --cb-border-dark: #d5ceca;
+
+    --cb-accent: #c77b67;
+    --cb-accent-dark: #a95f4d;
+    --cb-accent-soft: #f3dfd8;
+
+    --cb-black: #000000;
+
+    --cb-radius: 10px;
+    --cb-radius-small: 7px;
+
+    --cb-sidebar-width: 285px;
+
+    --cb-font:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   2. GLOBAL
+   ========================================================= */
+
+html,
+body {
+    font-family: var(--cb-font);
+}
+
+body {
+    background: var(--cb-bg);
+    color: var(--cb-text);
+}
+
+
+/* =========================================================
+   3. MAIN ADMIN HEADER
+   ========================================================= */
+
+#header {
+
+    background: #171717;
+
+    border-bottom: 1px solid #2a2a2a;
+
+    min-height: 64px;
+
+    padding: 0 24px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   4. BRANDING
+   ========================================================= */
+
+#branding {
+
+    display: flex;
+
+    align-items: center;
+}
+
+#branding h1 {
+
+    margin: 0;
+    padding: 0;
+}
+
+#branding h1 a,
+#branding #site-name a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.2px;
+}
+
+
+/* =========================================================
+   5. USER TOOLS
+   ========================================================= */
+
+#user-tools {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #eeeeee;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+#user-tools a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+}
+
+#user-tools a:hover {
+
+    color: #f0b5a4;
+}
+
+
+/* =========================================================
+   6. GLOBAL NAVIGATION
+   ========================================================= */
+
+#nav-global {
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   7. MAIN LAYOUT
+   ========================================================= */
+
+#container {
+
+    background: var(--cb-bg);
+
+    min-height: calc(100vh - 64px);
+}
+
+#content {
+
+    padding: 28px 32px 40px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   8. SIDEBAR
+   ========================================================= */
+
+#nav-sidebar {
+
+    width: var(--cb-sidebar-width);
+
+    background: var(--cb-surface);
+
+    border-right: 1px solid var(--cb-border);
+
+    box-sizing: border-box;
+
+    padding: 20px 14px;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   9. SIDEBAR MODULES
+   ========================================================= */
+
+#nav-sidebar .module {
+
+    margin: 0 0 20px;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   10. SIDEBAR SECTION HEADINGS
+   ========================================================= */
+
+#nav-sidebar .module caption {
+
+    display: block;
+
+    padding: 9px 10px 8px;
+
+    margin: 0 0 6px;
+
+    background: transparent;
+
+    color: #77706c;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   11. SIDEBAR TABLE
+   ========================================================= */
+
+#nav-sidebar .module table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+}
+
+
+/* =========================================================
+   12. SIDEBAR ROW
+   ========================================================= */
+
+#nav-sidebar .module table tr {
+
+    height: 44px;
+}
+
+#nav-sidebar .module table tr th,
+#nav-sidebar .module table tr td {
+
+    height: 44px;
+
+    padding: 0;
+
+    vertical-align: middle;
+
+    background: transparent;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   13. SIDEBAR MODEL NAME
+   ========================================================= */
+
+#nav-sidebar .module table tr th {
+
+    width: auto;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   14. SIDEBAR MODEL LINKS
+   ========================================================= */
+
+#nav-sidebar .module table tbody th a,
+#nav-sidebar .module table tbody th a:link,
+#nav-sidebar .module table tbody th a:visited {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 40px;
+
+    box-sizing: border-box;
+
+    padding: 9px 10px;
+
+    margin: 2px 0;
+
+    border-radius: var(--cb-radius-small);
+
+    color: #111111;
+
+    background: transparent;
+
+    font-size: 13.5px;
+
+    font-weight: 550;
+
+    line-height: 1.25;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+/* =========================================================
+   15. REMOVE ASTERISK FROM SIDEBAR
+   ========================================================= */
+
+#nav-sidebar .module table tbody th a::before {
+
+    content: none !important;
+
+    display: none !important;
+}
+
+
+/* =========================================================
+   16. SIDEBAR HOVER
+   ========================================================= */
+
+#nav-sidebar .module table tbody th a:hover {
+
+    color: #000000;
+
+    background: #f4eeeb;
+
+    transform: translateX(1px);
+}
+
+
+/* =========================================================
+   17. SIDEBAR SELECTED ITEM
+   ========================================================= */
+
+#nav-sidebar .module table tbody th a.selected,
+#nav-sidebar .module table tbody th a.current,
+#nav-sidebar .module table tbody tr.selected th a {
+
+    color: #000000;
+
+    background: var(--cb-accent-soft);
+
+    font-weight: 750;
+
+    box-shadow:
+        inset 3px 0 0 var(--cb-accent);
+}
+
+
+/* =========================================================
+   18. SIDEBAR ACTION CELL
+   ========================================================= */
+
+#nav-sidebar .module table tbody td {
+
+    width: 58px;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   19. SIDEBAR ADD / CHANGE BUTTON
+   ========================================================= */
+
+#nav-sidebar .module table tbody td a.addlink,
+#nav-sidebar .module table tbody td a.changelink {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 48px;
+
+    min-width: 48px;
+
+    min-height: 28px;
+
+    padding: 5px 8px;
+
+    margin: 0;
+
+    border: 1px solid var(--cb-border-dark);
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #222222;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+/* =========================================================
+   20. SIDEBAR BUTTON HOVER
+   ========================================================= */
+
+#nav-sidebar .module table tbody td a.addlink:hover,
+#nav-sidebar .module table tbody td a.changelink:hover {
+
+    background: var(--cb-accent);
+
+    border-color: var(--cb-accent);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   21. SIDEBAR EMPTY ROWS
+   ========================================================= */
+
+#nav-sidebar .module table tbody tr {
+
+    border: 0;
+}
+
+
+/* =========================================================
+   22. SIDEBAR SEARCH
+   ========================================================= */
+
+#nav-sidebar input[type="search"],
+#nav-sidebar input[type="text"] {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 9px 11px;
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    font-family: var(--cb-font);
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+#nav-sidebar input:focus {
+
+    border-color: var(--cb-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(199, 123, 103, 0.12);
+}
+
+
+/* =========================================================
+   23. BREADCRUMBS
+   ========================================================= */
+
+.breadcrumbs {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    box-sizing: border-box;
+
+    margin: 0 0 22px;
+
+    padding: 10px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: 9px;
+
+    color: var(--cb-text-muted);
+
+    font-size: 12.5px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   24. BREADCRUMB LINKS
+   ========================================================= */
+
+.breadcrumbs a {
+
+    color: #5b5551;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.18s ease;
+}
+
+.breadcrumbs a:hover {
+
+    color: var(--cb-accent-dark);
+}
+
+
+/* =========================================================
+   25. BREADCRUMB SEPARATORS
+   ========================================================= */
+
+.breadcrumbs a::after {
+
+    content: "›";
+
+    display: inline-block;
+
+    margin-left: 7px;
+
+    color: #aaa19c;
+
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   26. CURRENT BREADCRUMB
+   ========================================================= */
+
+.breadcrumbs span:last-child {
+
+    color: #171717;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   27. PAGE TITLE
+   ========================================================= */
+
+#content h1 {
+
+    margin: 0 0 22px;
+
+    color: #171717;
+
+    font-size: 28px;
+
+    font-weight: 780;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.4px;
+}
+
+
+/* =========================================================
+   28. MAIN CONTENT MODULE
+   ========================================================= */
+
+#content-main .module {
+
+    margin-bottom: 22px;
+
+    background: var(--cb-surface);
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: var(--cb-radius);
+
+    box-shadow:
+        0 3px 12px rgba(35, 27, 23, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   29. MODULE HEADING
+   ========================================================= */
+
+#content-main .module h2,
+#content-main .module caption {
+
+    padding: 14px 18px;
+
+    background: #faf8f7;
+
+    color: #222222;
+
+    border-bottom: 1px solid var(--cb-border);
+
+    font-size: 14px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   30. FORM ROWS
+   ========================================================= */
+
+.form-row {
+
+    padding: 17px 20px;
+
+    border-bottom: 1px solid #eee9e6;
+
+    background: #ffffff;
+}
+
+.form-row:last-child {
+
+    border-bottom: 0;
+}
+
+
+/* =========================================================
+   31. FORM LABELS
+   ========================================================= */
+
+.form-row label {
+
+    color: #282421;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   32. INPUTS
+   ========================================================= */
+
+#content-main input[type="text"],
+#content-main input[type="number"],
+#content-main input[type="email"],
+#content-main input[type="url"],
+#content-main input[type="password"],
+#content-main input[type="date"],
+#content-main input[type="datetime-local"],
+#content-main textarea,
+#content-main select {
+
+    box-sizing: border-box;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #d9d2ce;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #171717;
+
+    font-family: var(--cb-font);
+
+    font-size: 13.5px;
+
+    outline: none;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease;
+}
+
+
+/* =========================================================
+   33. FORM INPUT WIDTH
+   ========================================================= */
+
+#content-main input[type="text"],
+#content-main input[type="number"],
+#content-main input[type="email"],
+#content-main input[type="url"],
+#content-main input[type="password"],
+#content-main input[type="date"],
+#content-main input[type="datetime-local"],
+#content-main select {
+
+    width: min(520px, 100%);
+}
+
+
+/* =========================================================
+   34. TEXTAREA
+   ========================================================= */
+
+#content-main textarea {
+
+    width: min(620px, 100%);
+
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   35. INPUT FOCUS
+   ========================================================= */
+
+#content-main input:focus,
+#content-main select:focus,
+#content-main textarea:focus {
+
+    border-color: var(--cb-accent);
+
+    background: #fffdfc;
+
+    box-shadow:
+        0 0 0 3px rgba(199, 123, 103, 0.13);
+}
+
+
+/* =========================================================
+   36. HELP TEXT
+   ========================================================= */
+
+.help,
+.helptext {
+
+    color: #77716d;
+
+    font-size: 11.5px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   37. REQUIRED FIELD
+   ========================================================= */
+
+.required label,
+label.required {
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   38. SUBMIT ROW
+   ========================================================= */
+
+.submit-row {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+
+    margin: 18px 0 0;
+
+    padding: 16px 20px;
+
+    background: #faf8f7;
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: var(--cb-radius);
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   39. PRIMARY SAVE BUTTON
+   ========================================================= */
+
+.submit-row input[type="submit"],
+.submit-row input.default {
+
+    min-height: 42px;
+
+    padding: 10px 22px;
+
+    border: 1px solid var(--cb-accent);
+
+    border-radius: 8px;
+
+    background: var(--cb-accent);
+
+    color: #ffffff;
+
+    font-family: var(--cb-font);
+
+    font-size: 12.5px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+/* =========================================================
+   40. PRIMARY BUTTON HOVER
+   ========================================================= */
+
+.submit-row input[type="submit"]:hover,
+.submit-row input.default:hover {
+
+    background: var(--cb-accent-dark);
+
+    border-color: var(--cb-accent-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(120, 70, 57, 0.14);
+}
+
+
+/* =========================================================
+   41. SECONDARY BUTTONS
+   ========================================================= */
+
+.submit-row input[name="_addanother"],
+.submit-row input[name="_continue"] {
+
+    min-height: 42px;
+
+    padding: 10px 18px;
+
+    border: 1px solid #d4ccc7;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #33302d;
+
+    font-family: var(--cb-font);
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.submit-row input[name="_addanother"]:hover,
+.submit-row input[name="_continue"]:hover {
+
+    background: #f4eeeb;
+
+    border-color: #c5bbb5;
+
+    color: #111111;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   42. DELETE BUTTON
+   ========================================================= */
+
+.submit-row a.deletelink {
+
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    color: #8c3d35;
+
+    background: #fff5f3;
+
+    border: 1px solid #efd5d0;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   43. TABLES
+   ========================================================= */
+
+#content-main table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+#content-main table th {
+
+    color: #36312e;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    text-align: left;
+
+    background: #faf8f7;
+
+    border-bottom: 1px solid var(--cb-border);
+}
+
+#content-main table td {
+
+    color: #4c4744;
+
+    font-size: 12.5px;
+
+    border-bottom: 1px solid #eee9e6;
+}
+
+
+/* =========================================================
+   44. CONTENT LINKS
+   ========================================================= */
+
+#content-main a {
+
+    color: #9a5948;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+#content-main a:hover {
+
+    color: #713d31;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   45. OBJECT TOOLS
+   ========================================================= */
+
+.object-tools {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 16px;
+}
+
+.object-tools a {
+
+    border-radius: 7px !important;
+
+    background: var(--cb-accent) !important;
+
+    border: 1px solid var(--cb-accent) !important;
+
+    color: #ffffff !important;
+
+    font-size: 12px !important;
+
+    font-weight: 700 !important;
+
+    padding: 9px 14px !important;
+}
+
+.object-tools a:hover {
+
+    background: var(--cb-accent-dark) !important;
+
+    border-color: var(--cb-accent-dark) !important;
+}
+
+
+/* =========================================================
+   46. FILTER PANEL
+   ========================================================= */
+
+#changelist-filter {
+
+    background: #ffffff;
+
+    border-left: 1px solid var(--cb-border);
+
+    padding: 16px;
+
+    box-sizing: border-box;
+}
+
+#changelist-filter h2 {
+
+    color: #222222;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+#changelist-filter h3 {
+
+    color: #6b6561;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+#changelist-filter a {
+
+    color: #4e4946;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   47. SEARCH TOOLBAR
+   ========================================================= */
+
+#toolbar {
+
+    background: #ffffff;
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: 9px;
+
+    margin-bottom: 16px;
+
+    padding: 12px;
+}
+
+#toolbar input[type="text"] {
+
+    min-height: 40px;
+
+    border-radius: 7px;
+
+    border: 1px solid #d9d2ce;
+}
+
+#toolbar input[type="submit"] {
+
+    min-height: 40px;
+
+    padding: 8px 16px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #222222;
+
+    color: #ffffff;
+
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+#toolbar input[type="submit"]:hover {
+
+    background: #000000;
+}
+
+
+/* =========================================================
+   48. PAGINATION
+   ========================================================= */
+
+.paginator {
+
+    padding: 14px 0;
+
+    color: #68615d;
+
+    font-size: 12px;
+}
+
+.paginator a {
+
+    color: #8e5142;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   49. MESSAGES
+   ========================================================= */
+
+ul.messagelist {
+
+    margin: 0 0 18px;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+ul.messagelist li {
+
+    padding: 12px 15px;
+
+    margin-bottom: 8px;
+
+    border-radius: 8px;
+
+    font-size: 12.5px;
+
+    border: 1px solid var(--cb-border);
+}
+
+
+/* =========================================================
+   50. ERROR MESSAGE
+   ========================================================= */
+
+.errornote {
+
+    padding: 12px 15px;
+
+    margin-bottom: 18px;
+
+    border-radius: 8px;
+
+    background: #fff4f2;
+
+    border: 1px solid #efd2cd;
+
+    color: #873e35;
+
+    font-size: 12.5px;
+}
+
+
+/* =========================================================
+   51. INLINE FORMSETS
+   ========================================================= */
+
+.inline-group {
+
+    border: 1px solid var(--cb-border);
+
+    border-radius: var(--cb-radius);
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    margin-bottom: 20px;
+}
+
+.inline-group h2 {
+
+    background: #faf8f7;
+
+    border-bottom: 1px solid var(--cb-border);
+
+    padding: 13px 17px;
+
+    color: #292522;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   52. RECENT ACTIONS
+   ========================================================= */
+
+#content-related {
+
+    background: transparent;
+}
+
+#content-related h2 {
+
+    color: #292522;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+#content-related ul {
+
+    padding-left: 18px;
+}
+
+#content-related li {
+
+    color: #625c58;
+
+    font-size: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   53. FOOTER
+   ========================================================= */
+
+#footer {
+
+    background: transparent;
+
+    color: #8a837e;
+
+    font-size: 11px;
+
+    padding: 20px 32px;
+}
+
+
+/* =========================================================
+   54. ACCESSIBILITY
+   ========================================================= */
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+
+    outline: 2px solid rgba(199, 123, 103, 0.35);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   55. CINEBOOKAI ADMIN INDEX
+   ========================================================= */
+
+.cb-admin-home {
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   56. INDEX HEADER
+   ========================================================= */
+
+.cb-admin-home-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 28px;
+
+    padding: 26px 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #fffaf8 55%,
+            #f7e7e1 100%
+        );
+
+    border: 1px solid #e5d8d3;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 7px 24px rgba(50, 35, 28, 0.06);
+}
+
+
+.cb-admin-home-header h1 {
+
+    margin: 0 0 7px !important;
+
+    color: #171717 !important;
+
+    font-size: 27px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: -0.4px;
+}
+
+
+.cb-admin-home-header p {
+
+    margin: 0;
+
+    color: #6c6561;
+
+    font-size: 12.5px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   57. INDEX HEADER BUTTONS
+   ========================================================= */
+
+.cb-admin-home-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.cb-home-btn,
+.cb-dashboard-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 36px;
+
+    padding: 0 14px;
+
+    border-radius: 7px;
+
+    text-decoration: none !important;
+
+    font-size: 11.5px;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease;
+}
+
+
+.cb-home-btn {
+
+    color: #8e4f40 !important;
+
+    background: #ffffff;
+
+    border: 1px solid #dec9c1;
+}
+
+
+.cb-dashboard-btn {
+
+    color: #ffffff !important;
+
+    background: var(--cb-accent);
+
+    border: 1px solid var(--cb-accent);
+}
+
+
+.cb-home-btn:hover,
+.cb-dashboard-btn:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(50, 35, 28, 0.10);
+
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   58. APPLICATION CARDS
+   ========================================================= */
+
+.cb-admin-applications {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(460px, 1fr)
+        );
+
+    gap: 20px;
+}
+
+
+.cb-admin-app {
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e3dcd8;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 4px 15px rgba(35, 27, 23, 0.045);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+
+.cb-admin-app:hover {
+
+    transform: translateY(-2px);
+
+    border-color: #d5c2ba;
+
+    box-shadow:
+        0 8px 22px rgba(35, 27, 23, 0.075);
+}
+
+
+/* =========================================================
+   59. APPLICATION HEADER
+   ========================================================= */
+
+.cb-admin-app-header {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 76px;
+
+    box-sizing: border-box;
+
+    padding: 15px 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fcfaf9 0%,
+            #f8f5f3 100%
+        );
+
+    border-bottom: 1px solid #e6dfdb;
+}
+
+
+.cb-admin-app-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.cb-app-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #f3dfd8;
+
+    border: 1px solid #ead2c9;
+
+    font-size: 19px;
+}
+
+
+.cb-admin-app-title h2 {
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    border: 0 !important;
+
+    color: #181615 !important;
+
+    font-size: 15px !important;
+
+    font-weight: 800 !important;
+
+    line-height: 1.25;
+}
+
+
+.cb-admin-app-title span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #817a76;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   60. MODEL LIST
+   ========================================================= */
+
+.cb-admin-models {
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   61. MODEL ROW
+   ========================================================= */
+
+.cb-admin-model-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    min-height: 57px;
+
+    box-sizing: border-box;
+
+    padding: 8px 15px 8px 18px;
+
+    border-bottom: 1px solid #eee9e6;
+
+    background: #ffffff;
+
+    transition:
+        background-color 0.16s ease;
+}
+
+
+.cb-admin-model-row:last-child {
+
+    border-bottom: 0;
+}
+
+
+.cb-admin-model-row:hover {
+
+    background: #fdf9f7;
+}
+
+
+/* =========================================================
+   62. MODEL INFORMATION
+   ========================================================= */
+
+.cb-model-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+
+.cb-model-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 28px;
+
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+
+    background: #f7f2ef;
+
+    border: 1px solid #e7dfdb;
+
+    font-size: 12px;
+}
+
+
+.cb-model-name {
+
+    min-width: 0;
+}
+
+
+.cb-model-name a,
+.cb-model-name span {
+
+    color: #272321 !important;
+
+    font-size: 12.5px !important;
+
+    font-weight: 650 !important;
+
+    line-height: 1.3;
+
+    text-decoration: none !important;
+}
+
+
+.cb-model-name a:hover {
+
+    color: #a95f4d !important;
+
+    text-decoration: none !important;
+}
+
+
+.cb-disabled {
+
+    color: #77716d !important;
+}
+
+
+/* =========================================================
+   63. MODEL ACTIONS
+   ========================================================= */
+
+.cb-model-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-left: 12px;
+
+    flex-shrink: 0;
+}
+
+
+.cb-add-btn,
+.cb-view-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 50px;
+
+    min-height: 29px;
+
+    box-sizing: border-box;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px !important;
+
+    font-weight: 750 !important;
+
+    text-decoration: none !important;
+
+    transition:
+        background-color 0.16s ease,
+        border-color 0.16s ease,
+        color 0.16s ease,
+        transform 0.16s ease;
+}
+
+
+.cb-add-btn {
+
+    background: var(--cb-accent);
+
+    border: 1px solid var(--cb-accent);
+
+    color: #ffffff !important;
+}
+
+
+.cb-add-btn:hover {
+
+    background: var(--cb-accent-dark);
+
+    border-color: var(--cb-accent-dark);
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+
+.cb-view-btn {
+
+    background: #ffffff;
+
+    border: 1px solid #d7cfca;
+
+    color: #514b47 !important;
+}
+
+
+.cb-view-btn:hover {
+
+    background: #f5efec;
+
+    border-color: #cbbcb5;
+
+    color: #282421 !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   64. EMPTY STATE
+   ========================================================= */
+
+.cb-empty-state {
+
+    padding: 55px 25px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e2dad6;
+
+    border-radius: 13px;
+}
+
+
+.cb-empty-state > div {
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.cb-empty-state h2 {
+
+    margin: 0 0 7px;
+
+    color: #25211f;
+
+    font-size: 18px;
+}
+
+
+.cb-empty-state p {
+
+    margin: 0;
+
+    color: #77716d;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   65. INDEX LINK OVERRIDES
+   ========================================================= */
+
+#content-main .cb-admin-home a {
+
+    text-decoration: none;
+}
+
+#content-main .cb-admin-home a:hover {
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   66. REMOVE DEFAULT MODULE STYLING INSIDE INDEX
+   ========================================================= */
+
+#content-main .cb-admin-home .module {
+
+    border: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   67. RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    #nav-sidebar {
+
+        width: 245px;
+
+        padding: 16px 10px;
+    }
+
+    #content {
+
+        padding: 22px;
+    }
+
+    .form-row {
+
+        padding: 15px;
+    }
+
+    .cb-admin-applications {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   68. RESPONSIVE - SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    #header {
+
+        padding: 0 15px;
+    }
+
+    #content {
+
+        padding: 18px 15px 30px;
+    }
+
+    #nav-sidebar {
+
+        width: 100%;
+
+        border-right: 0;
+
+        border-bottom: 1px solid var(--cb-border);
+    }
+
+    #nav-sidebar .module {
+
+        margin-bottom: 12px;
+    }
+
+    #content h1 {
+
+        font-size: 24px;
+    }
+
+    .breadcrumbs {
+
+        margin-bottom: 17px;
+    }
+
+    .submit-row {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .submit-row input,
+    .submit-row a {
+
+        width: 100% !important;
+
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+
+    .cb-admin-home-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .cb-admin-home-actions {
+
+        width: 100%;
+    }
+
+    .cb-home-btn,
+    .cb-dashboard-btn {
+
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   69. RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #branding h1 a,
+    #branding #site-name a {
+
+        font-size: 17px;
+    }
+
+    #user-tools {
+
+        font-size: 11px;
+    }
+
+    #content {
+
+        padding: 14px 10px 25px;
+    }
+
+    #content h1 {
+
+        font-size: 22px;
+
+        margin-bottom: 17px;
+    }
+
+    .breadcrumbs {
+
+        padding: 9px 11px;
+
+        font-size: 11.5px;
+    }
+
+    .form-row {
+
+        padding: 14px 12px;
+    }
+
+    #content-main input[type="text"],
+    #content-main input[type="number"],
+    #content-main input[type="email"],
+    #content-main input[type="url"],
+    #content-main input[type="password"],
+    #content-main input[type="date"],
+    #content-main input[type="datetime-local"],
+    #content-main textarea,
+    #content-main select {
+
+        width: 100%;
+    }
+
+    .cb-admin-home-header {
+
+        padding: 21px 18px;
+
+        border-radius: 12px;
+    }
+
+    .cb-admin-home-header h1 {
+
+        font-size: 23px !important;
+    }
+
+    .cb-admin-home-header p {
+
+        font-size: 11.5px;
+    }
+
+    .cb-admin-home-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .cb-home-btn,
+    .cb-dashboard-btn {
+
+        width: 100%;
+    }
+
+    .cb-admin-model-row {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 9px;
+
+        padding: 11px 14px;
+    }
+
+    .cb-model-actions {
+
+        width: 100%;
+
+        margin-left: 38px;
+    }
+
+    .cb-add-btn,
+    .cb-view-btn {
+
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   70. VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    #content {
+
+        padding: 12px 9px 22px;
+    }
+
+    .cb-admin-home-header {
+
+        padding: 18px 15px;
+    }
+
+    .cb-admin-home-header h1 {
+
+        font-size: 21px !important;
+    }
+
+    .cb-app-icon {
+
+        width: 36px;
+
+        height: 36px;
+
+        font-size: 16px;
+    }
+
+    .cb-admin-app-title {
+
+        gap: 9px;
+    }
+
+    .cb-admin-app-title h2 {
+
+        font-size: 14px !important;
+    }
+
+    .cb-admin-model-row {
+
+        padding: 11px 12px;
+    }
+
+    .cb-model-actions {
+
+        margin-left: 0;
+    }
+
+    .cb-add-btn,
+    .cb-view-btn {
+
+        min-width: 0;
+    }
+}
+/* ============================================================
+   CINEBOOKAI ADMIN HOME
+   PROFESSIONAL GROUPED DASHBOARD
+   ============================================================ */
+
+
+/* ============================================================
+   MAIN HOME CONTAINER
+   ============================================================ */
+
+.cb-admin-home {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.cb-admin-hero {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 170px;
+
+    margin-bottom: 28px;
+    padding: 34px 38px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1a1a1a 0%,
+            #23201f 55%,
+            #2d211e 100%
+        );
+
+    border: 1px solid rgba(199, 123, 103, 0.28);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.10);
+
+    overflow: hidden;
+}
+
+
+.cb-admin-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -90px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(199, 123, 103, 0.20);
+
+    box-shadow:
+        0 0 0 30px rgba(199, 123, 103, 0.035),
+        0 0 0 60px rgba(199, 123, 103, 0.025);
+}
+
+
+.cb-admin-kicker {
+    margin-bottom: 8px;
+
+    color: #d99582;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+}
+
+
+.cb-admin-hero h1 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 31px;
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+}
+
+
+.cb-admin-hero p {
+    margin: 0;
+
+    max-width: 680px;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   APPLICATION GRID
+   ============================================================ */
+
+.cb-app-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(480px, 1fr)
+        );
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+/* ============================================================
+   APPLICATION CARD
+   ============================================================ */
+
+.cb-app-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e6dfdc;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 7px 22px rgba(42, 28, 24, 0.055);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.cb-app-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(42, 28, 24, 0.09);
+}
+
+
+/* ============================================================
+   APPLICATION HEADER
+   ============================================================ */
+
+.cb-app-card-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf8f7,
+            #f5f0ee
+        );
+
+    border-bottom: 1px solid #e7dfdc;
+}
+
+
+.cb-app-label {
+    margin-bottom: 4px;
+
+    color: #a77a6c;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+}
+
+
+.cb-app-card-header h2 {
+    margin: 0;
+
+    color: #201b19;
+
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+.cb-app-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    background: rgba(199, 123, 103, 0.11);
+
+    border: 1px solid rgba(199, 123, 103, 0.18);
+
+    font-size: 19px;
+}
+
+
+/* ============================================================
+   MODEL LIST
+   ============================================================ */
+
+.cb-model-list {
+    width: 100%;
+}
+
+
+/* ============================================================
+   MODEL ROW
+   ============================================================ */
+
+.cb-model-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 63px;
+
+    padding: 11px 18px 11px 22px;
+
+    border-bottom: 1px solid #eee9e6;
+
+    transition:
+        background 0.15s ease;
+}
+
+
+.cb-model-row:last-child {
+    border-bottom: none;
+}
+
+
+.cb-model-row:hover {
+    background: #fcfaf9;
+}
+
+
+/* ============================================================
+   MODEL INFORMATION
+   ============================================================ */
+
+.cb-model-info {
+    display: flex;
+
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 12px;
+}
+
+
+.cb-model-dot {
+    flex: 0 0 auto;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #c77b67;
+
+    box-shadow:
+        0 0 0 4px rgba(199, 123, 103, 0.08);
+}
+
+
+.cb-model-name {
+    color: #302925;
+
+    text-decoration: none;
+
+    font-size: 13.5px;
+    font-weight: 650;
+
+    transition:
+        color 0.15s ease;
+}
+
+
+a.cb-model-name:hover {
+    color: #b46653;
+}
+
+
+/* ============================================================
+   ACTION BUTTONS
+   ============================================================ */
+
+.cb-model-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-left: 15px;
+}
+
+
+.cb-add-btn,
+.cb-view-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 54px;
+
+    height: 30px;
+
+    padding: 0 10px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 10.5px;
+    font-weight: 750;
+
+    transition:
+        all 0.15s ease;
+}
+
+
+/* ADD */
+
+.cb-add-btn {
+    color: #ffffff;
+
+    background: #c77b67;
+
+    border: 1px solid #c77b67;
+
+    box-shadow:
+        0 3px 8px rgba(199, 123, 103, 0.18);
+}
+
+
+.cb-add-btn:hover {
+    color: #ffffff;
+
+    background: #b96d59;
+
+    border-color: #b96d59;
+
+    transform: translateY(-1px);
+}
+
+
+/* VIEW */
+
+.cb-view-btn {
+    color: #5b504b;
+
+    background: #ffffff;
+
+    border: 1px solid #d9d1cd;
+}
+
+
+.cb-view-btn:hover {
+    color: #9a5948;
+
+    background: #faf7f6;
+
+    border-color: #c9a59b;
+
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.cb-empty {
+    padding: 50px;
+
+    text-align: center;
+
+    color: #777;
+
+    background: #ffffff;
+
+    border: 1px solid #e6dfdc;
+
+    border-radius: 14px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .cb-app-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .cb-admin-hero {
+        padding: 26px 24px;
+        min-height: 145px;
+    }
+
+
+    .cb-admin-hero h1 {
+        font-size: 25px;
+    }
+
+
+    .cb-admin-hero p {
+        font-size: 12px;
+    }
+
+
+    .cb-app-card-header {
+        padding: 17px;
+    }
+
+
+    .cb-model-row {
+        align-items: flex-start;
+
+        gap: 12px;
+
+        padding: 13px 15px;
+    }
+
+
+    .cb-model-actions {
+        margin-left: auto;
+    }
+
+
+    .cb-add-btn,
+    .cb-view-btn {
+        min-width: 45px;
+
+        padding: 0 7px;
+
+        font-size: 9.5px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .cb-admin-hero {
+        padding: 22px 18px;
+    }
+
+
+    .cb-admin-hero h1 {
+        font-size: 22px;
+    }
+
+
+    .cb-app-grid {
+        gap: 16px;
+    }
+
+
+    .cb-model-row {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .cb-model-actions {
+        margin-left: 19px;
+    }
+
+}

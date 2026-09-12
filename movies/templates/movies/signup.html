@@ -1,0 +1,257 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | CineBook AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'movies/css/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <!-- ==============================
+         HEADER
+    =============================== -->
+
+    <header class="header">
+
+        <div class="header-container">
+
+            <a
+                href="{% url 'home' %}"
+                class="logo"
+            >
+
+                <span class="logo-icon">🎬</span>
+
+                <span class="logo-text">
+                    CineBook<strong>AI</strong>
+                </span>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a href="{% url 'my_bookings' %}">
+                    My Bookings
+                </a>
+
+                <a href="{% url 'login' %}">
+                    Sign In
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         SIGNUP PAGE
+    =============================== -->
+
+    <main class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    ✨
+                </div>
+
+                <h1>
+                    Create Account
+                </h1>
+
+                <p>
+                    Join CineBook AI and start booking your movies.
+                </p>
+
+            </div>
+
+
+            <!-- ==============================
+                 MESSAGES
+            =============================== -->
+
+            {% if messages %}
+
+                <div class="auth-messages">
+
+                    {% for message in messages %}
+
+                        <div class="auth-message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ==============================
+                 SIGNUP FORM
+            =============================== -->
+
+            <form
+                method="POST"
+                action="{% url 'signup' %}"
+                class="auth-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        required
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                        autocomplete="email"
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                        autocomplete="new-password"
+                    >
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirm your password"
+                        required
+                        autocomplete="new-password"
+                    >
+
+                </div>
+
+
+                <!-- CREATE ACCOUNT -->
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <!-- ==============================
+                 LOGIN LINK
+            =============================== -->
+
+            <div class="auth-footer">
+
+                <p>
+
+                    Already have an account?
+
+                    <a href="{% url 'login' %}">
+                        Sign In
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==============================
+         FOOTER
+    =============================== -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 CineBook AI. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

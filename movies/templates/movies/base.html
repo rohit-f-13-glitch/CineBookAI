@@ -1,0 +1,93 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}CineBook{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'movies/css/style.css' %}">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="{% url 'home' %}" class="logo">
+                🎬 CineBook
+            </a>
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    placeholder="Search for movies, cinemas..."
+                >
+                <button>🔍</button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="city-btn">
+                    📍 Pune
+                </button>
+
+                <a href="#" class="login-btn">
+                    Login
+                </a>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div>
+                    <h2>🎬 CineBook</h2>
+                    <p>
+                        Your smart movie ticket booking platform.
+                    </p>
+                </div>
+
+                <div>
+                    <h3>Quick Links</h3>
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="#">Movies</a>
+                    <a href="#">Cinemas</a>
+                </div>
+
+                <div>
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 CineBook. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
+```

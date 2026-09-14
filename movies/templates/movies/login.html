@@ -12,40 +12,887 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Sign In | CineBook AI</title>
+    <title>Sign In | CineBookAI</title>
 
     <link
         rel="stylesheet"
         href="{% static 'movies/css/style.css' %}"
     >
 
+    <style>
+
+        /* =========================================
+           CINEBOOKAI LOGIN PAGE
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: #080d18;
+            color: #ffffff;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .login-header {
+            width: 100%;
+            height: 76px;
+
+            background:
+                rgba(7, 13, 25, 0.96);
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-header-container {
+            max-width: 1280px;
+            height: 100%;
+
+            margin: 0 auto;
+            padding: 0 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            color: #ffffff;
+
+            text-decoration: none;
+        }
+
+        .login-logo-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7757,
+                    #ff5b3d
+                );
+
+            font-size: 22px;
+
+            box-shadow:
+                0 8px 24px rgba(255, 102, 72, 0.25);
+        }
+
+        .login-logo-name {
+            font-size: 23px;
+            font-weight: 750;
+            letter-spacing: -0.7px;
+        }
+
+        .login-logo-name strong {
+            color: #ff6b4a;
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .login-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .login-nav a {
+            color: #c7ccd7;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 550;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .login-nav a:hover {
+            color: #ff7655;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           MAIN LOGIN AREA
+        ========================================= */
+
+        .login-main {
+            min-height: calc(100vh - 76px);
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            padding: 70px 32px;
+        }
+
+
+        /* Cinematic background */
+
+        .cinema-background {
+            position: absolute;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 75% 40%,
+                    rgba(255, 102, 72, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 18% 70%,
+                    rgba(76, 100, 160, 0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    120deg,
+                    #070b14 0%,
+                    #101827 48%,
+                    #1c1114 100%
+                );
+
+            z-index: 0;
+        }
+
+
+        /* Cinematic light */
+
+        .cinema-background::before {
+            content: "";
+
+            position: absolute;
+
+            width: 700px;
+            height: 700px;
+
+            left: -230px;
+            bottom: -350px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(190, 35, 35, 0.38) 0%,
+                    rgba(120, 20, 25, 0.16) 35%,
+                    transparent 70%
+                );
+
+            filter: blur(20px);
+        }
+
+
+        /* Theater lights */
+
+        .cinema-background::after {
+            content: "";
+
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    105deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.025) 30%,
+                    transparent 48%,
+                    rgba(255, 120, 80, 0.035) 70%,
+                    transparent 100%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================
+           CONTENT CONTAINER
+        ========================================= */
+
+        .login-container {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            max-width: 1180px;
+
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: 1fr 470px;
+
+            align-items: center;
+
+            gap: 90px;
+        }
+
+
+        /* =========================================
+           LEFT SIDE
+        ========================================= */
+
+        .login-introduction {
+            max-width: 600px;
+        }
+
+        .login-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-bottom: 22px;
+
+            color: #ff7655;
+
+            font-size: 13px;
+            font-weight: 750;
+
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .login-eyebrow::before {
+            content: "";
+
+            width: 30px;
+            height: 2px;
+
+            background: #ff6b4a;
+
+            border-radius: 10px;
+        }
+
+        .login-introduction h1 {
+            font-size: clamp(48px, 5vw, 76px);
+
+            line-height: 0.98;
+
+            letter-spacing: -3.5px;
+
+            font-weight: 800;
+
+            margin-bottom: 26px;
+        }
+
+        .login-introduction h1 span {
+            color: #ff6b4a;
+        }
+
+        .login-description {
+            max-width: 520px;
+
+            color: #aeb6c6;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            margin-bottom: 38px;
+        }
+
+
+        /* =========================================
+           FEATURE ITEMS
+        ========================================= */
+
+        .login-features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            max-width: 570px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.09);
+
+            padding-top: 26px;
+        }
+
+        .login-feature {
+            padding-right: 20px;
+        }
+
+        .login-feature + .login-feature {
+            padding-left: 20px;
+
+            border-left:
+                1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(255, 107, 74, 0.12);
+
+            border:
+                1px solid rgba(255, 107, 74, 0.18);
+
+            color: #ff7655;
+
+            font-size: 17px;
+
+            margin-bottom: 12px;
+        }
+
+        .login-feature h3 {
+            font-size: 14px;
+            font-weight: 700;
+
+            color: #ffffff;
+
+            margin-bottom: 5px;
+        }
+
+        .login-feature p {
+            color: #8993a5;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           LOGIN CARD
+        ========================================= */
+
+        .login-card {
+            width: 100%;
+
+            background:
+                rgba(255, 255, 255, 0.97);
+
+            color: #121a2a;
+
+            border-radius: 24px;
+
+            padding: 42px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.38);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.7);
+
+            position: relative;
+        }
+
+
+        /* =========================================
+           CARD HEADER
+        ========================================= */
+
+        .login-card-header {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .card-logo {
+            width: 52px;
+            height: 52px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7655,
+                    #ff5d3e
+                );
+
+            color: #ffffff;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 12px 28px rgba(255, 107, 74, 0.25);
+        }
+
+        .login-card-header h2 {
+            font-size: 30px;
+
+            line-height: 1.2;
+
+            letter-spacing: -0.8px;
+
+            font-weight: 800;
+
+            margin-bottom: 9px;
+        }
+
+        .login-card-header p {
+            color: #7b8495;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           MESSAGES
+        ========================================= */
+
+        .auth-messages {
+            margin-bottom: 20px;
+        }
+
+        .auth-message {
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            background: #fff3ef;
+
+            border:
+                1px solid #ffd5ca;
+
+            color: #c94e36;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .login-form {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 20px;
+        }
+
+        .login-field {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .login-field label {
+            color: #263044;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #929baa;
+
+            font-size: 16px;
+
+            pointer-events: none;
+        }
+
+        .login-field input {
+            width: 100%;
+
+            height: 52px;
+
+            padding:
+                0 16px 0 46px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #dfe3e9;
+
+            background: #ffffff;
+
+            color: #182033;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .login-field input::placeholder {
+            color: #a2a9b5;
+        }
+
+        .login-field input:focus {
+            border-color: #ff6b4a;
+
+            box-shadow:
+                0 0 0 4px rgba(255, 107, 74, 0.10);
+        }
+
+
+        /* =========================================
+           SIGN IN BUTTON
+        ========================================= */
+
+        .login-submit {
+            width: 100%;
+
+            height: 54px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7655,
+                    #ff5e40
+                );
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(255, 107, 74, 0.22);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px rgba(255, 107, 74, 0.30);
+
+            filter: brightness(1.03);
+        }
+
+        .login-submit:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           CARD FOOTER
+        ========================================= */
+
+        .login-card-footer {
+            text-align: center;
+
+            margin-top: 26px;
+
+            padding-top: 24px;
+
+            border-top:
+                1px solid #eceef2;
+        }
+
+        .login-card-footer p {
+            color: #687286;
+
+            font-size: 13px;
+        }
+
+        .login-card-footer a {
+            color: #f15f43;
+
+            font-weight: 750;
+
+            text-decoration: none;
+
+            margin-left: 4px;
+        }
+
+        .login-card-footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .login-footer {
+            background: #070c17;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            padding: 22px 32px;
+
+            text-align: center;
+
+            color: #727c8e;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .login-container {
+                grid-template-columns: 1fr 430px;
+
+                gap: 45px;
+            }
+
+            .login-introduction h1 {
+                font-size: 56px;
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .login-main {
+                padding: 50px 20px;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+
+                max-width: 520px;
+
+                gap: 45px;
+            }
+
+            .login-introduction {
+                text-align: center;
+
+                max-width: 520px;
+
+                margin: 0 auto;
+            }
+
+            .login-eyebrow {
+                justify-content: center;
+            }
+
+            .login-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .login-features {
+                margin-left: auto;
+                margin-right: auto;
+
+                text-align: left;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .login-header {
+                height: 68px;
+            }
+
+            .login-header-container {
+                padding: 0 18px;
+            }
+
+            .login-logo-name {
+                font-size: 19px;
+            }
+
+            .login-logo-icon {
+                width: 38px;
+                height: 38px;
+
+                font-size: 19px;
+            }
+
+            .login-nav {
+                gap: 16px;
+            }
+
+            .login-nav a {
+                font-size: 12px;
+            }
+
+            .login-main {
+                min-height: auto;
+
+                padding:
+                    45px 16px 55px;
+            }
+
+            .login-introduction h1 {
+                font-size: 43px;
+
+                letter-spacing: -2px;
+            }
+
+            .login-description {
+                font-size: 15px;
+            }
+
+            .login-features {
+                grid-template-columns: 1fr;
+
+                gap: 18px;
+
+                text-align: left;
+            }
+
+            .login-feature {
+                padding-right: 0;
+            }
+
+            .login-feature + .login-feature {
+                padding-left: 0;
+
+                border-left: none;
+            }
+
+            .login-card {
+                padding: 30px 22px;
+
+                border-radius: 20px;
+            }
+
+            .login-card-header h2 {
+                font-size: 26px;
+            }
+
+            .login-footer {
+                padding:
+                    18px 16px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- ==============================
+
+    <!-- =========================================
          HEADER
-    =============================== -->
+    ========================================== -->
 
-    <header class="header">
+    <header class="login-header">
 
-        <div class="header-container">
+        <div class="login-header-container">
+
+
+            <!-- LOGO -->
 
             <a
                 href="{% url 'home' %}"
-                class="logo"
+                class="login-logo"
             >
 
-                <span class="logo-icon">🎬</span>
+                <span class="login-logo-icon">
+                    🎬
+                </span>
 
-                <span class="logo-text">
+                <span class="login-logo-name">
                     CineBook<strong>AI</strong>
                 </span>
 
             </a>
 
 
-            <nav class="nav-links">
+            <!-- NAVIGATION -->
+
+            <nav class="login-nav">
 
                 <a href="{% url 'home' %}">
                     Home
@@ -62,151 +909,300 @@
     </header>
 
 
-    <!-- ==============================
-         LOGIN PAGE
-    =============================== -->
 
-    <main class="auth-page">
+    <!-- =========================================
+         LOGIN MAIN
+    ========================================== -->
 
-        <div class="auth-card">
+    <main class="login-main">
 
-            <div class="auth-header">
 
-                <div class="auth-icon">
-                    🔐
+        <!-- CINEMATIC BACKGROUND -->
+
+        <div
+            class="cinema-background"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="login-container">
+
+
+            <!-- =================================
+                 LEFT INTRODUCTION
+            ================================== -->
+
+            <section class="login-introduction">
+
+
+                <div class="login-eyebrow">
+                    Your Movie Night
                 </div>
+
 
                 <h1>
-                    Welcome Back
+                    Powered by
+                    <span>AI.</span>
                 </h1>
 
-                <p>
-                    Sign in to continue your CineBook AI journey.
+
+                <p class="login-description">
+                    Discover movies you'll love, find the perfect showtime,
+                    and book your seats with a smarter movie experience.
                 </p>
 
-            </div>
 
 
-            <!-- ==============================
-                 MESSAGES
-            =============================== -->
+                <!-- FEATURES -->
 
-            {% if messages %}
+                <div class="login-features">
 
-                <div class="auth-messages">
 
-                    {% for message in messages %}
+                    <div class="login-feature">
 
-                        <div class="auth-message">
-                            {{ message }}
+                        <div class="feature-icon">
+                            🎬
                         </div>
 
-                    {% endfor %}
+                        <h3>
+                            Discover
+                        </h3>
+
+                        <p>
+                            Find movies worth watching.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="login-feature">
+
+                        <div class="feature-icon">
+                            ✦
+                        </div>
+
+                        <h3>
+                            Personalized
+                        </h3>
+
+                        <p>
+                            AI-powered recommendations.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="login-feature">
+
+                        <div class="feature-icon">
+                            ⚡
+                        </div>
+
+                        <h3>
+                            Book Faster
+                        </h3>
+
+                        <p>
+                            Simple and secure booking.
+                        </p>
+
+                    </div>
+
 
                 </div>
 
-            {% endif %}
+            </section>
 
 
-            <!-- ==============================
-                 LOGIN FORM
-            =============================== -->
 
-            <form
-                method="POST"
-                action="{% url 'login' %}"
-                class="auth-form"
-            >
+            <!-- =================================
+                 LOGIN CARD
+            ================================== -->
 
-                {% csrf_token %}
+            <section class="login-card">
 
 
-                <!-- USERNAME -->
+                <!-- CARD HEADER -->
 
-                <div class="form-group">
+                <div class="login-card-header">
 
-                    <label for="username">
-                        Username
-                    </label>
 
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Enter your username"
-                        required
-                        autocomplete="username"
-                    >
+                    <div class="card-logo">
+                        🎬
+                    </div>
+
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+
+                    <p>
+                        Sign in to continue your CineBookAI journey.
+                    </p>
+
 
                 </div>
 
 
-                <!-- PASSWORD -->
 
-                <div class="form-group">
+                <!-- =================================
+                     DJANGO MESSAGES
+                ================================== -->
 
-                    <label for="password">
-                        Password
-                    </label>
+                {% if messages %}
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        required
-                        autocomplete="current-password"
-                    >
+                    <div class="auth-messages">
 
-                </div>
+                        {% for message in messages %}
+
+                            <div class="auth-message">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
 
 
-                <!-- SIGN IN BUTTON -->
 
-                <button
-                    type="submit"
-                    class="auth-button"
+                <!-- =================================
+                     LOGIN FORM
+                ================================== -->
+
+                <form
+                    method="POST"
+                    action="{% url 'login' %}"
+                    class="login-form"
                 >
-                    Sign In
-                </button>
 
-            </form>
+                    {% csrf_token %}
 
 
-            <!-- ==============================
-                 SIGNUP LINK
-            =============================== -->
 
-            <div class="auth-footer">
+                    <!-- USERNAME -->
 
-                <p>
+                    <div class="login-field">
 
-                    Don't have an account?
+                        <label for="username">
+                            Username
+                        </label>
 
-                    <a href="{% url 'signup' %}">
-                        Create Account
-                    </a>
 
-                </p>
+                        <div class="input-wrapper">
 
-            </div>
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                required
+                                autocomplete="username"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="login-field">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                                autocomplete="current-password"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SIGN IN -->
+
+                    <button
+                        type="submit"
+                        class="login-submit"
+                    >
+                        Sign In
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =================================
+                     SIGNUP
+                ================================== -->
+
+                <div class="login-card-footer">
+
+                    <p>
+
+                        Don't have an account?
+
+                        <a href="{% url 'signup' %}">
+                            Create Account
+                        </a>
+
+                    </p>
+
+                </div>
+
+
+            </section>
+
 
         </div>
 
     </main>
 
 
-    <!-- ==============================
-         FOOTER
-    =============================== -->
 
-    <footer class="footer">
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="login-footer">
 
         <p>
-            © 2026 CineBook AI. All rights reserved.
+            © 2026 CineBookAI. All rights reserved.
         </p>
 
     </footer>
+
 
 </body>
 

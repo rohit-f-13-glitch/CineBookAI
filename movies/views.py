@@ -392,25 +392,78 @@ def ensure_cinema_seats(cinema):
                 f"{row}{number}"
             )
 
-    existing_seats = set(
-        Seat.objects
-        .filter(cinema=cinema)
-        .values_list(
-            "seat_number",
-            flat=True
+    existing_seats = {
+        seat_number: seat
+        for seat in Seat.objects.filter(
+            cinema=cinema
         )
-    )
+        for seat_number in [seat.seat_number]
+    }
+
+    seats_to_update = []
+
+    for seat_number, seat in existing_seats.items():
+
+        row = seat_number[0]
+
+        if row in "ABCD":
+            seat_type = "normal"
+            seat_price = 150
+
+        elif row in "EFGH":
+            seat_type = "premium"
+            seat_price = 200
+
+        else:
+            seat_type = "luxury"
+            seat_price = 270
+
+        if (
+            seat.seat_type != seat_type
+            or seat.seat_price != seat_price
+        ):
+            seat.seat_type = seat_type
+            seat.seat_price = seat_price
+            seats_to_update.append(seat)
+
+    if seats_to_update:
+        Seat.objects.bulk_update(
+            seats_to_update,
+            [
+                "seat_type",
+                "seat_price",
+            ],
+        )
 
     new_seats = []
 
     for seat_number in seat_numbers:
-        if seat_number not in existing_seats:
-            new_seats.append(
-                Seat(
-                    cinema=cinema,
-                    seat_number=seat_number,
-                )
+
+        if seat_number in existing_seats:
+            continue
+
+        row = seat_number[0]
+
+        if row in "ABCD":
+            seat_type = "normal"
+            seat_price = 150
+
+        elif row in "EFGH":
+            seat_type = "premium"
+            seat_price = 200
+
+        else:
+            seat_type = "luxury"
+            seat_price = 270
+
+        new_seats.append(
+            Seat(
+                cinema=cinema,
+                seat_number=seat_number,
+                seat_type=seat_type,
+                seat_price=seat_price,
             )
+        )
 
     if new_seats:
         Seat.objects.bulk_create(
@@ -529,8 +582,10 @@ def booking_details(request, showtime_id):
             )
 
         total_amount = (
-            seats.count()
-            * showtime.price
+            seats.aggregate(
+                total=Sum("seat_price")
+            ).get("total")
+            or 0
         )
 
         return render(
@@ -618,8 +673,10 @@ def booking_details(request, showtime_id):
         ] = showtime.id
 
         total_amount = (
-            seats.count()
-            * showtime.price
+            seats.aggregate(
+                total=Sum("seat_price")
+            ).get("total")
+            or 0
         )
 
         return render(
@@ -693,8 +750,10 @@ def booking_details(request, showtime_id):
         )
 
         total_amount = (
-            seats.count()
-            * showtime.price
+            seats.aggregate(
+                total=Sum("seat_price")
+            ).get("total")
+            or 0
         )
 
         return render(
@@ -708,8 +767,10 @@ def booking_details(request, showtime_id):
         )
 
     total_amount = (
-        seats.count()
-        * showtime.price
+        seats.aggregate(
+            total=Sum("seat_price")
+        ).get("total")
+        or 0
     )
 
     with transaction.atomic():
@@ -819,9 +880,6 @@ def payment_page(request, booking_id):
 
     # --------------------------------------------------------
     # CANCELLED BOOKING
-    #
-    # A cancelled booking must never be reused for payment.
-    # The user must create a fresh booking instead.
     # --------------------------------------------------------
 
     if booking.status == "cancelled":
@@ -853,12 +911,6 @@ def payment_page(request, booking_id):
 
     # --------------------------------------------------------
     # RESET FAILED PAYMENT IF BOOKING IS STILL PENDING
-    #
-    # This allows a legitimate retry when a payment record
-    # was marked failed but the booking itself is still pending.
-    #
-    # A booking already marked cancelled is handled above and
-    # can NEVER reach this section.
     # --------------------------------------------------------
 
     if (
@@ -1049,9 +1101,7 @@ def verify_razorpay_payment(request):
         )
 
     # --------------------------------------------------------
-    # IDEMPOTENCY:
-    # If Razorpay sends the success callback more than once,
-    # do not create duplicate processing/notifications.
+    # IDEMPOTENCY
     # --------------------------------------------------------
 
     if (
@@ -1207,13 +1257,9 @@ def verify_razorpay_payment(request):
 
     with transaction.atomic():
 
-        # Refresh both objects so we work with the latest
-        # database state.
         booking.refresh_from_db()
         payment.refresh_from_db()
 
-        # Another callback may have completed the payment
-        # while this request was being processed.
         if (
             payment.status == "success"
             and booking.status == "confirmed"
@@ -1227,7 +1273,6 @@ def verify_razorpay_payment(request):
                 booking_id=booking.id
             )
 
-        # Never revive a cancelled booking.
         if booking.status == "cancelled":
             messages.error(
                 request,
@@ -1390,9 +1435,6 @@ def razorpay_payment_failed(request):
 
     # --------------------------------------------------------
     # IDEMPOTENCY
-    #
-    # If the same failure callback arrives again, don't create
-    # another failure notification.
     # --------------------------------------------------------
 
     if (
@@ -1471,13 +1513,6 @@ def razorpay_payment_failed(request):
 @login_required(login_url="login")
 def booking_confirmation(request, booking_id):
 
-    # IMPORTANT:
-    # Do NOT filter status="confirmed" here.
-    #
-    # We first fetch the booking and then explicitly decide
-    # what should happen based on its current status.
-    #
-    # This prevents the old Django 404 for cancelled bookings.
     booking = get_object_or_404(
         Booking.objects
         .select_related(

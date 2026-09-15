@@ -365,10 +365,6 @@
             border-radius:
                 9px 9px 6px 6px;
 
-            background: #344154;
-
-            border: 1px solid #526177;
-
             display: flex;
             align-items: center;
             justify-content: center;
@@ -380,6 +376,8 @@
 
             cursor: pointer;
 
+            position: relative;
+
             transition:
                 transform 0.18s ease,
                 background 0.18s ease,
@@ -387,7 +385,28 @@
                 box-shadow 0.18s ease;
         }
 
-        /* SMALL SEAT BACK EFFECT */
+        /* =========================
+           SEAT CATEGORIES
+        ========================= */
+
+        .seat-normal {
+            background: #344154;
+            border: 1px solid #526177;
+        }
+
+        .seat-premium {
+            background: #29435d;
+            border: 1px solid #4d789f;
+        }
+
+        .seat-luxury {
+            background: #513d25;
+            border: 1px solid #a47c42;
+        }
+
+        /* =========================
+           SMALL SEAT BACK EFFECT
+        ========================= */
 
         .seat::after {
             content: "";
@@ -406,15 +425,38 @@
             background: #273448;
         }
 
+        .seat-normal::after {
+            background: #273448;
+        }
+
+        .seat-premium::after {
+            background: #1d3146;
+        }
+
+        .seat-luxury::after {
+            background: #382918;
+        }
+
         .seat:hover {
             transform: translateY(-3px);
 
-            background: #46556a;
-
-            border-color: #718197;
-
             box-shadow:
                 0 5px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .seat-normal:hover {
+            background: #46556a;
+            border-color: #718197;
+        }
+
+        .seat-premium:hover {
+            background: #345775;
+            border-color: #70a1c9;
+        }
+
+        .seat-luxury:hover {
+            background: #6a5030;
+            border-color: #c39a5c;
         }
 
         /* =========================
@@ -423,7 +465,6 @@
 
         .seat-checkbox:checked + .seat {
             background: #19a463;
-
             border-color: #55e5a0;
 
             color: #ffffff;
@@ -465,7 +506,70 @@
         }
 
         /* =========================
-           LEGEND
+           SEAT CATEGORY LEGEND
+        ========================= */
+
+        .seat-category-legend {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 18px;
+
+            margin-top: 35px;
+
+            padding: 18px;
+
+            background: #091522;
+
+            border: 1px solid #1e3045;
+
+            border-radius: 10px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            color: #c4ced9;
+
+            font-size: 13px;
+        }
+
+        .category-box {
+            width: 18px;
+            height: 18px;
+
+            border-radius: 5px;
+        }
+
+        .category-normal {
+            background: #344154;
+            border: 1px solid #526177;
+        }
+
+        .category-premium {
+            background: #29435d;
+            border: 1px solid #4d789f;
+        }
+
+        .category-luxury {
+            background: #513d25;
+            border: 1px solid #a47c42;
+        }
+
+        .category-price {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* =========================
+           STATUS LEGEND
         ========================= */
 
         .seat-legend {
@@ -476,9 +580,9 @@
 
             gap: 35px;
 
-            margin-top: 42px;
+            margin-top: 22px;
 
-            padding-top: 25px;
+            padding-top: 22px;
 
             border-top: 1px solid #1e3045;
 
@@ -598,13 +702,25 @@
 
             color: #a9ffd2;
 
-            padding: 6px 10px;
+            padding: 7px 10px;
 
-            border-radius: 20px;
+            border-radius: 8px;
 
             font-size: 12px;
 
             font-weight: 600;
+
+            line-height: 1.4;
+        }
+
+        .selected-seat-pill small {
+            display: block;
+
+            color: #83e8b3;
+
+            font-size: 10px;
+
+            margin-top: 2px;
         }
 
         .no-seats {
@@ -638,6 +754,46 @@
             font-size: 12px;
 
             margin-top: 4px;
+        }
+
+        /* =========================
+           PRICE BREAKDOWN
+        ========================= */
+
+        .price-breakdown {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            background: #091522;
+
+            border: 1px solid #1e3045;
+
+            border-radius: 8px;
+
+            display: none;
+        }
+
+        .price-breakdown-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            color: #aab7c7;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        .price-breakdown-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-breakdown-row strong {
+            color: #ffffff;
         }
 
         /* =========================
@@ -804,6 +960,14 @@
             .feature-row {
                 grid-template-columns: 1fr;
             }
+
+            .seat-category-legend {
+                min-width: 650px;
+            }
+
+            .seat-legend {
+                min-width: 650px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -957,11 +1121,8 @@
 
 
         <!--
-            IMPORTANT:
-            The whole booking layout is now inside
-            ONE POST form.
-
-            This fixes the Continue button.
+            The whole booking layout remains
+            inside ONE POST form.
         -->
 
         <form
@@ -1066,7 +1227,10 @@
 
                                     <!-- BOOKED SEAT -->
 
-                                    <label class="seat-wrapper booked-seat">
+                                    <label
+                                        class="seat-wrapper booked-seat"
+                                        title="{{ seat.seat_number }} — Booked"
+                                    >
 
                                         <input
                                             type="checkbox"
@@ -1074,7 +1238,9 @@
                                             disabled
                                         >
 
-                                        <span class="seat">
+                                        <span
+                                            class="seat"
+                                        >
                                             {{ seat.seat_number }}
                                         </span>
 
@@ -1084,16 +1250,31 @@
 
                                     <!-- AVAILABLE SEAT -->
 
-                                    <label class="seat-wrapper">
+                                    <label
+                                        class="seat-wrapper"
+                                        title="{{ seat.seat_number }} — {{ seat.get_seat_type_display }} — ₹{{ seat.seat_price }}"
+                                    >
 
                                         <input
                                             type="checkbox"
                                             name="seats"
                                             value="{{ seat.id }}"
                                             class="seat-checkbox"
+                                            data-seat-number="{{ seat.seat_number }}"
+                                            data-seat-type="{{ seat.get_seat_type_display }}"
+                                            data-seat-price="{{ seat.seat_price }}"
                                         >
 
-                                        <span class="seat">
+                                        <span
+                                            class="seat
+                                            {% if seat.seat_type == 'normal' %}
+                                                seat-normal
+                                            {% elif seat.seat_type == 'premium' %}
+                                                seat-premium
+                                            {% elif seat.seat_type == 'luxury' %}
+                                                seat-luxury
+                                            {% endif %}"
+                                        >
                                             {{ seat.seat_number }}
                                         </span>
 
@@ -1111,42 +1292,99 @@
 
                         </div>
 
-                    </div>
+
+                        <!-- SEAT CATEGORY LEGEND -->
+
+                        <div class="seat-category-legend">
+
+                            <div class="category-item">
+
+                                <span
+                                    class="category-box category-normal"
+                                ></span>
+
+                                <span>
+                                    Normal
+                                </span>
+
+                                <span class="category-price">
+                                    ₹150
+                                </span>
+
+                            </div>
 
 
-                    <!-- LEGEND -->
+                            <div class="category-item">
 
-                    <div class="seat-legend">
+                                <span
+                                    class="category-box category-premium"
+                                ></span>
 
-                        <div class="legend-item">
+                                <span>
+                                    Premium
+                                </span>
 
-                            <span
-                                class="legend-box legend-available"
-                            ></span>
+                                <span class="category-price">
+                                    ₹200
+                                </span>
 
-                            Available
+                            </div>
+
+
+                            <div class="category-item">
+
+                                <span
+                                    class="category-box category-luxury"
+                                ></span>
+
+                                <span>
+                                    Luxury / Recliner
+                                </span>
+
+                                <span class="category-price">
+                                    ₹270
+                                </span>
+
+                            </div>
 
                         </div>
 
 
-                        <div class="legend-item">
+                        <!-- STATUS LEGEND -->
 
-                            <span
-                                class="legend-box legend-selected"
-                            ></span>
+                        <div class="seat-legend">
 
-                            Selected
+                            <div class="legend-item">
 
-                        </div>
+                                <span
+                                    class="legend-box legend-available"
+                                ></span>
+
+                                Available
+
+                            </div>
 
 
-                        <div class="legend-item">
+                            <div class="legend-item">
 
-                            <span
-                                class="legend-box legend-booked"
-                            ></span>
+                                <span
+                                    class="legend-box legend-selected"
+                                ></span>
 
-                            Booked
+                                Selected
+
+                            </div>
+
+
+                            <div class="legend-item">
+
+                                <span
+                                    class="legend-box legend-booked"
+                                ></span>
+
+                                Booked
+
+                            </div>
 
                         </div>
 
@@ -1264,7 +1502,7 @@
                     class="total-price"
                     id="total-price"
                 >
-                    ₹0
+                    ₹0.00
                 </div>
 
 
@@ -1272,7 +1510,55 @@
                     class="price-note"
                     id="price-note"
                 >
-                    ₹{{ showtime.price }} × 0 Seats
+                    Select seats to see the total
+                </div>
+
+
+                <!-- PRICE BREAKDOWN -->
+
+                <div
+                    class="price-breakdown"
+                    id="price-breakdown"
+                >
+
+                    <div class="price-breakdown-row">
+
+                        <span>
+                            Normal
+                        </span>
+
+                        <strong id="normal-count">
+                            0 × ₹150
+                        </strong>
+
+                    </div>
+
+
+                    <div class="price-breakdown-row">
+
+                        <span>
+                            Premium
+                        </span>
+
+                        <strong id="premium-count">
+                            0 × ₹200
+                        </strong>
+
+                    </div>
+
+
+                    <div class="price-breakdown-row">
+
+                        <span>
+                            Luxury
+                        </span>
+
+                        <strong id="luxury-count">
+                            0 × ₹270
+                        </strong>
+
+                    </div>
+
                 </div>
 
 
@@ -1403,10 +1689,6 @@
 
     <script>
 
-        const ticketPrice =
-            Number("{{ showtime.price }}");
-
-
         const checkboxes =
             document.querySelectorAll(
                 ".seat-checkbox:not(:disabled)"
@@ -1428,6 +1710,30 @@
         const priceNote =
             document.getElementById(
                 "price-note"
+            );
+
+
+        const priceBreakdown =
+            document.getElementById(
+                "price-breakdown"
+            );
+
+
+        const normalCount =
+            document.getElementById(
+                "normal-count"
+            );
+
+
+        const premiumCount =
+            document.getElementById(
+                "premium-count"
+            );
+
+
+        const luxuryCount =
+            document.getElementById(
+                "luxury-count"
             );
 
 
@@ -1458,6 +1764,15 @@
             selectedSeatList.innerHTML = "";
 
 
+            let total = 0;
+
+            let normalSeats = 0;
+
+            let premiumSeats = 0;
+
+            let luxurySeats = 0;
+
+
             /* NO SEATS */
 
             if (selected.length === 0) {
@@ -1474,6 +1789,17 @@
                 selectedSeatList.appendChild(
                     emptyMessage
                 );
+
+                priceBreakdown.style.display =
+                    "none";
+
+                totalPrice.textContent =
+                    "₹0.00";
+
+                priceNote.textContent =
+                    "Select seats to see the total";
+
+                return;
             }
 
 
@@ -1482,10 +1808,40 @@
             selected.forEach(
                 function(checkbox) {
 
-                    const seat =
-                        checkbox.parentElement.querySelector(
-                            ".seat"
+                    const seatNumber =
+                        checkbox.dataset.seatNumber;
+
+                    const seatType =
+                        checkbox.dataset.seatType;
+
+                    const seatPrice =
+                        Number(
+                            checkbox.dataset.seatPrice
                         );
+
+
+                    total += seatPrice;
+
+
+                    if (
+                        seatType === "Normal"
+                    ) {
+
+                        normalSeats++;
+
+                    } else if (
+                        seatType === "Premium"
+                    ) {
+
+                        premiumSeats++;
+
+                    } else if (
+                        seatType === "Luxury / Recliner"
+                    ) {
+
+                        luxurySeats++;
+
+                    }
 
 
                     const pill =
@@ -1498,8 +1854,13 @@
                         "selected-seat-pill";
 
 
-                    pill.textContent =
-                        seat.textContent.trim();
+                    pill.innerHTML =
+                        seatNumber +
+                        "<small>" +
+                        seatType +
+                        " • ₹" +
+                        seatPrice.toFixed(2) +
+                        "</small>";
 
 
                     selectedSeatList.appendChild(
@@ -1512,25 +1873,37 @@
 
             /* TOTAL */
 
-            const count =
-                selected.length;
-
-
-            const total =
-                count * ticketPrice;
-
-
             totalPrice.textContent =
-                "₹" + total.toFixed(2);
+                "₹" +
+                total.toFixed(2);
 
 
             priceNote.textContent =
-                "₹" +
-                ticketPrice.toFixed(2) +
-                " × " +
-                count +
+                selected.length +
                 " Seat" +
-                (count === 1 ? "" : "s");
+                (selected.length === 1 ? "" : "s") +
+                " selected";
+
+
+            /* PRICE BREAKDOWN */
+
+            priceBreakdown.style.display =
+                "block";
+
+
+            normalCount.textContent =
+                normalSeats +
+                " × ₹150";
+
+
+            premiumCount.textContent =
+                premiumSeats +
+                " × ₹200";
+
+
+            luxuryCount.textContent =
+                luxurySeats +
+                " × ₹270";
 
         }
 

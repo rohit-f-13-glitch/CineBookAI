@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -301,6 +302,18 @@ class ShowTime(models.Model):
 
 class Seat(models.Model):
 
+    SEAT_TYPE_CHOICES = [
+        ("normal", "Normal"),
+        ("premium", "Premium"),
+        ("luxury", "Luxury / Recliner"),
+    ]
+
+    SEAT_PRICE_CHOICES = {
+        "normal": 150,
+        "premium": 200,
+        "luxury": 270,
+    }
+
     cinema = models.ForeignKey(
         Cinema,
         on_delete=models.CASCADE,
@@ -309,6 +322,18 @@ class Seat(models.Model):
 
     seat_number = models.CharField(
         max_length=20
+    )
+
+    seat_type = models.CharField(
+        max_length=20,
+        choices=SEAT_TYPE_CHOICES,
+        default="normal",
+    )
+
+    seat_price = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        default=150.00,
     )
 
     class Meta:
@@ -327,7 +352,9 @@ class Seat(models.Model):
     def __str__(self):
         return (
             f"{self.cinema.name} - "
-            f"{self.seat_number}"
+            f"{self.seat_number} - "
+            f"{self.get_seat_type_display()} - "
+            f"₹{self.seat_price}"
         )
 
 

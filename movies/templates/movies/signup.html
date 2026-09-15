@@ -4,7 +4,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -19,13 +18,245 @@
         href="{% static 'movies/css/style.css' %}"
     >
 
+    <style>
+        /* =========================================
+           CINEBOOK AI — CREATE ACCOUNT
+           Page-specific responsive styling
+        ========================================= */
+
+        .signup-page {
+            min-height: calc(100vh - 150px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+            background:
+                radial-gradient(circle at top left, rgba(255, 107, 74, 0.08), transparent 35%),
+                #f8f7f5;
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 460px;
+            background: #ffffff;
+            border: 1px solid rgba(20, 20, 20, 0.08);
+            border-radius: 22px;
+            padding: 38px;
+            box-shadow: 0 18px 55px rgba(20, 20, 20, 0.10);
+        }
+
+        .signup-brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .signup-brand-icon {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: #fff1ed;
+            font-size: 25px;
+        }
+
+        .signup-brand h1 {
+            margin: 0;
+            font-size: 30px;
+            line-height: 1.2;
+            font-weight: 750;
+            letter-spacing: -0.7px;
+            color: #171717;
+        }
+
+        .signup-brand p {
+            margin: 10px auto 0;
+            max-width: 350px;
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .signup-message {
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #fff4f1;
+            border: 1px solid rgba(255, 107, 74, 0.20);
+            color: #a33f2b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .signup-field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .signup-field label {
+            font-size: 13px;
+            font-weight: 650;
+            color: #292929;
+        }
+
+        .signup-field input {
+            width: 100%;
+            min-height: 48px;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 1px solid #dedede;
+            border-radius: 11px;
+            background: #fbfbfb;
+            color: #1d1d1d;
+            font-size: 14px;
+            outline: none;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .signup-field input::placeholder {
+            color: #a2a2a2;
+        }
+
+        .signup-field input:focus {
+            background: #ffffff;
+            border-color: #ff6b4a;
+            box-shadow: 0 0 0 4px rgba(255, 107, 74, 0.10);
+        }
+
+        .signup-button {
+            width: 100%;
+            min-height: 50px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 11px;
+            background: #ff6b4a;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .signup-button:hover {
+            background: #f45e3d;
+            box-shadow: 0 10px 24px rgba(255, 107, 74, 0.22);
+            transform: translateY(-1px);
+        }
+
+        .signup-footer {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            text-align: center;
+        }
+
+        .signup-footer p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .signup-footer a {
+            color: #ff6b4a;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .signup-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .signup-page {
+                min-height: calc(100vh - 110px);
+                padding: 28px 14px;
+                align-items: flex-start;
+            }
+
+            .signup-card {
+                max-width: none;
+                margin-top: 8px;
+                padding: 28px 20px;
+                border-radius: 18px;
+                box-shadow: 0 12px 35px rgba(20, 20, 20, 0.08);
+            }
+
+            .signup-brand {
+                margin-bottom: 24px;
+            }
+
+            .signup-brand-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 13px;
+                border-radius: 14px;
+                font-size: 22px;
+            }
+
+            .signup-brand h1 {
+                font-size: 25px;
+            }
+
+            .signup-brand p {
+                font-size: 13px;
+                line-height: 1.55;
+            }
+
+            .signup-form {
+                gap: 15px;
+            }
+
+            .signup-field input {
+                min-height: 47px;
+                font-size: 14px;
+            }
+
+            .signup-button {
+                min-height: 49px;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .signup-page {
+                padding: 20px 10px;
+            }
+
+            .signup-card {
+                padding: 24px 16px;
+            }
+
+            .signup-brand h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <!-- ==============================
-         HEADER
-    =============================== -->
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -35,15 +266,12 @@
                 href="{% url 'home' %}"
                 class="logo"
             >
-
                 <span class="logo-icon">🎬</span>
 
                 <span class="logo-text">
                     CineBook<strong>AI</strong>
                 </span>
-
             </a>
-
 
             <nav class="nav-links">
 
@@ -66,17 +294,15 @@
     </header>
 
 
-    <!-- ==============================
-         SIGNUP PAGE
-    =============================== -->
+    <!-- CREATE ACCOUNT -->
 
-    <main class="auth-page">
+    <main class="signup-page">
 
-        <div class="auth-card">
+        <div class="signup-card">
 
-            <div class="auth-header">
+            <div class="signup-brand">
 
-                <div class="auth-icon">
+                <div class="signup-brand-icon">
                     ✨
                 </div>
 
@@ -85,49 +311,39 @@
                 </h1>
 
                 <p>
-                    Join CineBook AI and start booking your movies.
+                    Join CineBook AI and make your next movie night effortless.
                 </p>
 
             </div>
 
 
-            <!-- ==============================
-                 MESSAGES
-            =============================== -->
+            <!-- MESSAGES -->
 
             {% if messages %}
 
-                <div class="auth-messages">
+                {% for message in messages %}
 
-                    {% for message in messages %}
+                    <div class="signup-message">
+                        {{ message }}
+                    </div>
 
-                        <div class="auth-message">
-                            {{ message }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
+                {% endfor %}
 
             {% endif %}
 
 
-            <!-- ==============================
-                 SIGNUP FORM
-            =============================== -->
+            <!-- SIGNUP FORM -->
 
             <form
                 method="POST"
                 action="{% url 'signup' %}"
-                class="auth-form"
+                class="signup-form"
             >
 
                 {% csrf_token %}
 
 
-                <!-- USERNAME -->
-
-                <div class="form-group">
+                <div class="signup-field">
 
                     <label for="username">
                         Username
@@ -145,9 +361,7 @@
                 </div>
 
 
-                <!-- EMAIL -->
-
-                <div class="form-group">
+                <div class="signup-field">
 
                     <label for="email">
                         Email Address
@@ -165,9 +379,7 @@
                 </div>
 
 
-                <!-- PASSWORD -->
-
-                <div class="form-group">
+                <div class="signup-field">
 
                     <label for="password">
                         Password
@@ -185,9 +397,7 @@
                 </div>
 
 
-                <!-- CONFIRM PASSWORD -->
-
-                <div class="form-group">
+                <div class="signup-field">
 
                     <label for="confirm_password">
                         Confirm Password
@@ -205,11 +415,9 @@
                 </div>
 
 
-                <!-- CREATE ACCOUNT -->
-
                 <button
                     type="submit"
-                    class="auth-button"
+                    class="signup-button"
                 >
                     Create Account
                 </button>
@@ -217,20 +425,15 @@
             </form>
 
 
-            <!-- ==============================
-                 LOGIN LINK
-            =============================== -->
+            <!-- LOGIN LINK -->
 
-            <div class="auth-footer">
+            <div class="signup-footer">
 
                 <p>
-
                     Already have an account?
-
                     <a href="{% url 'login' %}">
                         Sign In
                     </a>
-
                 </p>
 
             </div>
@@ -240,9 +443,7 @@
     </main>
 
 
-    <!-- ==============================
-         FOOTER
-    =============================== -->
+    <!-- FOOTER -->
 
     <footer class="footer">
 
